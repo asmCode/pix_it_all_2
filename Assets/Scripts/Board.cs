@@ -39,14 +39,12 @@ public class Board : MonoBehaviour
 
     public void ChangeZoom(float delta)
     {
-        float newZoom = m_zoom + delta / 1000.0f;
+        float newZoom = m_zoom + delta / 500.0f;
         SetZoom(Vector2.zero, newZoom);
     }
 
     public void FixPositionInsideParent()
     {
-        var sizeInPixels = GetSizeInPixels();
-
         var parentRect = GetParentRect();
         var imageRect = GetImageRect();
 
@@ -125,14 +123,7 @@ public class Board : MonoBehaviour
 
     private float CalculateScaleMax()
     {
-        return Screen.dpi;
-    }
-
-    public Vector2 GetSizeInPixels()
-    {
-        return new Vector2(
-            RectTransform.rect.width * RectTransform.lossyScale.x,
-            RectTransform.rect.height * RectTransform.lossyScale.y);
+        return Screen.dpi / 2;
     }
 
     public RectSides GetParentRect()

@@ -8,6 +8,7 @@ public class PanGestureDetector : MonoBehaviour
     public event System.Action PanEnded;
 
     private bool m_isPanning = false;
+    private int m_numberOfTouches;
     private Vector2 m_lastPosition;
 
     private void Update()
@@ -20,6 +21,7 @@ public class PanGestureDetector : MonoBehaviour
         if (!isTouching && m_isPanning)
         {
             m_isPanning = false;
+            m_numberOfTouches = 0;
             OnPanEnded();
             return;
         }
@@ -29,6 +31,13 @@ public class PanGestureDetector : MonoBehaviour
             m_isPanning = true;
             m_lastPosition = GetCurrentTouchPosition();
             OnPanStarted();
+            return;
+        }
+
+        if (NumberOfTouchsChanged())
+        {
+            m_numberOfTouches = GetNumberOfTouches();
+            m_lastPosition = GetCurrentTouchPosition();
             return;
         }
 
@@ -70,13 +79,15 @@ public class PanGestureDetector : MonoBehaviour
         }
     }
 
-    public Vector2 GetCurrentTouchPosition()
+    private Vector2 GetCurrentTouchPosition()
     {
         if (Input.touchSupported)
+        {
             if (Input.touchCount > 0)
-                return Input.GetTouch(0).position;
+                return GetAverageOfAllTouches();
             else
                 return Vector2.zero;
+        }
         else
         {
             if (Input.GetMouseButton(0))
@@ -86,8 +97,30 @@ public class PanGestureDetector : MonoBehaviour
         }
     }
 
-    public bool NumberOfTouchedChanged()
+    private bool NumberOfTouchsChanged()
     {
-        return false;
+        return m_numberOfTouches != GetNumberOfTouches();
+    }
+
+    private int GetNumberOfTouches()
+    {
+        if (Input.touchSupported)
+            return Input.touchCount;
+        else
+            return Input.GetMouseButton(0) ? 1 : 0;
+    }
+
+    private Vector2 GetAverageOfAllTouches()
+    {
+        Vector2 avg = Vector2.zero;
+
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            var touch = Input.GetTouch(i);
+            avg += touch.position;
+        }
+
+        avg /= Input.touchCount;
+        return avg;
     }
 }
