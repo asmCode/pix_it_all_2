@@ -5,6 +5,7 @@ public class Board : MonoBehaviour
 {
     public Image m_image;
     public RectTransform m_parentRectTransform;
+    public RectTransform m_scalePivot;
 
     private RectTransform m_rectTransform;
     private float m_scaleMin;
@@ -16,13 +17,49 @@ public class Board : MonoBehaviour
         get { return m_rectTransform; }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            var scalePivotPosition = m_scalePivot.position;
+            var boardPosition = m_rectTransform.position;
+            m_scalePivot.position = new Vector2(0, 0);
+            m_rectTransform.position = boardPosition;
+            m_scalePivot.localScale = new Vector3(22, 22, 1.0f);
+            boardPosition = m_rectTransform.position;
+            m_scalePivot.position = scalePivotPosition;
+            m_rectTransform.position = boardPosition;
+        }
+    }
+
     public void SetZoom(Vector2 pivot, float zoom)
     {
+        //return;
+
+        //Debug.Log("-----------------");
+
+        var boardPosition = m_rectTransform.position;
+        var scalePivotPosition = m_scalePivot.position;
+
+        Vector3 worldPoint;
+        //RectTransformUtility.ScreenPointToWorldPointInRectangle(m_scalePivot, pivot, Camera.main, out worldPoint);
+        //m_scalePivot.position = worldPoint;
+        m_scalePivot.position = pivot;
+        m_rectTransform.position = boardPosition;
+
         m_zoom = Mathf.Clamp01(zoom);
         float scale = GetScale(m_zoom);
-        gameObject.transform.localScale = new Vector3(scale, scale, 1.0f);
+        //gameObject.transform.localScale = new Vector3(scale, scale, 1.0f);
+
+        m_scalePivot.localScale = new Vector3(scale, scale, 1.0f);
+
+        boardPosition = m_rectTransform.position;
+        m_scalePivot.position = scalePivotPosition;
+        m_rectTransform.position = boardPosition;
 
         FixPositionInsideParent();
+
+        //Debug.LogFormat("screen = ({0}, {1}), scale_pivot = ({2}, {3})", pivot.x, pivot.y, worldPoint.x, worldPoint.y);
     }
 
     public void SetLocalPosition(Vector2 position)
@@ -37,10 +74,10 @@ public class Board : MonoBehaviour
         FixPositionInsideParent();
     }
 
-    public void ChangeZoom(float delta)
+    public void ChangeZoom(Vector2 pivot, float delta)
     {
         float newZoom = m_zoom + delta / 500.0f;
-        SetZoom(Vector2.zero, newZoom);
+        SetZoom(pivot, newZoom);
     }
 
     public void FixPositionInsideParent()
@@ -100,9 +137,9 @@ public class Board : MonoBehaviour
 
     private void ChangeLocalPositionInternal(Vector2 delta)
     {
-        Vector2 position = m_rectTransform.localPosition;
+        Vector2 position = m_rectTransform.position;
         position += delta;
-        m_rectTransform.localPosition = position;
+        m_rectTransform.position = position;
     }
 
     private float CalculateScaleMin()

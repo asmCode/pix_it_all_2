@@ -32,8 +32,8 @@ public class BoardController : MonoBehaviour
         m_board.ChangeLocalPosition(delta);
     }
 
-    private void HandlePinchChanged(float delta)
+    private void HandlePinchChanged(Vector2 pivot, float delta)
     {
-        m_board.ChangeZoom(delta);
+        m_board.ChangeZoom(pivot, delta);
     }
 }
