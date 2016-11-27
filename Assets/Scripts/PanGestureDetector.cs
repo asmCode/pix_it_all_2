@@ -71,30 +71,12 @@ public class PanGestureDetector : MonoBehaviour
 
     private bool IsTouching()
     {
-        if (Input.touchSupported)
-            return Input.touchCount > 0;
-        else
-        {
-            return Input.GetMouseButton(0);
-        }
+        return TouchProxy.GetTouchCount() > 0;
     }
 
     private Vector2 GetCurrentTouchPosition()
     {
-        if (Input.touchSupported)
-        {
-            if (Input.touchCount > 0)
-                return GetAverageOfAllTouches();
-            else
-                return Vector2.zero;
-        }
-        else
-        {
-            if (Input.GetMouseButton(0))
-                return Input.mousePosition;
-            else
-                return Vector2.zero;
-        }
+        return GetAverageOfAllTouches();
     }
 
     private bool NumberOfTouchsChanged()
@@ -104,23 +86,20 @@ public class PanGestureDetector : MonoBehaviour
 
     private int GetNumberOfTouches()
     {
-        if (Input.touchSupported)
-            return Input.touchCount;
-        else
-            return Input.GetMouseButton(0) ? 1 : 0;
+        return TouchProxy.GetTouchCount();
     }
 
     private Vector2 GetAverageOfAllTouches()
     {
         Vector2 avg = Vector2.zero;
 
-        for (int i = 0; i < Input.touchCount; i++)
+        for (int i = 0; i < TouchProxy.GetTouchCount(); i++)
         {
-            var touch = Input.GetTouch(i);
-            avg += touch.position;
+            var touch = TouchProxy.GetTouch(i);
+            avg += touch.Position;
         }
 
-        avg /= Input.touchCount;
+        avg /= TouchProxy.GetTouchCount();
         return avg;
     }
 }
