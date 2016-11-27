@@ -63,7 +63,7 @@ public class Board : MonoBehaviour
         // Fix horizontally
         if (imageRect.Width <= parentRect.Width)
         {
-            m_rectTransform.localPosition = new Vector2(0, m_rectTransform.localPosition.x);
+            m_rectTransform.localPosition = new Vector2(0, m_rectTransform.localPosition.y);
         }
         else
         {
