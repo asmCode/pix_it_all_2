@@ -17,39 +17,16 @@ public class Board : MonoBehaviour
         get { return m_rectTransform; }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            var scalePivotPosition = m_scalePivot.position;
-            var boardPosition = m_rectTransform.position;
-            m_scalePivot.position = new Vector2(0, 0);
-            m_rectTransform.position = boardPosition;
-            m_scalePivot.localScale = new Vector3(22, 22, 1.0f);
-            boardPosition = m_rectTransform.position;
-            m_scalePivot.position = scalePivotPosition;
-            m_rectTransform.position = boardPosition;
-        }
-    }
-
     public void SetZoom(Vector2 pivot, float zoom)
     {
-        //return;
-
-        //Debug.Log("-----------------");
+        m_zoom = Mathf.Clamp01(zoom);
+        float scale = GetScale(m_zoom);
 
         var boardPosition = m_rectTransform.position;
         var scalePivotPosition = m_scalePivot.position;
 
-        Vector3 worldPoint;
-        //RectTransformUtility.ScreenPointToWorldPointInRectangle(m_scalePivot, pivot, Camera.main, out worldPoint);
-        //m_scalePivot.position = worldPoint;
         m_scalePivot.position = pivot;
         m_rectTransform.position = boardPosition;
-
-        m_zoom = Mathf.Clamp01(zoom);
-        float scale = GetScale(m_zoom);
-        //gameObject.transform.localScale = new Vector3(scale, scale, 1.0f);
 
         m_scalePivot.localScale = new Vector3(scale, scale, 1.0f);
 
@@ -58,8 +35,6 @@ public class Board : MonoBehaviour
         m_rectTransform.position = boardPosition;
 
         FixPositionInsideParent();
-
-        //Debug.LogFormat("screen = ({0}, {1}), scale_pivot = ({2}, {3})", pivot.x, pivot.y, worldPoint.x, worldPoint.y);
     }
 
     public void SetLocalPosition(Vector2 position)
@@ -126,7 +101,8 @@ public class Board : MonoBehaviour
 
         InitScaleBounds();
 
-        SetZoom(Vector2.zero, 1.0f);
+        var screenCenter = new Vector2(Screen.width, Screen.height) / 2.0f;
+        SetZoom(screenCenter, 1.0f);
     }
 
     private void InitScaleBounds()
