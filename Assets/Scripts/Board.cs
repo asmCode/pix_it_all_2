@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
-    public Image m_image;
+    public RawImage m_image;
     public RectTransform m_parentRectTransform;
     public RectTransform m_scalePivot;
 
@@ -15,6 +15,18 @@ public class Board : MonoBehaviour
     public RectTransform RectTransform
     {
         get { return m_rectTransform; }
+    }
+
+    public void SetSize(int width, int height)
+    {
+        m_rectTransform.sizeDelta = new Vector2(width, height);
+    }
+
+    public void SetImage(Texture2D texture)
+    {
+        m_image.texture = texture;
+
+        InitScaleBounds();
     }
 
     public void SetZoom(Vector2 pivot, float zoom)
@@ -97,7 +109,7 @@ public class Board : MonoBehaviour
     private void Awake()
     {
         m_rectTransform = GetComponent<RectTransform>();
-        m_image = transform.GetComponentInChildren<Image>();
+        //m_image = transform.GetComponentInChildren<Image>();
 
         InitScaleBounds();
 
@@ -120,8 +132,8 @@ public class Board : MonoBehaviour
 
     private float CalculateScaleMin()
     {
-        float width = m_image.sprite.rect.width;
-        float height = m_image.sprite.rect.height;
+        float width = m_rectTransform.rect.width;
+        float height = m_rectTransform.rect.height;
 
         float parentWidth = m_parentRectTransform.rect.width;
         float parentHeight = m_parentRectTransform.rect.height;
