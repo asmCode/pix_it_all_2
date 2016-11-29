@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
+    public RawImage m_referenceImage;
     public RawImage m_image;
     public RectTransform m_parentRectTransform;
     public RectTransform m_scalePivot;
@@ -12,6 +13,12 @@ public class Board : MonoBehaviour
     private float m_scaleMax;
     private float m_zoom = 1.0f;
 
+    public Texture2D Image
+    {
+        get;
+        private set;
+    }
+
     public RectTransform RectTransform
     {
         get { return m_rectTransform; }
@@ -20,13 +27,23 @@ public class Board : MonoBehaviour
     public void SetSize(int width, int height)
     {
         m_rectTransform.sizeDelta = new Vector2(width, height);
+        InitScaleBounds();
+        RecreateImage();
     }
 
-    public void SetImage(Texture2D texture)
+    public void ShowPreview()
     {
-        m_image.texture = texture;
+        m_referenceImage.gameObject.SetActive(true);
+    }
 
-        InitScaleBounds();
+    public void HidePreview()
+    {
+        m_referenceImage.gameObject.SetActive(false);
+    }
+
+    public void SetReferenceImage(Texture2D texture)
+    {
+        m_referenceImage.texture = texture;
     }
 
     public void SetZoom(Vector2 pivot, float zoom)
@@ -173,5 +190,30 @@ public class Board : MonoBehaviour
         rect.Top = corners[2].y;
         rect.Bottom = corners[0].y;
         return rect;
+    }
+
+    private void RecreateImage()
+    {
+        int width = (int)m_rectTransform.rect.width;
+        int height = (int)m_rectTransform.rect.height;
+
+        if (Image == null)
+        {
+            Image = new Texture2D(width, height);
+            Image.wrapMode = TextureWrapMode.Clamp;
+            Image.filterMode = FilterMode.Point;
+            Image.name = "image";
+        }
+
+        int pixelCount = width * height;
+
+        Color[] colors = new Color[pixelCount];
+        for (int i = 0; i < colors.Length; i++)
+            colors[i] = new Color32(255, 255, 255, 0);
+
+        Image.SetPixels(colors);
+        Image.Apply();
+
+        m_image.texture = Image;
     }
 }
