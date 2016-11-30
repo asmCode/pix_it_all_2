@@ -31,7 +31,5 @@ public class Gameplay : MonoBehaviour
     {
         m_board.Image.SetPixel(x, y, m_image.Texture.GetPixel(x, y));
         m_board.Image.Apply();
-
-        Debug.LogFormat("tap: {0}, {1}", x, y);
     }
 }
