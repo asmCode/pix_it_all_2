@@ -22,30 +22,14 @@ public class ImageData
         private set;
     }
 
-    public static ImageData Load(string id)
+    public void Init(string id, Texture2D texture)
     {
-        string textureFileName = id + ".png";
-        string path = Application.persistentDataPath + "/" + textureFileName;
+        if (texture == null)
+            return;
 
-        if (!System.IO.File.Exists(path))
-            return null;
-
-        byte[] textureData = System.IO.File.ReadAllBytes(path);
-        if (textureData == null)
-            return null;
-
-        var texture = new Texture2D(2, 2);
-        texture.filterMode = FilterMode.Point;
-        texture.wrapMode = TextureWrapMode.Clamp;
-        if (!texture.LoadImage(textureData))
-            return null;
-
-        var imageData = new ImageData();
-        imageData.Texture = texture;
-
-        imageData.CountColors();
-
-        return imageData;
+        Texture = texture;
+        Id = id;
+        CountColors();
     }
 
     private void CountColors()

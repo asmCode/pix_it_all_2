@@ -10,7 +10,9 @@ public class Gameplay : MonoBehaviour
 
     private void Start()
     {
-        m_image = ImageData.Load("motorowka");
+        //m_image = ImageData.Load("motorowka");
+
+        m_image = Game.GetInstance().ImageManager.GetImageById("wrotki");
 
         m_board.SetSize(m_image.Texture.width, m_image.Texture.height);
         m_board.SetReferenceImage(m_image.Texture);
