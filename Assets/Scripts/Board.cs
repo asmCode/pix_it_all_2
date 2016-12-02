@@ -13,6 +13,8 @@ public class Board : MonoBehaviour
     private float m_scaleMax;
     private float m_zoom = 1.0f;
 
+    private bool m_isInitialized;
+
     public Texture2D Image
     {
         get;
@@ -125,8 +127,17 @@ public class Board : MonoBehaviour
 
     private void Awake()
     {
+        Init();
+    }
+
+    private void Init()
+    {
+        if (m_isInitialized)
+            return;
+
+        m_isInitialized = true;
+
         m_rectTransform = GetComponent<RectTransform>();
-        //m_image = transform.GetComponentInChildren<Image>();
 
         InitScaleBounds();
 
