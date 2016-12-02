@@ -12,31 +12,23 @@ public class Hud : MonoBehaviour
     {
         if (PreviewPressed != null)
             PreviewPressed();
-
-        Debug.Log("UiEventPreviewPressed");
     }
 
     public void UiEventPreviewReleased()
     {
         if (PreviewReleased != null)
             PreviewReleased();
-
-        Debug.Log("UiEventPreviewReleased");
     }
 
     public void UiEventPaletteClicked()
     {
         if (PaletteClicked != null)
             PaletteClicked();
-
-        Debug.Log("UiEventPaletteClicked");
     }
 
     public void UiEventPauseClicked()
     {
         if (PauseClicked != null)
             PauseClicked();
-
-        Debug.Log("UiEventPauseClicked");
     }
 }

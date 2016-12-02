@@ -1,37 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Gameplay : MonoBehaviour
+public class Gameplay
 {
-    public Board m_board;
-    public BoardController m_boardInputController;
-
-    private ImageData m_image;
-
-    private void Start()
+    public ImageData Image
     {
-        //m_image = ImageData.Load("motorowka");
-
-        m_image = Game.GetInstance().ImageManager.GetImageById("wrotki");
-
-        m_board.SetSize(m_image.Texture.width, m_image.Texture.height);
-        m_board.SetReferenceImage(m_image.Texture);
-        m_board.HidePreview();
+        get;
+        private set;
     }
 
-    private void OnEnable()
+    public void Init()
     {
-        m_boardInputController.BoardTileTapped += HandleBoardTileTapped;
-    }
-
-    private void OnDisable()
-    {
-        m_boardInputController.BoardTileTapped -= HandleBoardTileTapped;
-    }
-
-    private void HandleBoardTileTapped(int x, int y)
-    {
-        m_board.Image.SetPixel(x, y, m_image.Texture.GetPixel(x, y));
-        m_board.Image.Apply();
+        Image = Game.GetInstance().ImageManager.GetImageById("wrotki");
     }
 }
