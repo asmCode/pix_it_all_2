@@ -25,6 +25,7 @@ public class BoardController : MonoBehaviour
         m_tapGestureDetector.Tapped += HandleTapped;
     }
 
+    // dupa
     private void OnDisable()
     {
         m_panGestureDetector.PanMoved -= HandlePanMoved;
