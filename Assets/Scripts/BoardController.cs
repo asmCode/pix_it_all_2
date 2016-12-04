@@ -11,6 +11,7 @@ public class BoardController : MonoBehaviour
 
     private Board m_board;
 
+    // sdddd
     private void Awake()
     {
         Debug.LogFormat("dpi = {0}", Screen.dpi);
