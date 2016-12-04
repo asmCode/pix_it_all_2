@@ -176,7 +176,8 @@ public class Board : MonoBehaviour
 
     private float CalculateScaleMax()
     {
-        return Screen.dpi / 2;
+        const float InchToCm = 0.393701f;
+        return Screen.dpi * InchToCm;
     }
 
     public RectSides GetParentRect()
