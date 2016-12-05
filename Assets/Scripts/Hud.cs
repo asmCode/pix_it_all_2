@@ -3,10 +3,17 @@ using System.Collections;
 
 public class Hud : MonoBehaviour
 {
+    public Palette m_palette;
+
     public event System.Action PreviewPressed;
     public event System.Action PreviewReleased;
     public event System.Action PaletteClicked;
     public event System.Action PauseClicked;
+
+    public void Init(Color[] paletteColors)
+    {
+        m_palette.Init(paletteColors);
+    }
 
     public void UiEventPreviewPressed()
     {

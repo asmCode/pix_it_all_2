@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-public class PaletteStrip : MonoBehaviour {
+public class PaletteStrip : MonoBehaviour
+{
+    public Image m_image;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public Color Color
+    {
+        get
+        {
+            return m_image.color;
+        }
+
+        set
+        {
+            m_image.color = value;
+        }
+    }
 }

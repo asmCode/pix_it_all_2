@@ -24,15 +24,20 @@ public class GameplayController
 
     public void SetupGameplay()
     {
+        m_image = m_gameplay.Image;
+
         m_boardInputController.BoardTileTapped += HandleBoardTileTapped;
+
+        m_hud.Init(m_image.Colors);
         m_hud.PreviewPressed += HandlePreviewPressed;
         m_hud.PreviewReleased += HandlePreviewReleased;
-
-        m_image = m_gameplay.Image;
+        m_hud.PaletteClicked += HandlePaletteClicked;
 
         m_board.SetSize(m_image.Texture.width, m_image.Texture.height);
         m_board.SetReferenceImage(m_image.Texture);
         m_board.HidePreview();
+
+        m_hud.m_palette.HidePalette();
     }
 
     public void Cleanup()
@@ -40,6 +45,7 @@ public class GameplayController
         m_boardInputController.BoardTileTapped -= HandleBoardTileTapped;
         m_hud.PreviewPressed -= HandlePreviewPressed;
         m_hud.PreviewReleased -= HandlePreviewReleased;
+        m_hud.PaletteClicked -= HandlePaletteClicked;
     }
 
     private void HandleBoardTileTapped(int x, int y)
@@ -56,5 +62,13 @@ public class GameplayController
     private void HandlePreviewReleased()
     {
         m_board.HidePreview();
+    }
+
+    private void HandlePaletteClicked()
+    {
+        if (m_hud.m_palette.IsPaletteVisible)
+            m_hud.m_palette.HidePalette();
+        else
+            m_hud.m_palette.ShowPalette();
     }
 }
