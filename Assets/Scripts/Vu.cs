@@ -15,4 +15,11 @@ public class Vu
         result.y += y;
         return result;
     }
+
+    public static Vector3 SetY(Vector3 v, float y)
+    {
+        var result = v;
+        result.y = y;
+        return result;
+    }
 }

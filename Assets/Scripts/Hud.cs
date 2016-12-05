@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Hud : MonoBehaviour
 {
     public Palette m_palette;
+    public Button m_paletteButton;
 
     public event System.Action PreviewPressed;
     public event System.Action PreviewReleased;
@@ -13,6 +15,11 @@ public class Hud : MonoBehaviour
     public void Init(Color[] paletteColors)
     {
         m_palette.Init(paletteColors);
+    }
+
+    public void SetPaleteButtonColor(Color color)
+    {
+        m_paletteButton.image.color = color;
     }
 
     public void UiEventPreviewPressed()

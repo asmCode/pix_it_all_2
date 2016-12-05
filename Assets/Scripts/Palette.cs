@@ -7,7 +7,10 @@ public class Palette : MonoBehaviour
     public RectTransform m_stripContainer;
     public RectTransform m_rowPivot;
 
+    public event System.Action<Color> ColorClicked;
+
     private const int MaxStripsInRow = 9;
+    private Color m_activeColor;
 
     public bool IsPaletteVisible
     {
@@ -30,7 +33,7 @@ public class Palette : MonoBehaviour
 
         foreach (var color in colors)
         {
-            var strip = CreatePaletteStrip(angle, yOffset, color);
+            CreatePaletteStrip(angle, yOffset, color);
             angle -= stepAngle;
             stripNum++;
 
@@ -47,6 +50,7 @@ public class Palette : MonoBehaviour
     {
         var paletteStrip = Instantiate(m_paletteStripPrefab);
         paletteStrip.Color = color;
+        paletteStrip.Clicked += HandlePaletteStripClicked;
 
         var paletteStripRectTr = paletteStrip.gameObject.GetComponent<RectTransform>();
         paletteStripRectTr.parent = m_stripContainer.transform;
@@ -67,5 +71,27 @@ public class Palette : MonoBehaviour
     public void HidePalette()
     {
         gameObject.SetActive(false);
+    }
+
+    public void SetActiveColor(Color color)
+    {
+        m_activeColor = color;
+
+        MarkActiveStrip(m_activeColor);
+    }
+
+    private void MarkActiveStrip(Color color)
+    {
+        for (int i = 0; i < m_stripContainer.childCount; i++)
+        {
+            var child = m_stripContainer.GetChild(i).GetComponent<PaletteStrip>();
+            child.MarkSelected(child.Color == color);
+        }
+    }
+
+    private void HandlePaletteStripClicked(PaletteStrip paletteStrip)
+    {
+        if (ColorClicked != null)
+            ColorClicked(paletteStrip.Color);
     }
 }

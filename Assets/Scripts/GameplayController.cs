@@ -25,10 +25,12 @@ public class GameplayController
     public void SetupGameplay()
     {
         m_image = m_gameplay.Image;
+        var initialColor = m_image.Colors[0];
 
         m_boardInputController.BoardTileTapped += HandleBoardTileTapped;
 
         m_hud.Init(m_image.Colors);
+        m_hud.SetPaleteButtonColor(initialColor);
         m_hud.PreviewPressed += HandlePreviewPressed;
         m_hud.PreviewReleased += HandlePreviewReleased;
         m_hud.PaletteClicked += HandlePaletteClicked;
@@ -37,7 +39,9 @@ public class GameplayController
         m_board.SetReferenceImage(m_image.Texture);
         m_board.HidePreview();
 
+        m_hud.m_palette.ColorClicked += HandleColorClicked;
         m_hud.m_palette.HidePalette();
+        m_hud.m_palette.SetActiveColor(initialColor);
     }
 
     public void Cleanup()
@@ -70,5 +74,12 @@ public class GameplayController
             m_hud.m_palette.HidePalette();
         else
             m_hud.m_palette.ShowPalette();
+    }
+
+    private void HandleColorClicked(Color color)
+    {
+        m_hud.m_palette.SetActiveColor(color);
+        m_hud.m_palette.HidePalette();
+        m_hud.SetPaleteButtonColor(color);
     }
 }
