@@ -10,15 +10,16 @@ public class Palette : MonoBehaviour
     public event System.Action<Color> ColorClicked;
 
     private const int MaxStripsInRow = 9;
-    private Color m_activeColor;
 
     public bool IsPaletteVisible
     {
         get { return gameObject.activeSelf; }
     }
 
-    public void Awake()
+    public Color ActiveColor
     {
+        get;
+        private set;
     }
 
     public void Init(Color[] colors)
@@ -75,9 +76,9 @@ public class Palette : MonoBehaviour
 
     public void SetActiveColor(Color color)
     {
-        m_activeColor = color;
+        ActiveColor = color;
 
-        MarkActiveStrip(m_activeColor);
+        MarkActiveStrip(ActiveColor);
     }
 
     private void MarkActiveStrip(Color color)

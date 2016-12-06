@@ -54,8 +54,14 @@ public class GameplayController
 
     private void HandleBoardTileTapped(int x, int y)
     {
-        m_board.Image.SetPixel(x, y, m_image.Texture.GetPixel(x, y));
-        m_board.Image.Apply();
+        var activeColor = m_hud.m_palette.ActiveColor;
+        var requiredColor = m_image.Texture.GetPixel(x, y);
+
+        if (activeColor == requiredColor)
+        {
+            m_board.Image.SetPixel(x, y, activeColor);
+            m_board.Image.Apply();
+        }
     }
 
     private void HandlePreviewPressed()

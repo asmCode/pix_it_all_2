@@ -11,7 +11,6 @@ public class BoardController : MonoBehaviour
 
     private Board m_board;
 
-    // sdddd
     private void Awake()
     {
         Debug.LogFormat("dpi = {0}", Screen.dpi);
@@ -26,7 +25,6 @@ public class BoardController : MonoBehaviour
         m_tapGestureDetector.Tapped += HandleTapped;
     }
 
-    // dupa
     private void OnDisable()
     {
         m_panGestureDetector.PanMoved -= HandlePanMoved;
