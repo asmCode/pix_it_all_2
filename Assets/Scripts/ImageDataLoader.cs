@@ -4,10 +4,29 @@ using System.Collections.Generic;
 
 public class ImageDataLoader
 {
-    public static ImageData[] LoadAll(string path)
+    public static BundleData[] LoadBundles()
     {
-        Debug.LogFormat("Loading images from path: {0}", path);
+        var bundles = new List<BundleData>();
 
+        var bundlePathes = GetBundlePathes();
+
+        foreach (var bundlePath in bundlePathes)
+        {
+            var bundle = LoadBundle(bundlePath);
+            if (bundle == null)
+            {
+                Debug.LogErrorFormat("Couldn't load bundle from path: {0}", bundlePath);
+                continue;
+            }
+
+            bundles.Add(bundle);
+        }
+
+        return bundles.ToArray();
+    }
+
+    private static BundleData LoadBundle(string path)
+    {
         if (!System.IO.Directory.Exists(path))
             return null;
 
@@ -19,37 +38,22 @@ public class ImageDataLoader
 
         foreach (var fileName in fileNames)
         {
-            var id = System.IO.Path.GetFileNameWithoutExtension(fileName);
-
-            Debug.LogFormat("Loading image {0}", id);
-
             var imageData = LoadImageData(fileName);
-            if (imageData != null)
-                images.Add(imageData);
-        }
+            if (imageData == null)
+            {
+                Debug.LogErrorFormat("Couldn't load image from path: {0}", fileName);
+                continue;
+            }
 
-        return images.ToArray();
-    }
-
-    public static ImageData[] LoadFromResources()
-    {
-        var textures = Resources.LoadAll<Texture2D>("Bundles/base/");
-        if (textures == null)
-            return null;
-
-        List<ImageData> images = new List<ImageData>();
-
-        foreach (var texture in textures)
-        {
-            var imageData = new ImageData();
-            imageData.Init(texture.name, texture);
             images.Add(imageData);
         }
 
-        return images.ToArray();
+        var bundleId = System.IO.Path.GetFileNameWithoutExtension(path);
+
+        return new BundleData(bundleId, "tmp name", images.ToArray());
     }
 
-    public static ImageData LoadImageData(string path)
+    private static ImageData LoadImageData(string path)
     {
         if (!System.IO.File.Exists(path))
             return null;
@@ -70,5 +74,18 @@ public class ImageDataLoader
         imageData.Init(id, texture);
 
         return imageData;
+    }
+
+    private static List<string> GetBundlePathes()
+    {
+        var pathes = new List<string>();
+
+        var path = Application.persistentDataPath + "/Bundles";
+        pathes.InsertRange(0, System.IO.Directory.GetDirectories(path));
+
+        path = Application.streamingAssetsPath + "/Bundles";
+        pathes.InsertRange(0, System.IO.Directory.GetDirectories(path));
+
+        return pathes;
     }
 }

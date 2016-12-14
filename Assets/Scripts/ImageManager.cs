@@ -4,27 +4,30 @@ using System.Collections.Generic;
 
 public class ImageManager
 {
-    private List<ImageData> m_images = new List<ImageData>();
+    public BundleData[] Bundles
+    {
+        get;
+        private set;
+    }
 
     public bool LoadImages()
     {
-        m_images.Clear();
-
-        var dataPath = Application.persistentDataPath + "/Bundles/extra/";
+        Bundles = ImageDataLoader.LoadBundles();
  
-        var downloadedImages = ImageDataLoader.LoadAll(dataPath);
-        if (downloadedImages != null)
-            m_images.AddRange(downloadedImages);
-
-        var dataImages = ImageDataLoader.LoadFromResources();
-        if (dataImages != null)
-            m_images.AddRange(dataImages);
-
         return true;
     }
 
-    public ImageData GetImageById(string id)
+    public BundleData GetBundleById(string bundleId)
     {
-        return m_images.Find(t => { return t.Id == id; });
+        return System.Array.Find(Bundles, t => { return t.Id == bundleId; });
+    }
+
+    public ImageData GetImageById(string bundleId, string imageId)
+    {
+        var bundle = GetBundleById(bundleId);
+        if (bundle == null)
+            return null;
+
+        return bundle.GetImageById(imageId);
     }
 }

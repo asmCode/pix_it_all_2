@@ -11,6 +11,6 @@ public class Gameplay
 
     public void Init()
     {
-        Image = Game.GetInstance().ImageManager.GetImageById("wrotki");
+        Image = Game.GetInstance().ImageManager.GetImageById("base", "zamek");
     }
 }

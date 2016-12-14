@@ -29,6 +29,7 @@ public class ImageData
 
         Texture = texture;
         Id = id;
+
         CountColors();
     }
 
