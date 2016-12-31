@@ -54,7 +54,7 @@ public class Palette : MonoBehaviour
         paletteStrip.Clicked += HandlePaletteStripClicked;
 
         var paletteStripRectTr = paletteStrip.gameObject.GetComponent<RectTransform>();
-        paletteStripRectTr.parent = m_stripContainer.transform;
+        paletteStripRectTr.SetParent(m_stripContainer.transform);
         paletteStripRectTr.localPosition = Vector3.zero;
         paletteStripRectTr.localScale = Vector3.one;
         paletteStripRectTr.RotateAround(m_rowPivot.position, Vector3.forward, angle);

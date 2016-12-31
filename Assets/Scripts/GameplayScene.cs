@@ -3,6 +3,9 @@ using System.Collections;
 
 public class GameplayScene : MonoBehaviour
 {
+    public static string m_selectedBundleId;
+    public static string m_selectedLevelId;
+
     public Hud m_hud;
     public Board m_board;
     public BoardController m_boardInputController;
@@ -12,8 +15,10 @@ public class GameplayScene : MonoBehaviour
 
     private void Awake()
     {
+        SetupSceneInputVariables();
+
         m_gameplay = new Gameplay();
-        m_gameplay.Init();
+        m_gameplay.Init(m_selectedBundleId, m_selectedLevelId);
 
         m_gameplayController = new GameplayController(
             m_gameplay,
@@ -25,5 +30,15 @@ public class GameplayScene : MonoBehaviour
     private void Start()
     {
         m_gameplayController.SetupGameplay();
+    }
+
+    private void SetupSceneInputVariables()
+    {
+        if (string.IsNullOrEmpty(m_selectedBundleId) ||
+            string.IsNullOrEmpty(m_selectedLevelId))
+        {
+            m_selectedBundleId = "base";
+            m_selectedLevelId = "tree";
+        }
     }
 }

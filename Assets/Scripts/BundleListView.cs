@@ -35,7 +35,5 @@ public class BundleListView : MonoBehaviour
     {
         if (BundleClicked != null)
             BundleClicked(bundleId);
-
-        Debug.LogFormat("clicked {0}", bundleId);
     }
 }

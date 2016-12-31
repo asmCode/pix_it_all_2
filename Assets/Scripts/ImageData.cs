@@ -10,6 +10,12 @@ public class ImageData
         private set;
     }
 
+    public string Name
+    {
+        get;
+        private set;
+    }
+
     public Texture2D Texture
     {
         get;
@@ -29,6 +35,7 @@ public class ImageData
 
         Texture = texture;
         Id = id;
+        Name = id;
 
         CountColors();
     }

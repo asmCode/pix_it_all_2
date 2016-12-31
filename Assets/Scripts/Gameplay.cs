@@ -9,8 +9,8 @@ public class Gameplay
         private set;
     }
 
-    public void Init()
+    public void Init(string bundleId, string imageId)
     {
-        Image = Game.GetInstance().ImageManager.GetImageById("base", "zamek");
+        Image = Game.GetInstance().ImageManager.GetImageById(bundleId, imageId);
     }
 }
