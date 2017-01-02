@@ -3,7 +3,7 @@
 namespace bundle_maker
 {
     [DataContract]
-    class BundleMetaData
+    class BundleDataInput
     {
         [DataMember]
         public string Name { get; set; }

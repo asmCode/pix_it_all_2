@@ -27,21 +27,22 @@ public class ImageDataLoader
 
     private static BundleData LoadBundle(string path)
     {
-        if (!System.IO.Directory.Exists(path))
+        var bundleData = FileReader.ReadAllText(path);
+        if (bundleData == null)
             return null;
 
-        var fileNames = System.IO.Directory.GetFiles(path, "*.png");
-        if (fileNames == null)
+        var bundleFileData = JsonUtility.FromJson<BundleFileData>(bundleData);
+        if (bundleFileData == null || bundleFileData.Images == null || bundleFileData.Images.Length == 0)
             return null;
 
         List<ImageData> images = new List<ImageData>();
 
-        foreach (var fileName in fileNames)
+        foreach (var imageFileData in bundleFileData.Images)
         {
-            var imageData = LoadImageData(fileName);
+            var imageData = LoadImageData(imageFileData);
             if (imageData == null)
             {
-                Debug.LogErrorFormat("Couldn't load image from path: {0}", fileName);
+                Debug.LogErrorFormat("Couldn't load image: {0}", imageFileData.Id);
                 continue;
             }
 
@@ -50,15 +51,17 @@ public class ImageDataLoader
 
         var bundleId = System.IO.Path.GetFileNameWithoutExtension(path);
 
-        return new BundleData(bundleId, "tmp name", images.ToArray());
+        return new BundleData(bundleId, bundleFileData.Name, images.ToArray());
     }
 
-    private static ImageData LoadImageData(string path)
+    private static ImageData LoadImageData(ImageFileData imageFileData)
     {
-        if (!System.IO.File.Exists(path))
+        if (string.IsNullOrEmpty(imageFileData.Id) ||
+            string.IsNullOrEmpty(imageFileData.Name) ||
+            string.IsNullOrEmpty(imageFileData.RawImageData))
             return null;
 
-        byte[] textureData = System.IO.File.ReadAllBytes(path);
+        byte[] textureData = System.Convert.FromBase64String(imageFileData.RawImageData);
         if (textureData == null)
             return null;
 
@@ -68,10 +71,8 @@ public class ImageDataLoader
         if (!texture.LoadImage(textureData))
             return null;
 
-        var id = System.IO.Path.GetFileNameWithoutExtension(path);
-
         var imageData = new ImageData();
-        imageData.Init(id, texture);
+        imageData.Init(imageFileData.Id, imageFileData.Name, texture);
 
         return imageData;
     }
@@ -80,12 +81,23 @@ public class ImageDataLoader
     {
         var pathes = new List<string>();
 
-        var path = Application.persistentDataPath + "/Bundles";
-        pathes.InsertRange(0, System.IO.Directory.GetDirectories(path));
-
-        path = Application.streamingAssetsPath + "/Bundles";
-        pathes.InsertRange(0, System.IO.Directory.GetDirectories(path));
+        GetBaseBundlePathes(pathes);
+        GetDownloadedBundlePathes(pathes);
 
         return pathes;
+    }
+
+    private static void GetBaseBundlePathes(List<string> pathes)
+    {
+        var path = Application.streamingAssetsPath + "/Bundles";
+
+        pathes.Add(path + "/base.pixbundle");
+    }
+
+    private static void GetDownloadedBundlePathes(List<string> pathes)
+    {
+        var path = Application.persistentDataPath + "/Bundles";
+        if (System.IO.Directory.Exists(path))
+            pathes.InsertRange(0, System.IO.Directory.GetFiles(path, "*.pixbundles"));
     }
 }

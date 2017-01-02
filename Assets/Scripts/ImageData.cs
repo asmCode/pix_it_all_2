@@ -28,14 +28,14 @@ public class ImageData
         private set;
     }
 
-    public void Init(string id, Texture2D texture)
+    public void Init(string id, string name, Texture2D texture)
     {
         if (texture == null)
             return;
 
         Texture = texture;
         Id = id;
-        Name = id;
+        Name = name;
 
         CountColors();
     }
