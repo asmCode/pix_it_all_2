@@ -50,23 +50,15 @@ namespace bundle_maker
 
         static BundleData GetDirectoryContentAsBundleData(string path)
         {
+            var bundleDataInput = LoadFile<BundleDataInput>(path + "/bundle");
+            if (bundleDataInput == null)
+                return null;
+
             var bundleData = new BundleData();
-            bundleData.BundleMetaData = GetBundleMetaData(path);
+            bundleData.Name = bundleDataInput.Name;
             bundleData.Images = GetImagesData(path);
 
             return bundleData;
-        }
-
-        static BundleMetaData GetBundleMetaData(string path)
-        {
-            var bundleMetaDataInput = LoadFile<BundleMetaDataInput>(path + "/bundle");
-            if (bundleMetaDataInput == null)
-                return null;
-
-            var bundleMetaData = new BundleMetaData();
-            bundleMetaData.Name = bundleMetaDataInput.Name;
-
-            return bundleMetaData;
         }
 
         static ImageData[] GetImagesData(string path)

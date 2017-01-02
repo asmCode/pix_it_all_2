@@ -5,10 +5,10 @@ namespace bundle_maker
     [DataContract]
     class BundleData
     {
-        [DataMember]
-        public BundleMetaData BundleMetaData { get; set; }
+        [DataMember(Order = 0)]
+        public string Name { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 1)]
         public ImageData[] Images { get; set; }
     }
 }
