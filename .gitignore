@@ -28,3 +28,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+/tools/bundle_maker/bin
+/tools/bundle_maker/obj
