@@ -7,6 +7,7 @@ public class GameplayScene : MonoBehaviour
     public static string m_selectedLevelId;
 
     public Hud m_hud;
+    public PauseView m_pauseView;
     public Board m_board;
     public BoardController m_boardInputController;
 
@@ -23,6 +24,7 @@ public class GameplayScene : MonoBehaviour
         m_gameplayController = new GameplayController(
             m_gameplay,
             m_hud,
+            m_pauseView,
             m_board,
             m_boardInputController);
     }
