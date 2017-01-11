@@ -47,7 +47,8 @@ public class ImageManager
     {
         Debug.LogFormat("Downloading missing bundles finished. New bundles: {0}", eventData.HasNewBundles);
 
-        LoadImages();
+        if (eventData.HasNewBundles)
+            LoadImages();
 
         if (BundlesChanged != null)
             BundlesChanged();
