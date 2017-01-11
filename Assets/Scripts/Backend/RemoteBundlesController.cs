@@ -6,13 +6,13 @@ public class RemoteBundlesController
 {
     private IRemoteBundles m_remoteBundles = new RemoteBundlesGSparks();
 
-    public void DownloadMissingBundles(BundleData[] localBundles)
+    public void DownloadMissingBundles(BundleData[] localBundles, System.Action<DownloadMissingBundlesEventData> callback)
     {
         Debug.Log("Refreshing bundles...");
 
         if (GSpark.GetInstance().IsAuthenticated)
         {
-            DownloadBundleListFromServer(localBundles);
+            DownloadBundleListFromServer(localBundles, callback);
         }
         else
         {
@@ -23,12 +23,12 @@ public class RemoteBundlesController
                 Debug.LogFormat("GameSparks authenticated: {0}", success);
 
                 if (success)
-                    DownloadBundleListFromServer(localBundles);
+                    DownloadBundleListFromServer(localBundles, callback);
             });
         }
     }
 
-    private void DownloadBundleListFromServer(BundleData[] localBundles)
+    private void DownloadBundleListFromServer(BundleData[] localBundles, System.Action<DownloadMissingBundlesEventData> callback)
     {
         Debug.Log("Downloading bundle list...");
 
@@ -41,17 +41,20 @@ public class RemoteBundlesController
 
             if (success && m_remoteBundles.IsBundleListReady)
             {
-                DownloadBundles(m_remoteBundles.GetBundleList(), localBundles);
+                DownloadBundles(m_remoteBundles.GetBundleList(), localBundles, callback);
             }
         });
     }
 
-    private void DownloadBundles(RemoteBundleData[] remoteBundles, BundleData[] localBundles)
+    private void DownloadBundles(RemoteBundleData[] remoteBundles, BundleData[] localBundles, System.Action<DownloadMissingBundlesEventData> callback)
     {
         Debug.Log("Downloading bundles...");
 
         if (remoteBundles == null || remoteBundles.Length == 0)
             return;
+
+        bool newBundles = false;
+        int bundlesToDownload = 0;
 
         foreach (var remoteBundleData in remoteBundles)
         {
@@ -63,6 +66,9 @@ public class RemoteBundlesController
                 continue;
             }
 
+            newBundles = true;
+            bundlesToDownload++;
+
             if (localBundle != null)
                 Debug.LogFormat("Bundle {0} has different crc, downloading", remoteBundleData.BundleId);
             else
@@ -71,7 +77,21 @@ public class RemoteBundlesController
             m_remoteBundles.DownloadBundle(remoteBundleData, (success) =>
             {
                 Debug.LogFormat("Finished downloading bundle {0}: {1}", remoteBundleData.BundleId, success);
+                bundlesToDownload--;
+
+                // 0 means, that it was the last bundle.
+                if (bundlesToDownload == 0)
+                {
+                    if (callback != null)
+                        callback(new DownloadMissingBundlesEventData(newBundles, true));
+                }
             });
+        }
+
+        if (!newBundles)
+        {
+            if (callback != null)
+                callback(new DownloadMissingBundlesEventData(false, true));
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class ImageManager
 {
+    public event System.Action BundlesChanged;
+
     private RemoteBundlesController m_remoteBundlesController = new RemoteBundlesController();
 
     public BundleData[] Bundles
@@ -17,7 +19,7 @@ public class ImageManager
     /// </summary>
     public void RefreshBundles()
     {
-        m_remoteBundlesController.DownloadMissingBundles(Bundles);
+        m_remoteBundlesController.DownloadMissingBundles(Bundles, DownloadMissingBundlesCallback);
     }
 
     public bool LoadImages()
@@ -39,5 +41,13 @@ public class ImageManager
             return null;
 
         return bundle.GetImageById(imageId);
+    }
+
+    private void DownloadMissingBundlesCallback(DownloadMissingBundlesEventData eventData)
+    {
+        Debug.LogFormat("Downloading missing bundles finished. New bundles: {0}", eventData.HasNewBundles);
+
+        if (BundlesChanged != null)
+            BundlesChanged();
     }
 }
