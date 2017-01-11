@@ -18,10 +18,17 @@ public class BundleData
         private set;
     }
 
-    public BundleData(string id, string name, ImageData[] images)
+    public string Crc
+    {
+        get;
+        private set;
+    }
+
+    public BundleData(string id, string name, string crc, ImageData[] images)
     {
         Id = id;
         Name = name;
+        Crc = crc;
         m_images = new List<ImageData>(images);
     }
 

@@ -4,10 +4,20 @@ using System.Collections.Generic;
 
 public class ImageManager
 {
+    private RemoteBundlesController m_remoteBundlesController = new RemoteBundlesController();
+
     public BundleData[] Bundles
     {
         get;
         private set;
+    }
+
+    /// <summary>
+    /// Call this method after LoadImages
+    /// </summary>
+    public void RefreshBundles()
+    {
+        m_remoteBundlesController.DownloadMissingBundles(Bundles);
     }
 
     public bool LoadImages()

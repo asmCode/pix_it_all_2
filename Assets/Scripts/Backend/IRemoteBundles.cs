@@ -5,5 +5,5 @@
 
     void DownloadBundleList(System.Action<bool> callback);
     RemoteBundleData[] GetBundleList();
-    void DownloadBundle(RemoteBundleData remoteBundleData, System.Action<string> callback);
+    void DownloadBundle(RemoteBundleData remoteBundleData, System.Action<bool> callback);
 }

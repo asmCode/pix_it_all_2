@@ -63,7 +63,7 @@ public class RemoteBundlesGSparks : IRemoteBundles
         return result;
     }
 
-    public void DownloadBundle(RemoteBundleData remoteBundleData, System.Action<string> callback)
+    public void DownloadBundle(RemoteBundleData remoteBundleData, System.Action<bool> callback)
     {
         if (remoteBundleData == null || string.IsNullOrEmpty(remoteBundleData.RemoteId))
             return;
@@ -123,12 +123,12 @@ public class RemoteBundlesGSparks : IRemoteBundles
         GetDownloadableResponse response,
         string crc,
         string bundleId,
-        System.Action<string> callback)
+        System.Action<bool> callback)
     {
         if (response.HasErrors)
         {
             if (callback != null)
-                callback(null);
+                callback(false);
 
             return;
         }
@@ -139,7 +139,7 @@ public class RemoteBundlesGSparks : IRemoteBundles
             Debug.LogErrorFormat("Path {0} doesn't exist.", basePath);
 
             if (callback != null)
-                callback(null);
+                callback(false);
 
             return;
         }
@@ -159,7 +159,7 @@ public class RemoteBundlesGSparks : IRemoteBundles
             }
 
             if (callback != null)
-                callback(success ? bundleId : null);
+                callback(success);
         });
     }
 }

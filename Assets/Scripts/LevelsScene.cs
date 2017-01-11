@@ -16,8 +16,14 @@ public class LevelsScene : MonoBehaviour
 
     void Start()
     {
+        RefreshBundles();
         InitView();
         InitBundleList();
+    }
+
+    private void RefreshBundles()
+    {
+        Game.GetInstance().ImageManager.RefreshBundles();
     }
 
     private void InitView()

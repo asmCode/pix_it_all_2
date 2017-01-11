@@ -2,8 +2,6 @@
 
 public class GSpark : Singleton<GSpark>
 {
-    public event System.Action<bool> Authenticated;
-
     public bool IsAuthenticated
     {
         get;
@@ -28,17 +26,17 @@ public class GSpark : Singleton<GSpark>
             {
                 Dispatcher.Dispatch((what) =>
                 {
-                    OnAuthenticated(response);
+                    OnAuthenticated(response, callback);
                 });
             });
     }
 
-    private void OnAuthenticated(GameSparks.Api.Responses.AuthenticationResponse response)
+    private void OnAuthenticated(GameSparks.Api.Responses.AuthenticationResponse response, System.Action<bool> callback)
     {
         IsAuthenticating = false;
         IsAuthenticated = !response.HasErrors;
 
-        if (Authenticated != null)
-            Authenticated(IsAuthenticated);
+        if (callback != null)
+            callback(IsAuthenticated);
     }
 }

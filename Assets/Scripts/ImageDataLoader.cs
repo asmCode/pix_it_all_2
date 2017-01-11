@@ -51,7 +51,10 @@ public class ImageDataLoader
 
         var bundleId = System.IO.Path.GetFileNameWithoutExtension(path);
 
-        return new BundleData(bundleId, bundleFileData.Name, images.ToArray());
+        var bundleDataRaw = System.Text.Encoding.UTF8.GetBytes(bundleData);
+        var crc = DamienG.Security.Cryptography.Crc32.Compute(bundleDataRaw).ToString();
+
+        return new BundleData(bundleId, bundleFileData.Name, crc, images.ToArray());
     }
 
     private static ImageData LoadImageData(ImageFileData imageFileData)
@@ -98,6 +101,6 @@ public class ImageDataLoader
     {
         var path = Application.persistentDataPath + "/Bundles";
         if (System.IO.Directory.Exists(path))
-            pathes.InsertRange(0, System.IO.Directory.GetFiles(path, "*.pixbundles"));
+            pathes.InsertRange(0, System.IO.Directory.GetFiles(path, "*.pixbundle"));
     }
 }
