@@ -76,16 +76,23 @@ public class LevelsScene : MonoBehaviour
     {
         m_bundleListView.BundleClicked += HandleBundleClicked;
         m_imageListView.ImageClicked += HandleImageClicked;
+        Game.GetInstance().ImageManager.BundlesChanged += HandleBundlesChanged;
     }
 
     private void OnDisable()
     {
         m_bundleListView.BundleClicked -= HandleBundleClicked;
         m_imageListView.ImageClicked -= HandleImageClicked;
+        Game.GetInstance().ImageManager.BundlesChanged -= HandleBundlesChanged;
     }
 
     public void UiEvent_BackButtonClicked()
     {
         ShowBundles();
+    }
+
+    private void HandleBundlesChanged()
+    {
+        InitBundleList();
     }
 }
