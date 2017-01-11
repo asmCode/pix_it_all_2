@@ -7,6 +7,7 @@ public class GameplayController
     private Gameplay m_gameplay;
     private Hud m_hud;
     private PauseView m_pauseView;
+    private SummaryView m_summaryView;
     private Board m_board;
     private BoardController m_boardInputController;
 
@@ -16,12 +17,14 @@ public class GameplayController
         Gameplay gameplay,
         Hud hud,
         PauseView pauseView,
+        SummaryView summaryView,
         Board board,
         BoardController boardInputController)
     {
         m_gameplay = gameplay;
         m_hud = hud;
         m_pauseView = pauseView;
+        m_summaryView = summaryView;
         m_board = board;
         m_boardInputController = boardInputController;
     }
@@ -51,6 +54,11 @@ public class GameplayController
         m_pauseView.ResumeClicked += HandlePauseViewBackToMenuClicked;
         m_pauseView.BackToMenuClicked += HandlePauseViewResumeClicked;
         m_pauseView.gameObject.SetActive(false);
+
+        m_summaryView.NextLevelClicked += HandleNextLevelClicked;
+        m_summaryView.RetryClicked += HandleRetryClicked;
+        m_summaryView.BackToMenuClicked += HandleBackToMenuClicked;
+        m_summaryView.Hide();
     }
 
     public void Cleanup()
@@ -78,7 +86,9 @@ public class GameplayController
 
     private void Pause()
     {
-        m_pauseView.gameObject.SetActive(true);
+        //m_pauseView.gameObject.SetActive(true);
+
+        m_summaryView.Show(2, 76.32f, true);
     }
 
     private void Resume()
@@ -124,5 +134,20 @@ public class GameplayController
     private void HandlePauseViewResumeClicked()
     {
         SceneManager.LoadScene("Levels");
+    }
+
+    private void HandleNextLevelClicked()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void HandleRetryClicked()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void HandleBackToMenuClicked()
+    {
+        throw new System.NotImplementedException();
     }
 }
