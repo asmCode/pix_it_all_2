@@ -12,6 +12,7 @@ public class GameplayController
     private BoardController m_boardInputController;
 
     private ImageData m_image;
+    private int m_tilesLeft;
 
     public GameplayController(
         Gameplay gameplay,
@@ -33,6 +34,7 @@ public class GameplayController
     {
         m_image = m_gameplay.Image;
         var initialColor = m_image.Colors[0];
+        m_tilesLeft = m_image.Texture.width * m_image.Texture.height;
 
         m_boardInputController.BoardTileTapped += HandleBoardTileTapped;
 
@@ -42,6 +44,7 @@ public class GameplayController
         m_hud.PreviewReleased += HandlePreviewReleased;
         m_hud.PaletteClicked += HandlePaletteClicked;
         m_hud.PauseClicked += HandlePauseClicked;
+        m_hud.CheatFillColorsClicked += HandleCheatFillColorsClicked;
 
         m_board.SetSize(m_image.Texture.width, m_image.Texture.height);
         m_board.SetReferenceImage(m_image.Texture);
@@ -72,28 +75,77 @@ public class GameplayController
         m_pauseView.BackToMenuClicked -= HandlePauseViewResumeClicked;
     }
 
+    private void SetBoardColor(int x, int y, Color color)
+    {
+        m_board.Image.SetPixel(x, y, color);
+        m_board.Image.Apply();
+
+        m_tilesLeft--;
+
+        if (IsLevelCompleted())
+            ShowSummary();
+    }
+
     private void HandleBoardTileTapped(int x, int y)
     {
+        if (IsTileFilled(x, y))
+            return;
+
         var activeColor = m_hud.m_palette.ActiveColor;
         var requiredColor = m_image.Texture.GetPixel(x, y);
 
         if (activeColor == requiredColor)
         {
-            m_board.Image.SetPixel(x, y, activeColor);
-            m_board.Image.Apply();
+            SetBoardColor(x, y, activeColor);
         }
+    }
+
+    private void ShowSummary()
+    {
+        m_hud.gameObject.SetActive(false);
+        m_summaryView.Show(3, 10, false);
     }
 
     private void Pause()
     {
-        //m_pauseView.gameObject.SetActive(true);
-
-        m_summaryView.Show(2, 76.32f, true);
+        m_pauseView.gameObject.SetActive(true);
     }
 
     private void Resume()
     {
         m_pauseView.gameObject.SetActive(false);
+    }
+
+    private bool IsTileFilled(int x, int y)
+    {
+        return m_board.Image.GetPixel(x, y).a != 0.0f;
+    }
+
+    private bool IsLevelCompleted()
+    {
+        return m_tilesLeft == 0;
+    }
+
+    private void CheatSetAllButOnePixels()
+    {
+        bool skipped = false;
+
+        for (int y = 0; y < m_image.Texture.height; y++)
+        {
+            for (int x = 0; x < m_image.Texture.width; x++)
+            {
+                var boardPixel = m_board.Image.GetPixel(x, y);
+
+                if (boardPixel.a == 0.0f && skipped)
+                {
+                    var requiredColor = m_image.Texture.GetPixel(x, y);
+
+                    SetBoardColor(x, y, requiredColor);
+                }
+                else
+                    skipped = true;
+            }
+        }
     }
 
     private void HandlePreviewPressed()
@@ -126,6 +178,11 @@ public class GameplayController
         Pause();
     }
 
+    private void HandleCheatFillColorsClicked()
+    {
+        CheatSetAllButOnePixels();
+    }
+
     private void HandlePauseViewBackToMenuClicked()
     {
         Resume();
@@ -138,16 +195,13 @@ public class GameplayController
 
     private void HandleNextLevelClicked()
     {
-        throw new System.NotImplementedException();
     }
 
     private void HandleRetryClicked()
     {
-        throw new System.NotImplementedException();
     }
 
     private void HandleBackToMenuClicked()
     {
-        throw new System.NotImplementedException();
     }
 }

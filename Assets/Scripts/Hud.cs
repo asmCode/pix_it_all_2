@@ -11,6 +11,7 @@ public class Hud : MonoBehaviour
     public event System.Action PreviewReleased;
     public event System.Action PaletteClicked;
     public event System.Action PauseClicked;
+    public event System.Action CheatFillColorsClicked;
 
     public void Init(Color[] paletteColors)
     {
@@ -44,5 +45,11 @@ public class Hud : MonoBehaviour
     {
         if (PauseClicked != null)
             PauseClicked();
+    }
+
+    public void UiEventCheatFillColorsClicked()
+    {
+        if (CheatFillColorsClicked != null)
+            CheatFillColorsClicked();
     }
 }
