@@ -61,7 +61,18 @@ public class LevelsScene : MonoBehaviour
 
         m_selectedBundleId = bundleId;
 
-        m_imageListView.SetImages(bundle.GetImages());
+        var images = bundle.GetImages();
+        if (images == null)
+            return;
+
+        List<ImageViewData> imageViewDataList = new List<ImageViewData>();
+        foreach (var image in images)
+        {
+            var imageViewData = CreateImageViewData(image);
+            imageViewDataList.Add(imageViewData);
+        }
+
+        m_imageListView.SetImages(imageViewDataList);
     }
 
     private void ShowBundles()
@@ -94,5 +105,23 @@ public class LevelsScene : MonoBehaviour
     private void HandleBundlesChanged()
     {
         InitBundleList();
+    }
+
+    private ImageViewData CreateImageViewData(ImageData imageData)
+    {
+        var data = new ImageViewData();
+
+        data.ImageData = imageData;
+
+        var playerProgress = Game.GetInstance().PlayerProgress;
+        var levelProgress = playerProgress.GetLevelProgress(m_selectedBundleId, imageData.Id);
+        if (levelProgress != null)
+        {
+            data.BestTime = levelProgress.BestTime;
+            data.InProgress = levelProgress.IsInProgress;
+            data.Stars = 1; // TODO: calulate stars based on time
+        }
+
+        return data;
     }
 }

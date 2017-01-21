@@ -83,7 +83,14 @@ public class GameplayController
         m_tilesLeft--;
 
         if (IsLevelCompleted())
-            ShowSummary();
+            FinishLevel();
+    }
+
+    private void FinishLevel()
+    {
+        m_gameplay.Complete(1000 * 120 + 47 + 665);
+
+        ShowSummary();
     }
 
     private void HandleBoardTileTapped(int x, int y)

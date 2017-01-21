@@ -10,6 +10,12 @@ public class Game : MonoBehaviourSingleton<Game, MonoBehaviourSingletonMeta>
         private set;
     }
 
+    public PlayerProgress PlayerProgress
+    {
+        get;
+        private set;
+    }
+
     public void StartLevel(string bundleId, string imageId)
     {
         GameplayScene.m_selectedBundleId = bundleId;
@@ -25,6 +31,8 @@ public class Game : MonoBehaviourSingleton<Game, MonoBehaviourSingletonMeta>
 
         ImageManager = new ImageManager();
         ImageManager.LoadImages();
+
+        PlayerProgress = new PlayerProgress();
     }
 
 	private void Update()

@@ -9,7 +9,7 @@ public class ImageListView : MonoBehaviour
 
     public event System.Action<string> ImageClicked;
 
-    public void SetImages(ImageData[] images)
+    public void SetImages(List<ImageViewData> images)
     {
         Clear();
 

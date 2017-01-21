@@ -50,7 +50,10 @@ public class InitScene : MonoBehaviour
     private void InitDirectories()
     {
         string path = Application.persistentDataPath + "/Bundles";
+        if (!System.IO.Directory.Exists(path))
+            System.IO.Directory.CreateDirectory(path);
 
+        path = Application.persistentDataPath + "/progress";
         if (!System.IO.Directory.Exists(path))
             System.IO.Directory.CreateDirectory(path);
     }
