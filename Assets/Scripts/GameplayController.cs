@@ -54,8 +54,8 @@ public class GameplayController
         m_hud.m_palette.HidePalette();
         m_hud.m_palette.SetActiveColor(initialColor);
 
-        m_pauseView.ResumeClicked += HandlePauseViewBackToMenuClicked;
-        m_pauseView.BackToMenuClicked += HandlePauseViewResumeClicked;
+        m_pauseView.ResumeClicked += HandlePauseViewResumeClicked;
+        m_pauseView.BackToMenuClicked += HandlePauseViewBackToMenuClicked;
         m_pauseView.gameObject.SetActive(false);
 
         m_summaryView.NextLevelClicked += HandleNextLevelClicked;
@@ -91,6 +91,11 @@ public class GameplayController
         m_gameplay.Complete(1000 * 120 + 47 + 665);
 
         ShowSummary();
+    }
+
+    private void SaveProgress()
+    {
+        m_gameplay.SaveProgress(m_board.Image);
     }
 
     private void HandleBoardTileTapped(int x, int y)
@@ -192,12 +197,13 @@ public class GameplayController
 
     private void HandlePauseViewBackToMenuClicked()
     {
-        Resume();
+        SaveProgress();
+        SceneManager.LoadScene("Levels");   
     }
 
     private void HandlePauseViewResumeClicked()
     {
-        SceneManager.LoadScene("Levels");
+        Resume();
     }
 
     private void HandleNextLevelClicked()

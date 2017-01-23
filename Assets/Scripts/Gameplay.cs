@@ -40,4 +40,20 @@ public class Gameplay
         levelProgress.Complete(time);
         levelProgress.Save();
     }
+
+    public void SaveProgress(Texture2D image)
+    {
+        var playerProgress = Game.GetInstance().PlayerProgress;
+
+        var levelProgress = playerProgress.GetLevelProgress(BundleId, ImageId);
+        if (levelProgress == null)
+            return;
+
+        var imageProgressData = ImageMask.Encode(image);
+        if (imageProgressData == null)
+            return;
+
+        levelProgress.SaveProgress(1234455, imageProgressData);
+        levelProgress.Save();
+    }
 }

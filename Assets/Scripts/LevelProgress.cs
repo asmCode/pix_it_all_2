@@ -86,9 +86,10 @@ public class LevelProgress
         return null;
     }
 
-    public void SaveProgress(int time, bool[] imageMask)
+    public void SaveProgress(int time, string imageMaskData)
     {
-
+        m_data.ContinueTime = time;
+        m_data.ContinueImageData = imageMaskData;
     }
 
     public void Complete(int time)
