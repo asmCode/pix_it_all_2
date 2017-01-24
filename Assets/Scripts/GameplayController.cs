@@ -11,8 +11,7 @@ public class GameplayController
     private Board m_board;
     private BoardController m_boardInputController;
 
-    private ImageData m_image;
-    private int m_tilesLeft;
+    private ImageData m_referenceImage;
 
     public GameplayController(
         Gameplay gameplay,
@@ -32,13 +31,13 @@ public class GameplayController
 
     public void SetupGameplay()
     {
-        m_image = m_gameplay.Image;
-        var initialColor = m_image.Colors[0];
-        m_tilesLeft = m_image.Texture.width * m_image.Texture.height;
-
+        m_referenceImage = m_gameplay.ReferenceImage;
+        var initialColor = m_referenceImage.Colors[0];
+        var imageProgress = m_gameplay.ImageProgress;
+ 
         m_boardInputController.BoardTileTapped += HandleBoardTileTapped;
 
-        m_hud.Init(m_image.Colors);
+        m_hud.Init(m_referenceImage.Colors);
         m_hud.SetPaleteButtonColor(initialColor);
         m_hud.PreviewPressed += HandlePreviewPressed;
         m_hud.PreviewReleased += HandlePreviewReleased;
@@ -46,8 +45,9 @@ public class GameplayController
         m_hud.PauseClicked += HandlePauseClicked;
         m_hud.CheatFillColorsClicked += HandleCheatFillColorsClicked;
 
-        m_board.SetSize(m_image.Texture.width, m_image.Texture.height);
-        m_board.SetReferenceImage(m_image.Texture);
+        m_board.SetSize(imageProgress.Width, imageProgress.Height);
+        m_board.SetReferenceImage(m_referenceImage.Texture);
+        m_board.SetTiles(m_gameplay.ImageProgress.GetTiles());
         m_board.HidePreview();
 
         m_hud.m_palette.ColorClicked += HandleColorClicked;
@@ -80,7 +80,7 @@ public class GameplayController
         m_board.Image.SetPixel(x, y, color);
         m_board.Image.Apply();
 
-        m_tilesLeft--;
+        m_gameplay.ImageProgress.RevealTile(x, y);
 
         if (IsLevelCompleted())
             FinishLevel();
@@ -104,7 +104,7 @@ public class GameplayController
             return;
 
         var activeColor = m_hud.m_palette.ActiveColor;
-        var requiredColor = m_image.Texture.GetPixel(x, y);
+        var requiredColor = m_gameplay.GetReferenceColor(x, y);
 
         if (activeColor == requiredColor)
         {
@@ -130,27 +130,27 @@ public class GameplayController
 
     private bool IsTileFilled(int x, int y)
     {
-        return m_board.Image.GetPixel(x, y).a != 0.0f;
+        return m_gameplay.ImageProgress.IsRevealed(x, y);
     }
 
     private bool IsLevelCompleted()
     {
-        return m_tilesLeft == 0;
+        return m_gameplay.ImageProgress.IsCompleted;
     }
 
     private void CheatSetAllButOnePixels()
     {
         bool skipped = false;
 
-        for (int y = 0; y < m_image.Texture.height; y++)
-        {
-            for (int x = 0; x < m_image.Texture.width; x++)
-            {
-                var boardPixel = m_board.Image.GetPixel(x, y);
+        var imgPrg = m_gameplay.ImageProgress;
 
-                if (boardPixel.a == 0.0f && skipped)
+        for (int y = 0; y < imgPrg.Height; y++)
+        {
+            for (int x = 0; x < imgPrg.Width; x++)
+            {
+                if (!imgPrg.IsRevealed(x, y) && skipped)
                 {
-                    var requiredColor = m_image.Texture.GetPixel(x, y);
+                    var requiredColor = m_gameplay.GetReferenceColor(x, y);
 
                     SetBoardColor(x, y, requiredColor);
                 }

@@ -83,13 +83,22 @@ public class LevelProgress
 
     public bool[] GetContinueImageData()
     {
-        return null;
+        if (m_data == null || string.IsNullOrEmpty(m_data.ContinueImageData))
+            return null;
+
+
+        return ImageMask.Decode(m_data.ContinueImageData);
     }
 
-    public void SaveProgress(int time, string imageMaskData)
+    public void SaveProgress(int time, bool[] tiles)
     {
         m_data.ContinueTime = time;
-        m_data.ContinueImageData = imageMaskData;
+
+        var imageProgressData = ImageMask.Encode(tiles);
+        if (imageProgressData == null)
+            return;
+
+        m_data.ContinueImageData = imageProgressData;
     }
 
     public void Complete(int time)

@@ -4,26 +4,12 @@ using UnityEngine;
 
 public class ImageMask
 {
-    public static string Encode(Texture2D image)
+    public static string Encode(bool[] tiles)
     {
-        if (image == null)
+        if (tiles == null)
             return null;
 
-        int size = image.width * image.height;
-
-        var bitArray = new BitArray(size);
-
-        for (int y = 0; y < image.height; y++)
-        {
-            for (int x = 0; x < image.width; x++)
-            {
-                bool isPixelSet = image.GetPixel(x, y).a != 0.0f;
-                int index = y * image.width + x;
-
-                bitArray.Set(index, isPixelSet);
-            }
-        }
-
+        var bitArray = new BitArray(tiles);
         int bytes_count = bitArray.Count / 8 + Mathf.Min(1, bitArray.Count % 8);
         var data = new byte[bytes_count];
         bitArray.CopyTo(data, 0);

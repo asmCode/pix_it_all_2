@@ -48,6 +48,29 @@ public class Board : MonoBehaviour
         m_referenceImage.texture = texture;
     }
 
+    public void SetTiles(bool[] tiles)
+    {
+        if (tiles == null ||
+            tiles.Length != (Image.width * Image.height))
+            return;
+
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            int x = i % Image.width;
+            int y = i / Image.width;
+
+            var color = Color.black;
+            color.a = 0.0f;
+
+            if (tiles[i])
+                color = ((Texture2D)m_referenceImage.texture).GetPixel(x, y);
+
+            Image.SetPixel(x, y, color);
+        }
+
+        Image.Apply();
+    }
+
     public void SetZoom(Vector2 pivot, float zoom)
     {
         m_zoom = Mathf.Clamp01(zoom);

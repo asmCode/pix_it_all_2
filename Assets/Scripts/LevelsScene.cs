@@ -47,7 +47,14 @@ public class LevelsScene : MonoBehaviour
 
     private void HandleImageClicked(string imageId)
     {
-        Game.GetInstance().StartLevel(m_selectedBundleId, imageId);
+        var playerProgress = Game.GetInstance().PlayerProgress;
+        var levelProgress = playerProgress.GetLevelProgress(m_selectedBundleId, imageId);
+        if (levelProgress == null)
+            return;
+
+        // TODO: "continue or start new image" popup
+
+        Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
     }
 
     private void ShowImagesInBundle(string bundleId)

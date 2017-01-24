@@ -16,10 +16,11 @@ public class Game : MonoBehaviourSingleton<Game, MonoBehaviourSingletonMeta>
         private set;
     }
 
-    public void StartLevel(string bundleId, string imageId)
+    public void StartLevel(string bundleId, string imageId, bool continueLevel)
     {
         GameplayScene.m_selectedBundleId = bundleId;
         GameplayScene.m_selectedLevelId = imageId;
+        GameplayScene.m_continueLevel = continueLevel;
 
         SceneManager.LoadScene("Gameplay");
     }

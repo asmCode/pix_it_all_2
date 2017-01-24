@@ -15,45 +15,95 @@ public class Gameplay
         private set;
     }
 
-    public ImageData Image
+    public ImageData ReferenceImage
     {
         get;
         private set;
     }
 
-    public void Init(string bundleId, string imageId)
+    public ImageProgress ImageProgress
     {
-        Image = Game.GetInstance().ImageManager.GetImageById(bundleId, imageId);
+        get;
+        private set;
+    }
 
+    public LevelProgress LevelProgress
+    {
+        get;
+        private set;
+    }
+
+    public int Time
+    {
+        get;
+        private set;
+    }
+
+    public void Init(string bundleId, string imageId, bool continueLevel)
+    {
         BundleId = bundleId;
         ImageId = imageId;
+
+        ReferenceImage = Game.GetInstance().ImageManager.GetImageById(bundleId, imageId);
+
+        ImageProgress = new ImageProgress();
+        ImageProgress.Init(ReferenceImage.Texture.width, ReferenceImage.Texture.height);
+
+        InitLevelProgress();
+
+        if (continueLevel)
+            InitContinue();
+    }
+
+    public Color GetReferenceColor(int x, int y)
+    {
+        return ReferenceImage.Texture.GetPixel(x, y);
     }
 
     public void Complete(int time)
     {
-        var playerProgress = Game.GetInstance().PlayerProgress;
-
-        var levelProgress = playerProgress.GetLevelProgress(BundleId, ImageId);
-        if (levelProgress == null)
+        if (LevelProgress == null)
             return;
 
-        levelProgress.Complete(time);
-        levelProgress.Save();
+        LevelProgress.Complete(time);
+        LevelProgress.Save();
     }
 
     public void SaveProgress(Texture2D image)
     {
+        if (LevelProgress == null)
+            return;
+
+        var tiles = ImageProgress.GetTiles();
+        if (tiles == null)
+            return;
+
+        LevelProgress.SaveProgress(Time, tiles);
+        LevelProgress.Save();
+    }
+
+    private void InitLevelProgress()
+    {
+        LevelProgress = null;
+
         var playerProgress = Game.GetInstance().PlayerProgress;
 
-        var levelProgress = playerProgress.GetLevelProgress(BundleId, ImageId);
-        if (levelProgress == null)
+        LevelProgress = playerProgress.GetLevelProgress(BundleId, ImageId);
+        if (LevelProgress == null)
+            return;
+    }
+
+    private void InitContinue()
+    {
+        if (!LevelProgress.IsInProgress)
             return;
 
-        var imageProgressData = ImageMask.Encode(image);
-        if (imageProgressData == null)
+        var tiles = LevelProgress.GetContinueImageData();
+        if (tiles == null)
             return;
 
-        levelProgress.SaveProgress(1234455, imageProgressData);
-        levelProgress.Save();
+        ImageProgress.SetTiles(tiles);
+
+        Time = LevelProgress.ContinueTime;
     }
 }

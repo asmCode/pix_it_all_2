@@ -5,6 +5,7 @@ public class GameplayScene : MonoBehaviour
 {
     public static string m_selectedBundleId;
     public static string m_selectedLevelId;
+    public static bool m_continueLevel;
 
     public Hud m_hud;
     public PauseView m_pauseView;
@@ -20,7 +21,7 @@ public class GameplayScene : MonoBehaviour
         SetupSceneInputVariables();
 
         m_gameplay = new Gameplay();
-        m_gameplay.Init(m_selectedBundleId, m_selectedLevelId);
+        m_gameplay.Init(m_selectedBundleId, m_selectedLevelId, m_continueLevel);
 
         m_gameplayController = new GameplayController(
             m_gameplay,
@@ -43,6 +44,7 @@ public class GameplayScene : MonoBehaviour
         {
             m_selectedBundleId = "base";
             m_selectedLevelId = "tree";
+            m_continueLevel = true;
         }
     }
 }
