@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Utils
 {
-    public static string MsToString(int ms)
+    public static string TimeToString(float seconds)
     {
-        const int msInSecond = 1000;
-        const int msInMinute = msInSecond * 60;
+        var timeSpan = System.TimeSpan.FromSeconds(seconds);
+        return string.Format("{0}:{1}:{2}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
+    }
 
-        int minutes = ms / msInMinute;
-        int seconds = (ms % msInMinute) / msInSecond;
-        int ms_ = ms % msInSecond;
+    public static int SecondsToMs(float seconds)
+    {
+        var timeSpan = System.TimeSpan.FromSeconds(seconds);
+        return (int)timeSpan.TotalMilliseconds;
+    }
 
-        return string.Format("{0}:{1}:{2}", minutes, seconds, ms_);
+    public static float MsToSeconds(int ms)
+    {
+        var timeSpan = System.TimeSpan.FromMilliseconds(ms);
+        return (float)timeSpan.TotalSeconds;
     }
 }

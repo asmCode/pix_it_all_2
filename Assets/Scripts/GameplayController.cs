@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameplayController
 {
@@ -64,6 +65,11 @@ public class GameplayController
         m_summaryView.Hide();
     }
 
+    public void Update(float deltaTime)
+    {
+        m_gameplay.AddSeconds(deltaTime);
+    }
+
     public void Cleanup()
     {
         m_boardInputController.BoardTileTapped -= HandleBoardTileTapped;
@@ -88,7 +94,7 @@ public class GameplayController
 
     private void FinishLevel()
     {
-        m_gameplay.Complete(1000 * 120 + 47 + 665);
+        m_gameplay.Complete();
 
         ShowSummary();
     }

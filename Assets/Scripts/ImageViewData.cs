@@ -6,7 +6,7 @@
         set;
     }
 
-    public int BestTime
+    public float BestTime
     {
         get;
         set;

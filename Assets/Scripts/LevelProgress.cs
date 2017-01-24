@@ -26,9 +26,9 @@ public class LevelProgress
         get { return m_data.BestTime != 0; }
     }
 
-    public int BestTime
+    public float BestTime
     {
-        get { return m_data.BestTime; }
+        get { return Utils.MsToSeconds(m_data.BestTime); }
     }
 
     public bool IsInProgress
@@ -36,9 +36,9 @@ public class LevelProgress
         get { return !string.IsNullOrEmpty(m_data.ContinueImageData); }
     }
 
-    public int ContinueTime
+    public float ContinueTime
     {
-        get { return m_data.ContinueTime; }
+        get { return Utils.MsToSeconds(m_data.ContinueTime); }
     }
 
     public static LevelProgress LoadOrCreate(string bundleId, string imageId)
@@ -90,9 +90,9 @@ public class LevelProgress
         return ImageMask.Decode(m_data.ContinueImageData);
     }
 
-    public void SaveProgress(int time, bool[] tiles)
+    public void SaveProgress(float time, bool[] tiles)
     {
-        m_data.ContinueTime = time;
+        m_data.ContinueTime = Utils.SecondsToMs(time);
 
         var imageProgressData = ImageMask.Encode(tiles);
         if (imageProgressData == null)
@@ -101,13 +101,15 @@ public class LevelProgress
         m_data.ContinueImageData = imageProgressData;
     }
 
-    public void Complete(int time)
+    public void Complete(float time)
     {
         m_data.ContinueTime = 0;
         m_data.ContinueImageData = null;
 
-        if (m_data.BestTime == 0 || m_data.BestTime > time)
-            m_data.BestTime = time;
+        var bestTime = BestTime;
+
+        if (bestTime == 0.0f || bestTime > time)
+            m_data.BestTime = Utils.SecondsToMs(time);
     }
 
     private LevelProgress()

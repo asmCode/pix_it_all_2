@@ -33,7 +33,7 @@ public class Gameplay
         private set;
     }
 
-    public int Time
+    public float Time
     {
         get;
         private set;
@@ -55,17 +55,22 @@ public class Gameplay
             InitContinue();
     }
 
+    public void AddSeconds(float deltaTime)
+    {
+        Time += deltaTime;
+    }
+
     public Color GetReferenceColor(int x, int y)
     {
         return ReferenceImage.Texture.GetPixel(x, y);
     }
 
-    public void Complete(int time)
+    public void Complete()
     {
         if (LevelProgress == null)
             return;
 
-        LevelProgress.Complete(time);
+        LevelProgress.Complete(Time);
         LevelProgress.Save();
     }
 

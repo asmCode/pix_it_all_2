@@ -39,7 +39,7 @@ public class ImageView : MonoBehaviour
         m_name.text = image.Name;
         m_numberOfColors.text = image.Colors.Length.ToString();
 
-        m_bestTime.text = Utils.MsToString(data.BestTime);
+        m_bestTime.text = Utils.TimeToString(data.BestTime);
         m_inProgress.text = data.InProgress.ToString();
         m_completed.text = data.BestTime != 0 ? true.ToString() : false.ToString();
         m_stars.text = data.Stars.ToString();

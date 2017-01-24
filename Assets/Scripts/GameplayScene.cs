@@ -37,6 +37,11 @@ public class GameplayScene : MonoBehaviour
         m_gameplayController.SetupGameplay();
     }
 
+    private void Update()
+    {
+        m_gameplayController.Update(Time.deltaTime);
+    }
+
     private void SetupSceneInputVariables()
     {
         if (string.IsNullOrEmpty(m_selectedBundleId) ||
