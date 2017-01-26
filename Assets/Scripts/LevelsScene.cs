@@ -120,13 +120,18 @@ public class LevelsScene : MonoBehaviour
 
         data.ImageData = imageData;
 
+        int totalTiles = imageData.Texture.width * imageData.Texture.height;
+        int totalColors = imageData.Colors.Length;
+
         var playerProgress = Game.GetInstance().PlayerProgress;
         var levelProgress = playerProgress.GetLevelProgress(m_selectedBundleId, imageData.Id);
+        int stars = StarRatingCalc.GetStars(levelProgress.BestTime, totalTiles, totalColors);
+
         if (levelProgress != null)
         {
             data.BestTime = levelProgress.BestTime;
             data.InProgress = levelProgress.IsInProgress;
-            data.Stars = 1; // TODO: calulate stars based on time
+            data.Stars = levelProgress.IsCompleted ? stars : 0;
         }
 
         return data;

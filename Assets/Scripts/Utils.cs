@@ -7,7 +7,7 @@ public class Utils
     public static string TimeToString(float seconds)
     {
         var timeSpan = System.TimeSpan.FromSeconds(seconds);
-        return string.Format("{0}:{1}:{2}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
+        return string.Format("{0}:{1}:{2}", timeSpan.Minutes + timeSpan.Hours * 60, timeSpan.Seconds, timeSpan.Milliseconds);
     }
 
     public static int SecondsToMs(float seconds)

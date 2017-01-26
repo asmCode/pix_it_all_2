@@ -8,16 +8,20 @@ public class SummaryView : MonoBehaviour
     public Text m_labelStarsValue;
     public Text m_labelTimeValue;
     public Text m_labelRecordValue;
+    public Text m_timeFor3Stars;
+    public Text m_timeFor2Stars;
 
     public event System.Action NextLevelClicked;
     public event System.Action RetryClicked;
     public event System.Action BackToMenuClicked;
 
-    public void Show(int stars, float time, bool record)
+    public void Show(int stars, float time, bool record, float timeFor3Stars, float timeFor2Stars)
     {
         m_labelStarsValue.text = stars.ToString();
-        m_labelTimeValue.text = string.Format("{0}:{1}", (int)time / 60, (int)time % 60);
+        m_labelTimeValue.text = Utils.TimeToString(time);
         m_labelRecordValue.text = record.ToString().ToUpper();
+        m_timeFor3Stars.text = Utils.TimeToString(timeFor3Stars);
+        m_timeFor2Stars.text = Utils.TimeToString(timeFor2Stars);
 
         gameObject.SetActive(true);
     }

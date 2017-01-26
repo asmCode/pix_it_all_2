@@ -94,9 +94,9 @@ public class GameplayController
 
     private void FinishLevel()
     {
-        m_gameplay.Complete();
-
         ShowSummary();
+
+        m_gameplay.Complete();
     }
 
     private void SaveProgress()
@@ -120,8 +120,18 @@ public class GameplayController
 
     private void ShowSummary()
     {
+        int tilesCount = m_gameplay.ImageProgress.Width * m_gameplay.ImageProgress.Height;
+        int colorsCount = m_referenceImage.Colors.Length;
+        float time = m_gameplay.Time;
+        bool record =
+            m_gameplay.LevelProgress.IsCompleted &&
+            m_gameplay.LevelProgress.BestTime > time;
+        float timeFor3Stars = StarRatingCalc.RequiredTimeForStars(3, tilesCount, colorsCount);
+        float timeFor2Stars = StarRatingCalc.RequiredTimeForStars(2, tilesCount, colorsCount);
+        int starsCount = StarRatingCalc.GetStars(time, tilesCount, colorsCount);
+
         m_hud.gameObject.SetActive(false);
-        m_summaryView.Show(3, 10, false);
+        m_summaryView.Show(starsCount, time, record, timeFor3Stars, timeFor2Stars);
     }
 
     private void Pause()
@@ -225,5 +235,6 @@ public class GameplayController
 
     private void HandleBackToMenuClicked()
     {
+        SceneManager.LoadScene("Levels");
     }
 }
