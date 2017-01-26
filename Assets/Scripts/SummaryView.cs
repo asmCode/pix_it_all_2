@@ -11,8 +11,6 @@ public class SummaryView : MonoBehaviour
     public Text m_timeFor3Stars;
     public Text m_timeFor2Stars;
 
-    public event System.Action NextLevelClicked;
-    public event System.Action RetryClicked;
     public event System.Action BackToMenuClicked;
 
     public void Show(int stars, float time, bool record, float timeFor3Stars, float timeFor2Stars)
@@ -29,18 +27,6 @@ public class SummaryView : MonoBehaviour
     public void Hide()
     {
         gameObject.SetActive(false);
-    }
-
-    public void UiEvent_NextLevelClicked()
-    {
-        if (NextLevelClicked != null)
-            NextLevelClicked();
-    }
-
-    public void UiEvent_RetryClicked()
-    {
-        if (RetryClicked != null)
-            RetryClicked();
     }
 
     public void UiEvent_BackToMenuClicked()

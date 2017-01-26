@@ -59,8 +59,6 @@ public class GameplayController
         m_pauseView.BackToMenuClicked += HandlePauseViewBackToMenuClicked;
         m_pauseView.gameObject.SetActive(false);
 
-        m_summaryView.NextLevelClicked += HandleNextLevelClicked;
-        m_summaryView.RetryClicked += HandleRetryClicked;
         m_summaryView.BackToMenuClicked += HandleBackToMenuClicked;
         m_summaryView.Hide();
     }
@@ -223,14 +221,6 @@ public class GameplayController
     private void HandlePauseViewResumeClicked()
     {
         Resume();
-    }
-
-    private void HandleNextLevelClicked()
-    {
-    }
-
-    private void HandleRetryClicked()
-    {
     }
 
     private void HandleBackToMenuClicked()
