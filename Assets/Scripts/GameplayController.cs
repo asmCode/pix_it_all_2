@@ -154,14 +154,17 @@ public class GameplayController
         {
             for (int x = 0; x < imgPrg.Width; x++)
             {
-                if (!imgPrg.IsRevealed(x, y) && skipped)
+                if (!imgPrg.IsRevealed(x, y))
                 {
-                    var requiredColor = m_gameplay.GetReferenceColor(x, y);
+                    if (skipped)
+                    {
+                        var requiredColor = m_gameplay.GetReferenceColor(x, y);
 
-                    SetBoardColor(x, y, requiredColor);
+                        SetBoardColor(x, y, requiredColor);
+                    }
+                    else
+                        skipped = true;
                 }
-                else
-                    skipped = true;
             }
         }
     }
