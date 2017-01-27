@@ -65,7 +65,10 @@ public class GameplayController
 
     public void Update(float deltaTime)
     {
-        m_gameplay.AddSeconds(deltaTime);
+        if (IsGameRunning())
+            m_gameplay.AddSeconds(deltaTime);
+
+        m_hud.SetTime(m_gameplay.Time);
     }
 
     public void Cleanup()
@@ -175,6 +178,21 @@ public class GameplayController
                 }
             }
         }
+    }
+
+    private bool IsGameRunning()
+    {
+        return !IsPauseActive() && !IsSumaryActive();
+    }
+
+    private bool IsPauseActive()
+    {
+        return m_pauseView.gameObject.activeSelf;
+    }
+
+    private bool IsSumaryActive()
+    {
+        return m_summaryView.gameObject.activeSelf;
     }
 
     private void HandlePreviewPressed()

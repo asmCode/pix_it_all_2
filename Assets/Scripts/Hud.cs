@@ -6,6 +6,7 @@ public class Hud : MonoBehaviour
 {
     public Palette m_palette;
     public Button m_paletteButton;
+    public Text m_labelTime;
 
     public event System.Action PreviewPressed;
     public event System.Action PreviewReleased;
@@ -16,6 +17,11 @@ public class Hud : MonoBehaviour
     public void Init(Color[] paletteColors)
     {
         m_palette.Init(paletteColors);
+    }
+
+    public void SetTime(float time)
+    {
+        m_labelTime.text = Utils.TimeToString(time);
     }
 
     public void SetPaleteButtonColor(Color color)

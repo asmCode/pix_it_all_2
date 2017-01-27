@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Utils
 {
+    private static readonly string TimeFormat = "{0:00}:{1:00}";
+    private static readonly string TimeFormatWithH = "{0}:{1:00}:{2:00}";
+
     public static string TimeToString(float seconds)
     {
         var timeSpan = System.TimeSpan.FromSeconds(seconds);
-        return string.Format("{0}:{1}:{2}", timeSpan.Minutes + timeSpan.Hours * 60, timeSpan.Seconds, timeSpan.Milliseconds);
+
+        if (timeSpan.Hours > 0)
+            return string.Format(TimeFormatWithH, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
+        else
+            return string.Format(TimeFormat, timeSpan.Minutes, timeSpan.Seconds);
     }
 
     public static int SecondsToMs(float seconds)
