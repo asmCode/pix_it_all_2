@@ -9,6 +9,7 @@ public class GameplayController
     private Hud m_hud;
     private PauseView m_pauseView;
     private SummaryView m_summaryView;
+    private PenaltyView m_penaltyView;
     private Board m_board;
     private BoardController m_boardInputController;
 
@@ -19,6 +20,7 @@ public class GameplayController
         Hud hud,
         PauseView pauseView,
         SummaryView summaryView,
+        PenaltyView penaltyView,
         Board board,
         BoardController boardInputController)
     {
@@ -26,6 +28,7 @@ public class GameplayController
         m_hud = hud;
         m_pauseView = pauseView;
         m_summaryView = summaryView;
+        m_penaltyView = penaltyView;
         m_board = board;
         m_boardInputController = boardInputController;
     }
@@ -117,6 +120,16 @@ public class GameplayController
         {
             SetBoardColor(x, y, activeColor);
         }
+        else
+        {
+            ApplyPenalty();
+        }
+    }
+
+    private void ApplyPenalty()
+    {
+        int penaltySeconds = m_gameplay.ApplyPenalty();
+        m_penaltyView.ShowPenalty(penaltySeconds);
     }
 
     private void ShowSummary()

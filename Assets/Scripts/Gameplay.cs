@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Gameplay
 {
+    private static readonly int PenaltyTime = 10;
+
     public string BundleId
     {
         get;
@@ -110,5 +113,12 @@ public class Gameplay
         ImageProgress.SetTiles(tiles);
 
         Time = LevelProgress.ContinueTime;
+    }
+
+    public int ApplyPenalty()
+    {
+        AddSeconds(PenaltyTime);
+
+        return PenaltyTime;
     }
 }
