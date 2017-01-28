@@ -26,6 +26,11 @@ public class Board : MonoBehaviour
         get { return m_rectTransform; }
     }
 
+    public bool IsPreviewActive
+    {
+        get { return m_referenceImage.gameObject.activeSelf;  }
+    }
+
     public void SetSize(int width, int height)
     {
         m_rectTransform.sizeDelta = new Vector2(width, height);

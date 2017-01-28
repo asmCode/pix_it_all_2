@@ -5,6 +5,7 @@ using System;
 public class Gameplay
 {
     private static readonly int PenaltyTime = 10;
+    private static readonly float PreviewTimeCostPerSecond = 7.0f;
 
     public string BundleId
     {
@@ -120,5 +121,10 @@ public class Gameplay
         AddSeconds(PenaltyTime);
 
         return PenaltyTime;
+    }
+
+    public void ApplyPreview(float deltaTime)
+    {
+        Time += PreviewTimeCostPerSecond * deltaTime;
     }
 }

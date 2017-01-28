@@ -69,7 +69,12 @@ public class GameplayController
     public void Update(float deltaTime)
     {
         if (IsGameRunning())
+        {
             m_gameplay.AddSeconds(deltaTime);
+
+            if (m_board.IsPreviewActive)
+                m_gameplay.ApplyPreview(deltaTime);
+        }
 
         m_hud.SetTime(m_gameplay.Time);
     }
