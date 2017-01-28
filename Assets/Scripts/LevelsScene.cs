@@ -57,7 +57,10 @@ public class LevelsScene : MonoBehaviour
             Popup.Show("CONTINUE?\nTAP \"NO\" TO START FROM SCRATCH", (int)Popup.Button.No | (int)Popup.Button.Yes, (button) =>
             {
                 if (button == Popup.Button.No)
+                {
                     levelProgress.ClearContinue();
+                    levelProgress.Save();
+                }
 
                 Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
             });
