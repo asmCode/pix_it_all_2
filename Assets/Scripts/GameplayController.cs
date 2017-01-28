@@ -60,7 +60,7 @@ public class GameplayController
 
         m_pauseView.ResumeClicked += HandlePauseViewResumeClicked;
         m_pauseView.BackToMenuClicked += HandlePauseViewBackToMenuClicked;
-        m_pauseView.gameObject.SetActive(false);
+        m_pauseView.Hide();
 
         m_summaryView.BackToMenuClicked += HandleBackToMenuClicked;
         m_summaryView.Hide();
@@ -155,7 +155,9 @@ public class GameplayController
 
     private void Pause()
     {
-        m_pauseView.gameObject.SetActive(true);
+        bool is_save_available = m_gameplay.ImageProgress.RevealedTiles > 0;
+
+        m_pauseView.Show(is_save_available);
     }
 
     private void Resume()
@@ -205,7 +207,7 @@ public class GameplayController
 
     private bool IsPauseActive()
     {
-        return m_pauseView.gameObject.activeSelf;
+        return m_pauseView.IsActive;
     }
 
     private bool IsSumaryActive()
@@ -250,7 +252,9 @@ public class GameplayController
 
     private void HandlePauseViewBackToMenuClicked()
     {
-        SaveProgress();
+        if (m_gameplay.ImageProgress.RevealedTiles > 0)
+            SaveProgress();
+
         SceneManager.LoadScene("Levels");   
     }
 
