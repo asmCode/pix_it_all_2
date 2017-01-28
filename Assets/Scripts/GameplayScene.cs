@@ -42,6 +42,16 @@ public class GameplayScene : MonoBehaviour
     private void Update()
     {
         m_gameplayController.Update(Time.deltaTime);
+
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    Popup.Show("DUPA DUPA DUPA", (int)Popup.Button.OK, (button) => { Debug.Log("OK"); });
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.W))
+        //{
+        //    Popup.Show("DUPA DUPA DUPA", (int)Popup.Button.Yes | (int)Popup.Button.No, (button) => { Debug.Log(button.ToString()); });
+        //}
     }
 
     private void SetupSceneInputVariables()
