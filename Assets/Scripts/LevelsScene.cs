@@ -52,9 +52,18 @@ public class LevelsScene : MonoBehaviour
         if (levelProgress == null)
             return;
 
-        // TODO: "continue or start new image" popup
+        if (levelProgress.IsInProgress)
+        {
+            Popup.Show("CONTINUE?\nTAP \"NO\" TO START FROM SCRATCH", (int)Popup.Button.No | (int)Popup.Button.Yes, (button) =>
+            {
+                if (button == Popup.Button.No)
+                    levelProgress.ClearContinue();
 
-        Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
+                Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
+            });
+        }
+        else
+            Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
     }
 
     private void ShowImagesInBundle(string bundleId)

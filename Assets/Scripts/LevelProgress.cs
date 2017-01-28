@@ -90,6 +90,12 @@ public class LevelProgress
         return ImageMask.Decode(m_data.ContinueImageData);
     }
 
+    public void ClearContinue()
+    {
+        m_data.ContinueTime = 0;
+        m_data.ContinueImageData = null;
+    }
+
     public void SaveProgress(float time, bool[] tiles)
     {
         m_data.ContinueTime = Utils.SecondsToMs(time);
@@ -103,8 +109,7 @@ public class LevelProgress
 
     public void Complete(float time)
     {
-        m_data.ContinueTime = 0;
-        m_data.ContinueImageData = null;
+        ClearContinue();
 
         var bestTime = BestTime;
 
