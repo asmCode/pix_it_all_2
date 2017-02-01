@@ -62,6 +62,14 @@ public class IapTest : MonoBehaviour
         m_purchaser.InitializePurchasing();
     }
 
+    public void UIEvent_Restore()
+    {
+        if (m_purchaser.IsInitialized() || m_purchaser.IsInitializing())
+            return;
+
+        m_purchaser.RestorePurchases();
+    }
+
     private void RefreshStats()
     {
         m_isInitialized.text = m_purchaser.IsInitialized().ToString();

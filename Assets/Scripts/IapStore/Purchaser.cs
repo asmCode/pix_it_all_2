@@ -144,7 +144,6 @@ public class Purchaser : IStoreListener
             InitializationFinished(true);
     }
 
-
     public void OnInitializeFailed(InitializationFailureReason error)
     {
         m_isInitializing = false;
@@ -154,7 +153,6 @@ public class Purchaser : IStoreListener
         if (InitializationFinished != null)
             InitializationFinished(false);
     }
-
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
     {
@@ -167,7 +165,6 @@ public class Purchaser : IStoreListener
 
         return PurchaseProcessingResult.Complete;
     }
-
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
     {
