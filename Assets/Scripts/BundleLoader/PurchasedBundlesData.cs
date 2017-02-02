@@ -3,5 +3,5 @@
 [Serializable]
 public class PurchasedBundlesData
 {
-    public string[] StoreIds;
+    public string[] ProductIds;
 }

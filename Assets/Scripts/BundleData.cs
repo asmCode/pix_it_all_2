@@ -12,7 +12,7 @@ public class BundleData
         private set;
     }
 
-    public string StoreId
+    public string ProductId
     {
         get;
         private set;
@@ -30,10 +30,10 @@ public class BundleData
         private set;
     }
 
-    public BundleData(string id, string storeId, string name, string crc, ImageData[] images)
+    public BundleData(string id, string productId, string name, string crc, ImageData[] images)
     {
         Id = id;
-        StoreId = storeId;
+        ProductId = productId;
         Name = name;
         Crc = crc;
         m_images = new List<ImageData>(images);

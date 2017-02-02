@@ -53,7 +53,31 @@ public class LevelsScene : MonoBehaviour
 
     private void HandleBundleClicked(string bundleId)
     {
-        ShowImagesInBundle(bundleId);
+        var game = Game.GetInstance();
+
+        if (game.ImageManager.IsBundleAvailable(bundleId))
+            ShowImagesInBundle(bundleId);
+        else
+        {
+            var bundle = game.ImageManager.GetBundleById(bundleId);
+            if (bundle == null)
+                return;
+
+            var product = game.Purchaser.GetProductById(bundle.ProductId);
+            if (product == null)
+                return;
+
+            var popupText = string.Format("Do you want to buy bundle {0} ({1}) for {2}?",
+                                           bundleId, product.Id, product.LocalizedPrice);
+
+            Popup.Show(popupText, (int)(Popup.Button.Yes | Popup.Button.No), (button) =>
+            {
+                if (button == Popup.Button.Yes)
+                {
+                    game.Purchaser.BuyProductId(product.Id);
+                }
+            });
+        }
     }
 
     private void HandleImageClicked(string imageId)
@@ -171,13 +195,13 @@ public class LevelsScene : MonoBehaviour
 
         if (!data.IsAvailable)
         {
-            var product = game.Purchaser.GetProductById(data.BundleData.StoreId);
+            var product = game.Purchaser.GetProductById(data.BundleData.ProductId);
             if (product == null)
                 return null;
 
             data.LocalizedPrice = product.LocalizedPrice;
         }
-    
+
         return data;
     }
 }

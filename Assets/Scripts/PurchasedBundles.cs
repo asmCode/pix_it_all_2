@@ -15,25 +15,25 @@ public class PurchasedBundles
             m_data = new PurchasedBundlesData();
     }
 
-    public bool IsPurchased(string storeId)
+    public bool IsPurchased(string productId)
     {
-        if (m_data == null || m_data.StoreIds == null)
+        if (m_data == null || m_data.ProductIds == null)
             return false;
 
-        return Array.Exists(m_data.StoreIds, (t) => { return t == storeId; });
+        return Array.Exists(m_data.ProductIds, (t) => { return t == productId; });
     }
 
-    public void SetPurchased(string storeId)
+    public void SetPurchased(string productId)
     {
         if (m_data == null)
             return;
 
-        if (IsPurchased(storeId))
+        if (IsPurchased(productId))
             return;
 
-        int newSize = m_data.StoreIds != null ? m_data.StoreIds.Length + 1 : 1;
-        Array.Resize(ref m_data.StoreIds, newSize);
-        m_data.StoreIds[m_data.StoreIds.Length - 1] = storeId;
+        int newSize = m_data.ProductIds != null ? m_data.ProductIds.Length + 1 : 1;
+        Array.Resize(ref m_data.ProductIds, newSize);
+        m_data.ProductIds[m_data.ProductIds.Length - 1] = productId;
 
         Save();
     }

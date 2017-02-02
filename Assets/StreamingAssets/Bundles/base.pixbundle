@@ -1,6 +1,6 @@
 {
 	"Name": "Standard",
-	"StoreId": "test.pixitall.01",
+	"ProductId": "test.pixitall.01",
 	"Images": [{
 			"Id": "tree",
 			"Name": "Tree",

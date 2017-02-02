@@ -43,10 +43,19 @@ public class Game : MonoBehaviourSingleton<Game, MonoBehaviourSingletonMeta>
         PlayerProgress = new PlayerProgress();
 
         Purchaser = new Purchaser();
+        Purchaser.PurchaseFinished += Purchaser_PurchaseFinished;
         Purchaser.InitializePurchasing();
     }
 
-	private void Update()
+    private void Purchaser_PurchaseFinished(bool success, string productId)
+    {
+        if (!success)
+            return;
+
+        ImageManager.SetBundleAvailable(productId);
+    }
+
+    private void Update()
     {
         TouchProxy.Update();
 	}

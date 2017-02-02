@@ -49,9 +49,14 @@ public class ImageManager
         return bundle.GetImageById(imageId);
     }
 
-    public void SetBundleAvailable(string bundleId)
+    public void SetBundleAvailable(string productId)
     {
-        m_purchasedBundles.SetPurchased(bundleId);
+        if (m_purchasedBundles.IsPurchased(productId))
+            return;
+
+        m_purchasedBundles.SetPurchased(productId);
+
+        NotifyBundlesChanged();
     }
 
     public bool IsBundleAvailable(string bundleId)
@@ -63,11 +68,11 @@ public class ImageManager
         if (bundleId == null)
             return false;
 
-        // Bundles with empty StoreId are considered as free and always available.
-        if (string.IsNullOrEmpty(bundle.StoreId))
+        // Bundles with empty ProductId are considered as free and always available.
+        if (string.IsNullOrEmpty(bundle.ProductId))
             return true;
 
-        return m_purchasedBundles.IsPurchased(bundle.StoreId);
+        return m_purchasedBundles.IsPurchased(bundle.ProductId);
     }
 
     private void DownloadMissingBundlesCallback(DownloadMissingBundlesEventData eventData)
@@ -77,6 +82,11 @@ public class ImageManager
         if (eventData.HasNewBundles)
             LoadImages();
 
+        NotifyBundlesChanged();
+    }
+
+    private void NotifyBundlesChanged()
+    {
         if (BundlesChanged != null)
             BundlesChanged();
     }
