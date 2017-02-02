@@ -10,6 +10,7 @@ public class Purchaser : IStoreListener
 
     private bool m_isInitializing = false;
     private bool m_isPurchasing = false;
+    private bool m_isRestoring = false;
 
     public event Action<bool, string> PurchaseFinished;
     public event Action<bool> InitializationFinished;
@@ -29,6 +30,19 @@ public class Purchaser : IStoreListener
         return m_isPurchasing;
     }
 
+    public bool IsRestoring()
+    {
+        return m_isRestoring;
+    }
+
+    public bool IsReady()
+    {
+        return
+            IsInitialized() &&
+            !IsPurchasing() &&
+            !IsRestoring();
+    }
+
     public void InitializePurchasing()
     {
 		if (IsInitialized() || IsInitializing())
@@ -46,11 +60,8 @@ public class Purchaser : IStoreListener
 
     public void BuyProductId(string productId)
     {
-		if (!IsInitialized())
+		if (!IsReady())
 			return;
-
-        if (IsPurchasing())
-            return;
 		
 		Product product = m_storeController.products.WithID(productId);
 		if (product == null || !product.availableToPurchase)
@@ -67,12 +78,14 @@ public class Purchaser : IStoreListener
 	
     public void RestorePurchases()
     {
-		if (!IsInitialized())
+		if (!IsReady())
 			return;
 		
         if (Application.platform != RuntimePlatform.IPhonePlayer &&
             Application.platform != RuntimePlatform.OSXPlayer)
 			return;
+
+        m_isRestoring = true;
         
 		Debug.Log("RestorePurchases started ...");
 
@@ -82,9 +95,11 @@ public class Purchaser : IStoreListener
 		// the Action<bool> below, and ProcessPurchase if there are previously purchased products to restore.
 		apple.RestoreTransactions((result) =>
 		{
-			// The first phase of restoration. If no more responses are received on ProcessPurchase then 
-			// no purchases are available to be restored.
-			Debug.Log("RestorePurchases continuing: " + result + ". If no further messages, no purchases available to restore.");
+            m_isRestoring = false;
+
+            // The first phase of restoration. If no more responses are received on ProcessPurchase then 
+            // no purchases are available to be restored.
+            Debug.Log("RestorePurchases continuing: " + result + ". If no further messages, no purchases available to restore.");
 		});
     }
 
@@ -139,6 +154,8 @@ public class Purchaser : IStoreListener
 
         m_storeController = controller;
         m_storeExtensionProvider = extensions;
+
+        RestorePurchases();
 
         if (InitializationFinished != null)
             InitializationFinished(true);

@@ -37,7 +37,18 @@ public class LevelsScene : MonoBehaviour
         if (bundles == null)
             return;
 
-        m_bundleListView.SetBundles(bundles);
+        List<BundleViewData> bundleViews = new List<BundleViewData>();
+
+        foreach (var bundle in bundles)
+        {
+            var bundleView = CreateBundleViewData(bundle);
+            if (bundleView == null)
+                continue;
+
+            bundleViews.Add(bundleView);
+        }
+
+        m_bundleListView.SetBundles(bundleViews.ToArray());
     }
 
     private void HandleBundleClicked(string bundleId)
@@ -146,6 +157,27 @@ public class LevelsScene : MonoBehaviour
             data.Stars = levelProgress.IsCompleted ? stars : 0;
         }
 
+        return data;
+    }
+
+    private BundleViewData CreateBundleViewData(BundleData bundleData)
+    {
+        var game = Game.GetInstance();
+
+        var data = new BundleViewData();
+
+        data.BundleData = bundleData;
+        data.IsAvailable = game.ImageManager.IsBundleAvailable(bundleData.Id);
+
+        if (!data.IsAvailable)
+        {
+            var product = game.Purchaser.GetProductById(data.BundleData.StoreId);
+            if (product == null)
+                return null;
+
+            data.LocalizedPrice = product.LocalizedPrice;
+        }
+    
         return data;
     }
 }

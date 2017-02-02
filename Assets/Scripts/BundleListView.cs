@@ -9,18 +9,18 @@ public class BundleListView : MonoBehaviour
 
     public event System.Action<string> BundleClicked;
 
-    public void SetBundles(BundleData[] bundles)
+    public void SetBundles(BundleViewData[] bundles)
     {
         Clear();
 
         if (bundles == null)
             return;
 
-        foreach (var bundleData in bundles)
+        foreach (var bundleViewData in bundles)
         {
             var bundleView = Instantiate(m_bundleViewPrefab, m_bundlesContainer);
             bundleView.transform.localScale = Vector3.one;
-            bundleView.SetBundle(bundleData);
+            bundleView.SetBundle(bundleViewData);
             bundleView.Clicked += HandleBundleViewClicked;
         }
     }

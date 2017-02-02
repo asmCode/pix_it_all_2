@@ -8,6 +8,7 @@ public class BundleView : MonoBehaviour
     public Text m_id;
     public Text m_name;
     public Text m_numberOfImages;
+    public Text m_price;
 
     public event System.Action<string> Clicked;
 
@@ -17,23 +18,28 @@ public class BundleView : MonoBehaviour
         private set;
     }
 
-    public void SetBundle(BundleData bundle)
+    public void SetBundle(BundleViewData bundle)
     {
         BundleId = null;
 
         if (bundle == null)
             return;
 
-        BundleId = bundle.Id;
+        BundleId = bundle.BundleData.Id;
 
-        m_id.text = bundle.Id;
-        m_name.text = bundle.Name;
+        m_id.text = bundle.BundleData.Id;
+        m_name.text = bundle.BundleData.Name;
 
-        var images = bundle.GetImages();
+        var images = bundle.BundleData.GetImages();
         if (images != null)
             m_numberOfImages.text = images.Length.ToString();
         else
             m_numberOfImages.text = "0";
+
+        if (bundle.IsAvailable)
+            m_price.text = "available";
+        else
+            m_price.text = bundle.LocalizedPrice;
     }
 
     public void UiEvent_Clicked()

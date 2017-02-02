@@ -16,6 +16,12 @@ public class Game : MonoBehaviourSingleton<Game, MonoBehaviourSingletonMeta>
         private set;
     }
 
+    public Purchaser Purchaser
+    {
+        get;
+        private set;
+    }
+
     public void StartLevel(string bundleId, string imageId, bool continueLevel)
     {
         GameplayScene.m_selectedBundleId = bundleId;
@@ -31,9 +37,13 @@ public class Game : MonoBehaviourSingleton<Game, MonoBehaviourSingletonMeta>
         TouchProxy.Init();
 
         ImageManager = new ImageManager();
+        ImageManager.Init();
         ImageManager.LoadImages();
 
         PlayerProgress = new PlayerProgress();
+
+        Purchaser = new Purchaser();
+        Purchaser.InitializePurchasing();
     }
 
 	private void Update()

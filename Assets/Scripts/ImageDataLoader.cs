@@ -54,7 +54,7 @@ public class ImageDataLoader
         var bundleDataRaw = System.Text.Encoding.UTF8.GetBytes(bundleData);
         var crc = DamienG.Security.Cryptography.Crc32.Compute(bundleDataRaw).ToString();
 
-        return new BundleData(bundleId, bundleFileData.Name, crc, images.ToArray());
+        return new BundleData(bundleId, bundleFileData.StoreId, bundleFileData.Name, crc, images.ToArray());
     }
 
     private static ImageData LoadImageData(ImageFileData imageFileData)
