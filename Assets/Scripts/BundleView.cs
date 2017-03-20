@@ -39,7 +39,16 @@ public class BundleView : MonoBehaviour
         if (bundle.IsAvailable)
             m_price.text = "available";
         else
-            m_price.text = bundle.LocalizedPrice;
+        {
+            if (!string.IsNullOrEmpty(bundle.LocalizedPrice))
+            {
+                m_price.text = bundle.LocalizedPrice;
+            }
+            else
+            {
+                m_price.text = "BUY";
+            }
+        }
     }
 
     public void UiEvent_Clicked()

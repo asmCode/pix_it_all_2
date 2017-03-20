@@ -10,12 +10,60 @@ public class BoardController : MonoBehaviour
     public TapGestureDetector m_tapGestureDetector;
 
     private Board m_board;
+    private Vector2 m_boardDstPositionVelocity;
 
     private void Awake()
     {
         Debug.LogFormat("dpi = {0}", Screen.dpi);
 
         m_board = GetComponent<Board>();
+    }
+
+    private void Update()
+    {
+        if (TouchProxy.GetTouchCount() == 0)
+            UpdateSpring();
+    }
+
+    private void UpdateSpring()
+    {
+        var parentRect = m_board.GetParentRect();
+        var imageRect = m_board.GetImageRect();
+
+        var imagePos = imageRect.Center;
+        var imageOffset = new Vector2();
+
+        // Hori
+        if (imageRect.Width <= parentRect.Width)
+        {
+            imageOffset.x = parentRect.CenterHori - imageRect.CenterHori;
+        }
+        else
+        {
+            if (imageRect.Left > parentRect.Left)
+                imageOffset.x = parentRect.Left - imageRect.Left;
+            else if (imageRect.Right < parentRect.Right)
+                imageOffset.x = parentRect.Right - imageRect.Right;
+        }
+
+        // Vert
+        if (imageRect.Height <= parentRect.Height)
+        {
+            imageOffset.y = parentRect.CenterVert - imageRect.CenterVert;
+        }
+        else
+        {
+            if (imageRect.Bottom > parentRect.Bottom)
+                imageOffset.y = parentRect.Bottom - imageRect.Bottom;
+            else if (imageRect.Top < parentRect.Top)
+                imageOffset.y = parentRect.Top - imageRect.Top;
+        }
+
+        var boardDstPosition = imagePos + imageOffset;
+
+        var position = m_board.GetPosition();
+        position = Vector2.SmoothDamp(position, boardDstPosition, ref m_boardDstPositionVelocity, 0.1f, float.MaxValue, Time.deltaTime);
+        m_board.SetPosition(position);
     }
 
     private void OnEnable()
@@ -34,6 +82,15 @@ public class BoardController : MonoBehaviour
 
     private void HandlePanMoved(Vector2 position, Vector2 delta)
     {
+        var parentRect = m_board.GetParentRect();
+        var imageRect = m_board.GetImageRect();
+
+        if (!imageRect.IsInsideHori(parentRect))
+            delta.x *= 0.2f;
+
+        if (!imageRect.IsInsideVert(parentRect))
+            delta.y *= 0.2f;
+
         m_board.ChangeLocalPosition(delta);
     }
 

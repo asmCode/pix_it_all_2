@@ -196,10 +196,10 @@ public class LevelsScene : MonoBehaviour
         if (!data.IsAvailable)
         {
             var product = game.Purchaser.GetProductById(data.BundleData.ProductId);
-            if (product == null)
-                return null;
-
-            data.LocalizedPrice = product.LocalizedPrice;
+            if (product != null)
+            {
+                data.LocalizedPrice = product.LocalizedPrice;
+            }
         }
 
         return data;

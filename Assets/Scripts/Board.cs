@@ -92,60 +92,32 @@ public class Board : MonoBehaviour
         boardPosition = m_rectTransform.position;
         m_scalePivot.position = scalePivotPosition;
         m_rectTransform.position = boardPosition;
-
-        FixPositionInsideParent();
     }
 
     public void SetLocalPosition(Vector2 position)
     {
         m_rectTransform.localPosition = position;
-        FixPositionInsideParent();
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        m_rectTransform.position = position;
+    }
+
+    public Vector2 GetPosition()
+    {
+        return new Vector2(transform.position.x, transform.position.y);
     }
 
     public void ChangeLocalPosition(Vector2 delta)
     {
         ChangeLocalPositionInternal(delta);
-        FixPositionInsideParent();
     }
 
     public void ChangeZoom(Vector2 pivot, float delta)
     {
         float newZoom = m_zoom + delta / 500.0f;
         SetZoom(pivot, newZoom);
-    }
-
-    public void FixPositionInsideParent()
-    {
-        var parentRect = GetParentRect();
-        var imageRect = GetImageRect();
-
-        // Fix horizontally
-        if (imageRect.Width <= parentRect.Width)
-        {
-            m_rectTransform.localPosition = new Vector2(0, m_rectTransform.localPosition.y);
-        }
-        else
-        {
-            if (imageRect.Right < parentRect.Right)
-                ChangeLocalPositionInternal(new Vector2(parentRect.Right - imageRect.Right, 0));
-
-            if (imageRect.Left > parentRect.Left)
-                ChangeLocalPositionInternal(new Vector2(parentRect.Left - imageRect.Left, 0));
-        }
-
-        // Fix vertically
-        if (imageRect.Height <= parentRect.Height)
-        {
-            m_rectTransform.localPosition = new Vector2(m_rectTransform.localPosition.x, 0);
-        }
-        else
-        {
-            if (imageRect.Top < parentRect.Top)
-                ChangeLocalPositionInternal(new Vector2(0, parentRect.Top - imageRect.Top));
-
-            if (imageRect.Bottom > parentRect.Bottom)
-                ChangeLocalPositionInternal(new Vector2(0, parentRect.Bottom - imageRect.Bottom));
-        }
     }
 
     private float GetScale(float zoom)
