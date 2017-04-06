@@ -30,11 +30,23 @@ public class TouchProxy
             for (int i = 0; i < m_touchCount; i++)
             {
                 var touch = Input.GetTouch(i);
-                m_touches[i].Position = touch.position;
-                if (touch.phase == TouchPhase.Moved)
-                    m_touches[i].Delta = touch.deltaPosition;
-                else
+
+                switch (touch.phase)
+                {
+                    case TouchPhase.Began:
+                    m_touches[i].Position = touch.position;
                     m_touches[i].Delta = Vector2.zero;
+                    break;
+
+                    case TouchPhase.Moved:
+                    m_touches[i].Position = touch.position;
+                    m_touches[i].Delta = touch.deltaPosition;
+                    break;
+
+                    case TouchPhase.Ended:
+                    m_touches[i].Delta = Vector2.zero;
+                    break;
+                }    
             }
         }
         else
