@@ -12,7 +12,7 @@ public class BoardController : MonoBehaviour
     private Board m_board;
     private Vector2 m_boardDstPositionVelocity;
     private Vector2 m_interiaVelocity;
-    private Vector2 m_interiaDeceleration;
+    //private Vector2 m_interiaDeceleration;
 
     private const float DecelerationNormal = 10000.0f;
     private const float DecelerationOffScreen = 1000000.0f;
@@ -82,7 +82,7 @@ public class BoardController : MonoBehaviour
 
         sampleInteriaDeceleration *= Time.deltaTime;
 
-        if (sampleInteriaDeceleration.x >= m_interiaVelocity.x)
+        if (Mathf.Abs(sampleInteriaDeceleration.x) >= Mathf.Abs(m_interiaVelocity.x))
         {
             m_interiaVelocity.x = 0.0f;
         }
@@ -91,7 +91,7 @@ public class BoardController : MonoBehaviour
             m_interiaVelocity.x += sampleInteriaDeceleration.x;
         }
 
-        if (sampleInteriaDeceleration.y >= m_interiaVelocity.y)
+        if (Mathf.Abs(sampleInteriaDeceleration.y) >= Mathf.Abs(m_interiaVelocity.y))
         {
             m_interiaVelocity.y = 0.0f;
         }
@@ -101,8 +101,19 @@ public class BoardController : MonoBehaviour
         }
 
         position += m_interiaVelocity * Time.deltaTime;
-        if (m_interiaVelocity.magnitude == 0.0f)
-            position = Vector2.SmoothDamp(position, boardDstPosition, ref m_boardDstPositionVelocity, 0.1f, float.MaxValue, Time.deltaTime);
+
+        if (m_interiaVelocity.x == 0.0f)
+        {
+            position.x = Mathf.SmoothDamp(position.x, boardDstPosition.x, ref m_boardDstPositionVelocity.x, 0.1f, float.MaxValue, Time.deltaTime);
+            //position = Vector2.SmoothDamp(position, boardDstPosition, ref m_boardDstPositionVelocity, 0.1f, float.MaxValue, Time.deltaTime);
+        }
+
+        if (m_interiaVelocity.y == 0.0f)
+        {
+            position.y = Mathf.SmoothDamp(position.y, boardDstPosition.y, ref m_boardDstPositionVelocity.y, 0.1f, float.MaxValue, Time.deltaTime);
+            //position = Vector2.SmoothDamp(position, boardDstPosition, ref m_boardDstPositionVelocity, 0.1f, float.MaxValue, Time.deltaTime);
+        }
+
         m_board.SetPosition(position);
     }
 
@@ -140,7 +151,7 @@ public class BoardController : MonoBehaviour
     {
         Debug.LogFormat("velocity.x = {0}", velocity.x);
         m_interiaVelocity = velocity;
-        m_interiaDeceleration = -m_interiaVelocity.normalized * DecelerationNormal;
+        // m_interiaDeceleration = -m_interiaVelocity.normalized * DecelerationNormal;
     }
 
     private void HandlePinchChanged(Vector2 pivot, float delta)
