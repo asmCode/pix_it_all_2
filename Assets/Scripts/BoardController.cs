@@ -11,6 +11,11 @@ public class BoardController : MonoBehaviour
 
     private Board m_board;
     private Vector2 m_boardDstPositionVelocity;
+    private Vector2 m_interiaVelocity;
+    private Vector2 m_interiaDeceleration;
+
+    private const float DecelerationNormal = 10000.0f;
+    private const float DecelerationOffScreen = 1000000.0f;
 
     private void Awake()
     {
@@ -62,13 +67,49 @@ public class BoardController : MonoBehaviour
         var boardDstPosition = imagePos + imageOffset;
 
         var position = m_board.GetPosition();
-        position = Vector2.SmoothDamp(position, boardDstPosition, ref m_boardDstPositionVelocity, 0.1f, float.MaxValue, Time.deltaTime);
+
+        var sampleInteriaDeceleration = -m_interiaVelocity.normalized;
+
+        if (imageOffset.x != 0.0f)
+            sampleInteriaDeceleration.x *= DecelerationOffScreen;
+        else
+            sampleInteriaDeceleration.x *= DecelerationNormal;
+
+        if (imageOffset.y != 0.0f)
+            sampleInteriaDeceleration.y *= DecelerationOffScreen;
+        else
+            sampleInteriaDeceleration.y *= DecelerationNormal;
+
+        sampleInteriaDeceleration *= Time.deltaTime;
+
+        if (sampleInteriaDeceleration.x >= m_interiaVelocity.x)
+        {
+            m_interiaVelocity.x = 0.0f;
+        }
+        else
+        {
+            m_interiaVelocity.x += sampleInteriaDeceleration.x;
+        }
+
+        if (sampleInteriaDeceleration.y >= m_interiaVelocity.y)
+        {
+            m_interiaVelocity.y = 0.0f;
+        }
+        else
+        {
+            m_interiaVelocity.y += sampleInteriaDeceleration.y;
+        }
+
+        position += m_interiaVelocity * Time.deltaTime;
+        if (m_interiaVelocity.magnitude == 0.0f)
+            position = Vector2.SmoothDamp(position, boardDstPosition, ref m_boardDstPositionVelocity, 0.1f, float.MaxValue, Time.deltaTime);
         m_board.SetPosition(position);
     }
 
     private void OnEnable()
     {
         m_panGestureDetector.PanMoved += HandlePanMoved;
+        m_panGestureDetector.PanEnded += HandlePanEnded;
         m_pinchGestureDetector.PinchChanged += HandlePinchChanged;
         m_tapGestureDetector.Tapped += HandleTapped;
     }
@@ -76,6 +117,7 @@ public class BoardController : MonoBehaviour
     private void OnDisable()
     {
         m_panGestureDetector.PanMoved -= HandlePanMoved;
+        m_panGestureDetector.PanEnded -= HandlePanEnded;
         m_pinchGestureDetector.PinchChanged -= HandlePinchChanged;
         m_tapGestureDetector.Tapped -= HandleTapped;
     }
@@ -92,6 +134,13 @@ public class BoardController : MonoBehaviour
             delta.y *= 0.2f;
 
         m_board.ChangeLocalPosition(delta);
+    }
+
+    private void HandlePanEnded(Vector2 velocity)
+    {
+        Debug.LogFormat("velocity.x = {0}", velocity.x);
+        m_interiaVelocity = velocity;
+        m_interiaDeceleration = -m_interiaVelocity.normalized * DecelerationNormal;
     }
 
     private void HandlePinchChanged(Vector2 pivot, float delta)
