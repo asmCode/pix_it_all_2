@@ -34,19 +34,19 @@ public class TouchProxy
                 switch (touch.phase)
                 {
                     case TouchPhase.Began:
-                    m_touches[i].Position = touch.position;
-                    m_touches[i].Delta = Vector2.zero;
-                    break;
+                        m_touches[i].Position = touch.position;
+                        m_touches[i].Delta = Vector2.zero;
+                        break;
 
                     case TouchPhase.Moved:
-                    m_touches[i].Position = touch.position;
-                    m_touches[i].Delta = touch.deltaPosition;
-                    break;
+                        m_touches[i].Position = touch.position;
+                        m_touches[i].Delta = touch.deltaPosition;
+                        break;
 
                     case TouchPhase.Ended:
-                    m_touches[i].Delta = Vector2.zero;
-                    break;
-                }    
+                        m_touches[i].Delta = Vector2.zero;
+                        break;
+                }
             }
         }
         else
@@ -64,7 +64,7 @@ public class TouchProxy
                 m_touches[0].Position = mousePosition;
                 m_touches[0].Delta = mousePosition - m_lastMousePosition;
                 m_lastMousePosition = mousePosition;
-                
+
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
                     m_touchCount++;
