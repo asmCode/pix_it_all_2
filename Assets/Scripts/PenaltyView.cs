@@ -9,7 +9,7 @@ public class PenaltyView : MonoBehaviour
 
     public void ShowPenalty(int seconds)
     {
-        m_labelSeconds.text = string.Format("PENALTY {0}s", seconds);
+        m_labelSeconds.text = string.Format("+{0}s PENALTY", seconds);
         gameObject.SetActive(true);
         PlayAppearAnimation();
     }
