@@ -11,7 +11,7 @@ public class Board : MonoBehaviour
     private RectTransform m_rectTransform;
     private float m_scaleMin;
     private float m_scaleMax;
-    private float m_zoom = 1.0f;
+    private float m_scale = 1.0f;
 
     private bool m_isInitialized;
 
@@ -76,10 +76,9 @@ public class Board : MonoBehaviour
         Image.Apply();
     }
 
-    public void SetZoom(Vector2 pivot, float zoom)
+    public void SetScale(Vector2 pivot, float scale)
     {
-        m_zoom = Mathf.Clamp01(zoom);
-        float scale = GetScale(m_zoom);
+        m_scale = Mathf.Clamp(scale, m_scaleMin, m_scaleMax);
 
         var boardPosition = m_rectTransform.position;
         var scalePivotPosition = m_scalePivot.position;
@@ -87,7 +86,7 @@ public class Board : MonoBehaviour
         m_scalePivot.position = pivot;
         m_rectTransform.position = boardPosition;
 
-        m_scalePivot.localScale = new Vector3(scale, scale, 1.0f);
+        m_scalePivot.localScale = new Vector3(m_scale, m_scale, 1.0f);
 
         boardPosition = m_rectTransform.position;
         m_scalePivot.position = scalePivotPosition;
@@ -114,15 +113,10 @@ public class Board : MonoBehaviour
         ChangeLocalPositionInternal(delta);
     }
 
-    public void ChangeZoom(Vector2 pivot, float delta)
+    public void Scale(Vector2 pivot, float scale)
     {
-        float newZoom = m_zoom + delta / 500.0f;
-        SetZoom(pivot, newZoom);
-    }
-
-    private float GetScale(float zoom)
-    {
-        return Mathf.Lerp(m_scaleMin, m_scaleMax, zoom);
+        float newScale = m_scale * scale;
+        SetScale(pivot, newScale);
     }
 
     private void Awake()
@@ -142,7 +136,7 @@ public class Board : MonoBehaviour
         InitScaleBounds();
 
         var screenCenter = new Vector2(Screen.width, Screen.height) / 2.0f;
-        SetZoom(screenCenter, 1.0f);
+        SetScale(screenCenter, 1.0f);
     }
 
     private void InitScaleBounds()

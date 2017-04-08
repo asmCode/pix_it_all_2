@@ -11,8 +11,7 @@ public class BoardController : MonoBehaviour
 
     private Board m_board;
     private Vector2 m_boardDstPositionVelocity;
-    private Vector2 m_interiaVelocity;
-    //private Vector2 m_interiaDeceleration;
+    private Vector2 m_inertiaVelocity;
 
     private const float DecelerationNormal = 10000.0f;
     private const float DecelerationOffScreen = 1000000.0f;
@@ -68,7 +67,7 @@ public class BoardController : MonoBehaviour
 
         var position = m_board.GetPosition();
 
-        var sampleInteriaDeceleration = -m_interiaVelocity.normalized;
+        var sampleInteriaDeceleration = -m_inertiaVelocity.normalized;
 
         if (imageOffset.x != 0.0f)
             sampleInteriaDeceleration.x *= DecelerationOffScreen;
@@ -82,33 +81,33 @@ public class BoardController : MonoBehaviour
 
         sampleInteriaDeceleration *= Time.deltaTime;
 
-        if (Mathf.Abs(sampleInteriaDeceleration.x) >= Mathf.Abs(m_interiaVelocity.x))
+        if (Mathf.Abs(sampleInteriaDeceleration.x) >= Mathf.Abs(m_inertiaVelocity.x))
         {
-            m_interiaVelocity.x = 0.0f;
+            m_inertiaVelocity.x = 0.0f;
         }
         else
         {
-            m_interiaVelocity.x += sampleInteriaDeceleration.x;
+            m_inertiaVelocity.x += sampleInteriaDeceleration.x;
         }
 
-        if (Mathf.Abs(sampleInteriaDeceleration.y) >= Mathf.Abs(m_interiaVelocity.y))
+        if (Mathf.Abs(sampleInteriaDeceleration.y) >= Mathf.Abs(m_inertiaVelocity.y))
         {
-            m_interiaVelocity.y = 0.0f;
+            m_inertiaVelocity.y = 0.0f;
         }
         else
         {
-            m_interiaVelocity.y += sampleInteriaDeceleration.y;
+            m_inertiaVelocity.y += sampleInteriaDeceleration.y;
         }
 
-        position += m_interiaVelocity * Time.deltaTime;
+        position += m_inertiaVelocity * Time.deltaTime;
 
-        if (m_interiaVelocity.x == 0.0f)
+        if (m_inertiaVelocity.x == 0.0f)
         {
             position.x = Mathf.SmoothDamp(position.x, boardDstPosition.x, ref m_boardDstPositionVelocity.x, 0.1f, float.MaxValue, Time.deltaTime);
             //position = Vector2.SmoothDamp(position, boardDstPosition, ref m_boardDstPositionVelocity, 0.1f, float.MaxValue, Time.deltaTime);
         }
 
-        if (m_interiaVelocity.y == 0.0f)
+        if (m_inertiaVelocity.y == 0.0f)
         {
             position.y = Mathf.SmoothDamp(position.y, boardDstPosition.y, ref m_boardDstPositionVelocity.y, 0.1f, float.MaxValue, Time.deltaTime);
             //position = Vector2.SmoothDamp(position, boardDstPosition, ref m_boardDstPositionVelocity, 0.1f, float.MaxValue, Time.deltaTime);
@@ -149,14 +148,12 @@ public class BoardController : MonoBehaviour
 
     private void HandlePanEnded(Vector2 velocity)
     {
-        Debug.LogFormat("velocity.x = {0}", velocity.x);
-        m_interiaVelocity = velocity;
-        // m_interiaDeceleration = -m_interiaVelocity.normalized * DecelerationNormal;
+        m_inertiaVelocity = velocity;
     }
 
-    private void HandlePinchChanged(Vector2 pivot, float delta)
+    private void HandlePinchChanged(Vector2 pivot, float scale)
     {
-        m_board.ChangeZoom(pivot, delta);
+        m_board.Scale(pivot, scale);
     }
 
     private void HandleTapped(Vector2 position)

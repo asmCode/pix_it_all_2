@@ -42,7 +42,10 @@ public class PinchGestureDetector : MonoBehaviour
         var t1OldPos = touch1.Position - touch1.Delta;
         var oldDistance = (t0OldPos - t1OldPos).magnitude;
         var newDistance = (touch0.Position - touch1.Position).magnitude;
-        return newDistance - oldDistance;
+        if (oldDistance == 0)
+            return 1.0f;
+
+        return newDistance / oldDistance;
     }
 
     private void OnPinchChanged(Vector2 pivot, float delta)
