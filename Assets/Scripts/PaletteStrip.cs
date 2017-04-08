@@ -29,6 +29,8 @@ public class PaletteStrip : MonoBehaviour
         Init();
 
         float yOffset = selected ? 50.0f : 0.0f;
+        // Keep it in line for now
+        yOffset = 0;
         m_image.rectTransform.localPosition = Vu.SetY(m_image.rectTransform.localPosition, m_baseYOffset + yOffset);
     }
 

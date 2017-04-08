@@ -5,11 +5,10 @@ public class Palette : MonoBehaviour
 {
     public PaletteStrip m_paletteStripPrefab;
     public RectTransform m_stripContainer;
-    public RectTransform m_rowPivot;
 
     public event System.Action<Color> ColorClicked;
 
-    private const int MaxStripsInRow = 9;
+    private const int MaxStripsInColumn = 4;
 
     public bool IsPaletteVisible
     {
@@ -24,30 +23,28 @@ public class Palette : MonoBehaviour
 
     public void Init(Color[] colors)
     {
-        const float yOffsetStep = 100.0f;
-        const float stepAngle = 3.2f;
-        const float initAngle = stepAngle * (MaxStripsInRow - 1) / 2.0f;
+        const float padding = 110.0f;
 
         int stripNum = 0;
-        float angle = initAngle;
-        float yOffset = 0.0f;
+        Vector2 offset = Vector2.zero;
 
         foreach (var color in colors)
         {
-            CreatePaletteStrip(angle, yOffset, color);
-            angle -= stepAngle;
+            CreatePaletteStrip(offset, color);
             stripNum++;
 
-            if (stripNum == MaxStripsInRow)
+            offset.y += padding;
+
+            if (stripNum > MaxStripsInColumn)
             {
                 stripNum = 0;
-                angle = initAngle;
-                yOffset += yOffsetStep;
+                offset.x -= padding;
+                offset.y = 0;
             }
         }
     }
 
-    private PaletteStrip CreatePaletteStrip(float angle, float yOffset, Color color)
+    private PaletteStrip CreatePaletteStrip(Vector2 offset, Color color)
     {
         var paletteStrip = Instantiate(m_paletteStripPrefab);
         paletteStrip.Color = color;
@@ -55,10 +52,8 @@ public class Palette : MonoBehaviour
 
         var paletteStripRectTr = paletteStrip.gameObject.GetComponent<RectTransform>();
         paletteStripRectTr.SetParent(m_stripContainer.transform);
-        paletteStripRectTr.localPosition = Vector3.zero;
+        paletteStripRectTr.localPosition = offset;
         paletteStripRectTr.localScale = Vector3.one;
-        paletteStripRectTr.RotateAround(m_rowPivot.position, Vector3.forward, angle);
-        paletteStripRectTr.localPosition = Vu.AddY(paletteStripRectTr.localPosition, yOffset);
         paletteStripRectTr.SetAsFirstSibling();
 
         return paletteStrip;
