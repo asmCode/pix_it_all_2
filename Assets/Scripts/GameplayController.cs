@@ -58,6 +58,9 @@ public class GameplayController
         m_hud.m_palette.HidePalette();
         m_hud.m_palette.SetActiveColor(initialColor);
 
+        m_hud.m_palette.PaletteShown += PaletteShown;
+        m_hud.m_palette.PaletteClosed += PaletteClosed;
+
         m_pauseView.ResumeClicked += HandlePauseViewResumeClicked;
         m_pauseView.BackToMenuClicked += HandlePauseViewBackToMenuClicked;
         m_pauseView.Hide();
@@ -266,5 +269,13 @@ public class GameplayController
     private void HandleBackToMenuClicked()
     {
         SceneManager.LoadScene("Levels");
+    }
+
+    private void PaletteShown()
+    {
+    }
+
+    private void PaletteClosed()
+    {
     }
 }

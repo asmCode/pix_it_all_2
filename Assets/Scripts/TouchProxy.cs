@@ -2,23 +2,17 @@
 
 public class TouchProxy
 {
-    public class Touch
-    {
-        public Vector2 Position { get; set; }
-        public Vector2 Delta { get; set; }
-    }
-
     private const int MaxTouchCount = 4;
 
     private static int m_touchCount = 0;
-    private static Touch[] m_touches = new Touch[MaxTouchCount];
+    private static Ssg.Touch[] m_touches = new Ssg.Touch[MaxTouchCount];
     private static Vector2 m_lastMousePosition;
     private static bool m_isMouseDown = false;
 
     public static void Init()
     {
         for (int i = 0; i < MaxTouchCount; i++)
-            m_touches[i] = new Touch();
+            m_touches[i] = new Ssg.Touch();
     }
 
     public static void Update()
@@ -82,7 +76,7 @@ public class TouchProxy
         }
     }
 
-    public static Touch GetTouch(int index)
+    public static Ssg.Touch GetTouch(int index)
     {
         return m_touches[index];
     }

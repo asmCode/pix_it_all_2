@@ -5,6 +5,7 @@ public class PanGestureDetector : MonoBehaviour
 {
     public event System.Action PanStarted;
     public event System.Action<Vector2, Vector2> PanMoved;
+    public TouchDataProvider m_touchProvider;
     // Velocity
     public event System.Action<Vector2> PanEnded;
 
@@ -76,7 +77,7 @@ public class PanGestureDetector : MonoBehaviour
 
     private bool IsTouching()
     {
-        return TouchProxy.GetTouchCount() > 0;
+        return m_touchProvider.GetTouchCount() > 0;
     }
 
     private Vector2 GetCurrentTouchPosition()
@@ -91,20 +92,20 @@ public class PanGestureDetector : MonoBehaviour
 
     private int GetNumberOfTouches()
     {
-        return TouchProxy.GetTouchCount();
+        return m_touchProvider.GetTouchCount();
     }
 
     private Vector2 GetAverageOfAllTouches()
     {
         Vector2 avg = Vector2.zero;
 
-        for (int i = 0; i < TouchProxy.GetTouchCount(); i++)
+        for (int i = 0; i < m_touchProvider.GetTouchCount(); i++)
         {
-            var touch = TouchProxy.GetTouch(i);
+            var touch = m_touchProvider.GetTouch(i);
             avg += touch.Position;
         }
 
-        avg /= TouchProxy.GetTouchCount();
+        avg /= m_touchProvider.GetTouchCount();
         return avg;
     }
 }

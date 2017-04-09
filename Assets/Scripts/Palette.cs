@@ -7,8 +7,10 @@ public class Palette : MonoBehaviour
     public RectTransform m_stripContainer;
 
     public event System.Action<Color> ColorClicked;
+    public event System.Action PaletteShown;
+    public event System.Action PaletteClosed;
 
-    private const int MaxStripsInColumn = 4;
+    private const int MaxStripsInColumn = 6;
 
     public bool IsPaletteVisible
     {
@@ -62,11 +64,17 @@ public class Palette : MonoBehaviour
     public void ShowPalette()
     {
         gameObject.SetActive(true);
+
+        if (PaletteShown != null)
+            PaletteShown();
     }
 
     public void HidePalette()
     {
         gameObject.SetActive(false);
+
+        if (PaletteClosed != null)
+            PaletteClosed();
     }
 
     public void SetActiveColor(Color color)

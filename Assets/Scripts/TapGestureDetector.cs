@@ -8,14 +8,17 @@ public class TapGestureDetector : MonoBehaviour
 
     public event System.Action<Vector2> Tapped;
 
+    public TouchDataProvider m_touchProvider;
+
     private Vector2 m_touchStartPosition;
     private Vector2 m_touchEndPosition;
     private bool m_isTouching;
     private bool m_isTapValid;
 
+
     private void Update()
     {
-        int touchCount = TouchProxy.GetTouchCount();
+        int touchCount = m_touchProvider.GetTouchCount();
 
         if (touchCount > 1)
         {
@@ -35,7 +38,7 @@ public class TapGestureDetector : MonoBehaviour
 
         if (!m_isTouching && touchCount == 1)
         {
-            var touch = TouchProxy.GetTouch(0);
+            var touch = m_touchProvider.GetTouch(0);
             m_isTouching = true;
             m_isTapValid = true;
             m_touchStartPosition = touch.Position;
@@ -45,7 +48,7 @@ public class TapGestureDetector : MonoBehaviour
 
         if (m_isTouching && touchCount == 1)
         {
-            var touch = TouchProxy.GetTouch(0);
+            var touch = m_touchProvider.GetTouch(0);
             m_touchEndPosition = touch.Position;
             if (!IsLessThanThreshold())
                 m_isTapValid = false;

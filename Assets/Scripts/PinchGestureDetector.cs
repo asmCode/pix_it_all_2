@@ -6,14 +6,16 @@ public class PinchGestureDetector : MonoBehaviour
 {
     public event System.Action<Vector2, float> PinchChanged;
 
+    public TouchDataProvider m_touchProvider;
+
     private bool m_isPinching = false;
 
     private void Update()
     {
-        if (TouchProxy.GetTouchCount() < 2 && !m_isPinching)
+        if (m_touchProvider.GetTouchCount() < 2 && !m_isPinching)
             return;
 
-        if (TouchProxy.GetTouchCount() < 2 && m_isPinching)
+        if (m_touchProvider.GetTouchCount() < 2 && m_isPinching)
         {
             m_isPinching = false;
             return;
@@ -24,8 +26,8 @@ public class PinchGestureDetector : MonoBehaviour
             m_isPinching = true;
         }
 
-        var touch0 = TouchProxy.GetTouch(0);
-        var touch1 = TouchProxy.GetTouch(1);
+        var touch0 = m_touchProvider.GetTouch(0);
+        var touch1 = m_touchProvider.GetTouch(1);
 
         if (touch0.Delta != Vector2.zero ||
             touch1.Delta != Vector2.zero)
@@ -36,7 +38,7 @@ public class PinchGestureDetector : MonoBehaviour
         }
     }
 
-    private float CalculatePinchDelta(TouchProxy.Touch touch0, TouchProxy.Touch touch1)
+    private float CalculatePinchDelta(Ssg.Touch touch0, Ssg.Touch touch1)
     {
         var t0OldPos = touch0.Position - touch0.Delta;
         var t1OldPos = touch1.Position - touch1.Delta;
