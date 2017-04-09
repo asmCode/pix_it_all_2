@@ -60,5 +60,6 @@ public class UiTouchDataProvider : TouchDataProvider
             return;
 
         touch.Position = eventData.position;
+        touch.Delta = eventData.delta;
     }
 }
