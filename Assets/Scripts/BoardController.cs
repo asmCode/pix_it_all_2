@@ -3,6 +3,8 @@ using System.Collections;
 
 public class BoardController : MonoBehaviour
 {
+    private const float PinchDelay = 0.2f;
+
     public event System.Action<int, int> BoardTileTapped;
 
     public PanGestureDetector m_panGestureDetector;
@@ -15,6 +17,8 @@ public class BoardController : MonoBehaviour
 
     private const float DecelerationNormal = 10000.0f;
     private const float DecelerationOffScreen = 1000000.0f;
+
+    private float m_timeFromLastPinch = 0.0f;
 
     private void Awake()
     {
@@ -148,11 +152,22 @@ public class BoardController : MonoBehaviour
 
     private void HandlePanEnded(Vector2 velocity)
     {
+        float timeElapsedSinceLastPinch = Time.time - m_timeFromLastPinch;
+
+        if (timeElapsedSinceLastPinch <= PinchDelay &&
+            m_panGestureDetector.TouchDataProvider.GetTouchCount() == 0)
+        {
+            Debug.LogFormat("timeElapsedSinceLastPinch = {0}. Skipping HandlePanEnded", timeElapsedSinceLastPinch);
+            return;
+        }
+
         m_inertiaVelocity = velocity;
     }
 
     private void HandlePinchChanged(Vector2 pivot, float scale)
     {
+        m_timeFromLastPinch = Time.time;
+
         m_board.Scale(pivot, scale);
     }
 

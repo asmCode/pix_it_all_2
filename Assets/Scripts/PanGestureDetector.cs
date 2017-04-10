@@ -14,6 +14,11 @@ public class PanGestureDetector : MonoBehaviour
     private Vector2 m_lastPosition;
     private GestureVelocity m_gestureVelocity = new GestureVelocity();
 
+    public TouchDataProvider TouchDataProvider
+    {
+        get { return m_touchProvider; }
+    }
+
     private void Update()
     {
         bool isTouching = IsTouching();
