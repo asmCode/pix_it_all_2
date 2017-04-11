@@ -19,6 +19,7 @@ public class BoardController : MonoBehaviour
     private const float DecelerationOffScreen = 1000000.0f;
 
     private float m_timeFromLastPinch = 0.0f;
+    private bool m_ignoreNextTap;
 
     private void Awake()
     {
@@ -125,6 +126,7 @@ public class BoardController : MonoBehaviour
         m_panGestureDetector.PanMoved += HandlePanMoved;
         m_panGestureDetector.PanEnded += HandlePanEnded;
         m_pinchGestureDetector.PinchChanged += HandlePinchChanged;
+        m_tapGestureDetector.TapStarted += HandleTapStarted;
         m_tapGestureDetector.Tapped += HandleTapped;
     }
 
@@ -133,6 +135,7 @@ public class BoardController : MonoBehaviour
         m_panGestureDetector.PanMoved -= HandlePanMoved;
         m_panGestureDetector.PanEnded -= HandlePanEnded;
         m_pinchGestureDetector.PinchChanged -= HandlePinchChanged;
+        m_tapGestureDetector.TapStarted -= HandleTapStarted;
         m_tapGestureDetector.Tapped -= HandleTapped;
     }
 
@@ -171,8 +174,23 @@ public class BoardController : MonoBehaviour
         m_board.Scale(pivot, scale);
     }
 
+    private void HandleTapStarted()
+    {
+        if (m_inertiaVelocity != Vector2.zero)
+        {
+            m_ignoreNextTap = true;
+            m_inertiaVelocity = Vector2.zero;
+        }
+    }
+
     private void HandleTapped(Vector2 position)
     {
+        if (m_ignoreNextTap)
+        {
+            m_ignoreNextTap = false;
+            return;
+        }
+
         Vector2 localPoint;
         if (RectTransformUtility.RectangleContainsScreenPoint(m_board.m_parentRectTransform, position) &&
             RectTransformUtility.RectangleContainsScreenPoint(m_board.RectTransform, position) &&

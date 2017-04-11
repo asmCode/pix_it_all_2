@@ -6,6 +6,7 @@ public class TapGestureDetector : MonoBehaviour
     private const float m_tapInchThreshold = 0.06f;
 
     public event System.Action<Vector2> Tapped;
+    public event System.Action TapStarted;
 
     public TouchDataProvider m_touchProvider;
 
@@ -37,6 +38,9 @@ public class TapGestureDetector : MonoBehaviour
 
         if (!m_isTouching && touchCount == 1)
         {
+            if (!m_isTouching)
+                OnTapStarted();
+
             var touch = m_touchProvider.GetTouch(0);
             m_isTouching = true;
             m_isTapValid = true;
@@ -59,6 +63,12 @@ public class TapGestureDetector : MonoBehaviour
     {
         if (Tapped != null)
             Tapped(position);
+    }
+
+    private void OnTapStarted()
+    {
+        if (TapStarted != null)
+            TapStarted();
     }
 
     private bool IsLessThanThreshold()
