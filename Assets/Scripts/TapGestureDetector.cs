@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TapGestureDetector : MonoBehaviour
 {
-    private const float m_tapInchThreshold = 0.06f;
+    private const float m_tapInchThreshold = 0.07f;
 
     public event System.Action<Vector2> Tapped;
     public event System.Action TapStarted;

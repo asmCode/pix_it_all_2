@@ -181,6 +181,8 @@ public class BoardController : MonoBehaviour
             m_ignoreNextTap = true;
             m_inertiaVelocity = Vector2.zero;
         }
+        else
+            m_ignoreNextTap = false;
     }
 
     private void HandleTapped(Vector2 position)
