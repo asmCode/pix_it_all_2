@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BoardController : MonoBehaviour
 {
-    private const float PinchDelay = 0.2f;
+    private const float PinchDelay = 0.15f;
 
     public event System.Action<int, int> BoardTileTapped;
 

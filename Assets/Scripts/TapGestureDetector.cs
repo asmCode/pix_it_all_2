@@ -3,8 +3,7 @@ using System.Collections;
 
 public class TapGestureDetector : MonoBehaviour
 {
-    // Default is 3 pixels on screen with the width 640.
-    public float m_panThreshold = 3.0f / 640.0f;
+    private const float m_tapInchThreshold = 0.5f;
 
     public event System.Action<Vector2> Tapped;
 
@@ -31,7 +30,7 @@ public class TapGestureDetector : MonoBehaviour
         {
             m_isTouching = false;
             if (m_isTapValid)
-                OnTapped(m_touchEndPosition);
+                OnTapped(m_touchStartPosition);
             m_isTapValid = false;
             return;
         }
@@ -66,7 +65,7 @@ public class TapGestureDetector : MonoBehaviour
     {
         float screenDiag = Mathf.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
         float pixelsMoved = (m_touchStartPosition - m_touchEndPosition).magnitude;
-        float ratio = pixelsMoved / screenDiag;
-        return ratio <= m_panThreshold;
+        float inchesMoved = pixelsMoved / Screen.dpi;
+        return inchesMoved <= m_tapInchThreshold;
     }
 }

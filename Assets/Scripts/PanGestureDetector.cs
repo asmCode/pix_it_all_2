@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PanGestureDetector : MonoBehaviour
 {
+    private const float m_tapInchThreshold = 0.5f;
+
     public event System.Action PanStarted;
     public event System.Action<Vector2, Vector2> PanMoved;
     public TouchDataProvider m_touchProvider;
@@ -13,6 +15,9 @@ public class PanGestureDetector : MonoBehaviour
     private int m_numberOfTouches;
     private Vector2 m_lastPosition;
     private GestureVelocity m_gestureVelocity = new GestureVelocity();
+    private bool m_waitingForThreshold;
+    private bool m_firstTouch;
+    private Vector2 m_startPosition;
 
     public TouchDataProvider TouchDataProvider
     {
@@ -24,13 +29,42 @@ public class PanGestureDetector : MonoBehaviour
         bool isTouching = IsTouching();
 
         if (!isTouching && !m_isPanning)
+        {
+            m_waitingForThreshold = true;
+            m_firstTouch = false;
             return;
+        }
 
         if (!isTouching && m_isPanning)
         {
             m_isPanning = false;
+            m_firstTouch = false;
+            m_waitingForThreshold = true;
             m_numberOfTouches = 0;
             OnPanEnded(m_gestureVelocity.GetVelocity(Time.time));
+            return;
+        }
+
+        var currentPosition = GetCurrentTouchPosition();
+
+        if (m_waitingForThreshold)
+        {
+            if (!m_firstTouch)
+            {
+                m_firstTouch = true;
+                m_startPosition = currentPosition;
+            }
+            else
+            {
+                float deltaPixels = (currentPosition - m_startPosition).magnitude;
+                float deltaInches = deltaPixels / Screen.dpi;
+
+                if (deltaInches >= m_tapInchThreshold)
+                {
+                    m_waitingForThreshold = false;
+                }
+            }
+
             return;
         }
 
@@ -51,7 +85,6 @@ public class PanGestureDetector : MonoBehaviour
             return;
         }
 
-        var currentPosition = GetCurrentTouchPosition();
         var delta = currentPosition - m_lastPosition;
         m_lastPosition = currentPosition;
 
