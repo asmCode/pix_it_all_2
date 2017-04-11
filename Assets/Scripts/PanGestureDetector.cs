@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PanGestureDetector : MonoBehaviour
 {
-    private const float m_tapInchThreshold = 0.07f;
+    private const float m_tapInchThreshold = 0.00f;
 
     public event System.Action PanStarted;
     public event System.Action<Vector2, Vector2> PanMoved;

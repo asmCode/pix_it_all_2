@@ -176,22 +176,22 @@ public class BoardController : MonoBehaviour
 
     private void HandleTapStarted()
     {
-        if (m_inertiaVelocity != Vector2.zero)
-        {
-            m_ignoreNextTap = true;
-            m_inertiaVelocity = Vector2.zero;
-        }
-        else
-            m_ignoreNextTap = false;
+        //if (m_inertiaVelocity != Vector2.zero)
+        //{
+        //    m_ignoreNextTap = true;
+        //    m_inertiaVelocity = Vector2.zero;
+        //}
+        //else
+        //    m_ignoreNextTap = false;
     }
 
     private void HandleTapped(Vector2 position)
     {
-        if (m_ignoreNextTap)
-        {
-            m_ignoreNextTap = false;
-            return;
-        }
+        //if (m_ignoreNextTap)
+        //{
+        //    m_ignoreNextTap = false;
+        //    return;
+        //}
 
         Vector2 localPoint;
         if (RectTransformUtility.RectangleContainsScreenPoint(m_board.m_parentRectTransform, position) &&
