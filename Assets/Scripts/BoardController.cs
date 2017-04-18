@@ -74,12 +74,12 @@ public class BoardController : MonoBehaviour
 
         var sampleInteriaDeceleration = -m_inertiaVelocity.normalized;
 
-        if (imageOffset.x != 0.0f)
+        if (Mathf.Round(imageOffset.x) != 0.0f)
             sampleInteriaDeceleration.x *= DecelerationOffScreen;
         else
             sampleInteriaDeceleration.x *= DecelerationNormal;
 
-        if (imageOffset.y != 0.0f)
+        if (Mathf.Round(imageOffset.y) != 0.0f)
             sampleInteriaDeceleration.y *= DecelerationOffScreen;
         else
             sampleInteriaDeceleration.y *= DecelerationNormal;
@@ -88,6 +88,9 @@ public class BoardController : MonoBehaviour
 
         if (Mathf.Abs(sampleInteriaDeceleration.x) >= Mathf.Abs(m_inertiaVelocity.x))
         {
+            // if (m_inertiaVelocity.x != 0.0f)
+            //     Debug.LogFormat("[{0}] m_inertiaVelocity.x = {1}, sampleInteriaDeceleration.x = {2}, imageOffset.x = {3}", Time.frameCount, m_inertiaVelocity.x, sampleInteriaDeceleration.x, imageOffset.x);
+
             m_inertiaVelocity.x = 0.0f;
         }
         else
@@ -97,6 +100,9 @@ public class BoardController : MonoBehaviour
 
         if (Mathf.Abs(sampleInteriaDeceleration.y) >= Mathf.Abs(m_inertiaVelocity.y))
         {
+            // if (m_inertiaVelocity.y != 0.0f)
+            //     Debug.LogFormat("[{0}] m_inertiaVelocity.y = {1}, sampleInteriaDeceleration.y = {2}, imageOffset.x = {3}", Time.frameCount, m_inertiaVelocity.y, sampleInteriaDeceleration.y, imageOffset.y);
+
             m_inertiaVelocity.y = 0.0f;
         }
         else
@@ -160,7 +166,7 @@ public class BoardController : MonoBehaviour
         if (timeElapsedSinceLastPinch <= PinchDelay &&
             m_panGestureDetector.TouchDataProvider.GetTouchCount() == 0)
         {
-            Debug.LogFormat("timeElapsedSinceLastPinch = {0}. Skipping HandlePanEnded", timeElapsedSinceLastPinch);
+            // Debug.LogFormat("timeElapsedSinceLastPinch = {0}. Skipping HandlePanEnded", timeElapsedSinceLastPinch);
             return;
         }
 
