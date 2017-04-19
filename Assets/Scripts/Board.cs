@@ -11,6 +11,7 @@ public class Board : MonoBehaviour
     private RectTransform m_rectTransform;
     private float m_scaleMin;
     private float m_scaleMax;
+    private float m_scaleOptimal;
     private float m_scale = 1.0f;
 
     private bool m_isInitialized;
@@ -31,11 +32,26 @@ public class Board : MonoBehaviour
         get { return m_referenceImage.gameObject.activeSelf;  }
     }
 
+    public float OptimalScale
+    {
+        get { return m_scaleOptimal; }
+    }
+
+    public float CurrentScale
+    {
+        get { return m_scale; }
+    }
+
     public void SetSize(int width, int height)
     {
         m_rectTransform.sizeDelta = new Vector2(width, height);
         InitScaleBounds();
         RecreateImage();
+    }
+
+    public bool IsScaleLessThanOptimal()
+    {
+        return m_scale < m_scaleOptimal;
     }
 
     public void ShowPreview()
@@ -143,6 +159,7 @@ public class Board : MonoBehaviour
     {
         m_scaleMin = CalculateScaleMin();
         m_scaleMax = CalculateScaleMax();
+        m_scaleOptimal = CalculateScaleOptimal();
     }
 
     private void ChangeLocalPositionInternal(Vector2 delta)
@@ -172,6 +189,16 @@ public class Board : MonoBehaviour
     {
         const float InchToCm = 0.393701f;
         return Screen.dpi * InchToCm;
+    }
+
+    private float CalculateScaleOptimal()
+    {
+        float scaleOptimal = CalculateScaleMax() * 0.8f;
+        float scaleMax = CalculateScaleMin();
+        if (scaleOptimal < scaleMax)
+            scaleOptimal = scaleMax;
+        
+        return scaleOptimal;
     }
 
     public RectSides GetParentRect()

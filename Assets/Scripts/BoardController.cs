@@ -21,6 +21,27 @@ public class BoardController : MonoBehaviour
     private float m_timeFromLastPinch = 0.0f;
     private bool m_ignoreNextTap;
 
+    private bool m_isDuringSmoothScale;
+    private float m_smoothScaleVelocity;
+    private Vector2 m_smoothScalePivot;
+    private float m_smoothScaleTarget;
+
+    public void SmoothZoom(Vector2 pivot, float scale)
+    {
+        if (scale == m_board.CurrentScale)
+            return;
+
+        m_smoothScalePivot = pivot;
+        m_smoothScaleTarget = scale;
+
+        m_isDuringSmoothScale = true;
+    }
+
+    private bool IsDuringSmoothScale()
+    {
+        return m_isDuringSmoothScale;
+    }
+
     private void Awake()
     {
         Debug.LogFormat("dpi = {0}", Screen.dpi);
@@ -28,10 +49,33 @@ public class BoardController : MonoBehaviour
         m_board = GetComponent<Board>();
     }
 
+    private void Start()
+    {
+        m_smoothScaleTarget = m_board.CurrentScale;
+    }
+
     private void Update()
     {
+        if (IsDuringSmoothScale())
+            UpdateSmoothZoom();
+
         if (TouchProxy.GetTouchCount() == 0)
+        {
             UpdateSpring();
+        }
+    }
+
+    private void UpdateSmoothZoom()
+    {
+        float scale = Mathf.SmoothDamp(m_board.CurrentScale, m_smoothScaleTarget, ref m_smoothScaleVelocity, 0.1f, float.MaxValue, Time.deltaTime);
+
+        if (Mathf.Abs(scale - m_smoothScaleTarget) < 0.01f)
+        {
+            scale = m_smoothScaleTarget;
+            m_isDuringSmoothScale = false;
+        }
+
+        m_board.SetScale(m_smoothScalePivot, scale);
     }
 
     private void UpdateSpring()
@@ -177,6 +221,9 @@ public class BoardController : MonoBehaviour
     {
         m_timeFromLastPinch = Time.time;
 
+        if (IsDuringSmoothScale())
+            return;
+
         m_board.Scale(pivot, scale);
     }
 
@@ -204,10 +251,17 @@ public class BoardController : MonoBehaviour
             RectTransformUtility.RectangleContainsScreenPoint(m_board.RectTransform, position) &&
             RectTransformUtility.ScreenPointToLocalPointInRectangle(m_board.RectTransform, position, null, out localPoint))
         {
-            int x = (int)(localPoint.x + m_board.RectTransform.rect.width / 2);
-            int y = (int)(localPoint.y + m_board.RectTransform.rect.height / 2);
-            if (BoardTileTapped != null)
-                BoardTileTapped(x, y);
+            if (m_board.IsScaleLessThanOptimal())
+            {
+                SmoothZoom(position, m_board.OptimalScale);
+            }
+            else
+            {
+                int x = (int)(localPoint.x + m_board.RectTransform.rect.width / 2);
+                int y = (int)(localPoint.y + m_board.RectTransform.rect.height / 2);
+                if (BoardTileTapped != null)
+                    BoardTileTapped(x, y);
+            }
         }
     }
 }
