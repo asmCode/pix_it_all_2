@@ -27,6 +27,8 @@ public class GestureVelocity
 
     public void Track(Vector2 position, float time)
     {
+        // Debug.LogFormat("[{0}] Track {1}, {2}, time={3}", Time.frameCount, position.x, position.y, time);
+
         if (m_samples.Count >= NumSamples)
             m_samples.RemoveAt(0);
 

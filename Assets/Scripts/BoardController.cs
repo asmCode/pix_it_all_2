@@ -21,6 +21,27 @@ public class BoardController : MonoBehaviour
     private float m_timeFromLastPinch = 0.0f;
     private bool m_ignoreNextTap;
 
+    private bool m_isDuringSmoothScale;
+    private float m_smoothScaleVelocity;
+    private Vector2 m_smoothScalePivot;
+    private float m_smoothScaleTarget;
+
+    public void SmoothZoom(Vector2 pivot, float scale)
+    {
+        if (scale == m_board.CurrentScale)
+            return;
+
+        m_smoothScalePivot = pivot;
+        m_smoothScaleTarget = scale;
+
+        m_isDuringSmoothScale = true;
+    }
+
+    private bool IsDuringSmoothScale()
+    {
+        return m_isDuringSmoothScale;
+    }
+
     private void Awake()
     {
         Debug.LogFormat("dpi = {0}", Screen.dpi);
@@ -28,10 +49,33 @@ public class BoardController : MonoBehaviour
         m_board = GetComponent<Board>();
     }
 
+    private void Start()
+    {
+        m_smoothScaleTarget = m_board.CurrentScale;
+    }
+
     private void Update()
     {
+        if (IsDuringSmoothScale())
+            UpdateSmoothZoom();
+
         if (TouchProxy.GetTouchCount() == 0)
+        {
             UpdateSpring();
+        }
+    }
+
+    private void UpdateSmoothZoom()
+    {
+        float scale = Mathf.SmoothDamp(m_board.CurrentScale, m_smoothScaleTarget, ref m_smoothScaleVelocity, 0.1f, float.MaxValue, Time.deltaTime);
+
+        if (Mathf.Abs(scale - m_smoothScaleTarget) < 0.01f)
+        {
+            scale = m_smoothScaleTarget;
+            m_isDuringSmoothScale = false;
+        }
+
+        m_board.SetScale(m_smoothScalePivot, scale);
     }
 
     private void UpdateSpring()
@@ -74,12 +118,12 @@ public class BoardController : MonoBehaviour
 
         var sampleInteriaDeceleration = -m_inertiaVelocity.normalized;
 
-        if (imageOffset.x != 0.0f)
+        if (Mathf.Round(imageOffset.x) != 0.0f)
             sampleInteriaDeceleration.x *= DecelerationOffScreen;
         else
             sampleInteriaDeceleration.x *= DecelerationNormal;
 
-        if (imageOffset.y != 0.0f)
+        if (Mathf.Round(imageOffset.y) != 0.0f)
             sampleInteriaDeceleration.y *= DecelerationOffScreen;
         else
             sampleInteriaDeceleration.y *= DecelerationNormal;
@@ -88,6 +132,9 @@ public class BoardController : MonoBehaviour
 
         if (Mathf.Abs(sampleInteriaDeceleration.x) >= Mathf.Abs(m_inertiaVelocity.x))
         {
+            // if (m_inertiaVelocity.x != 0.0f)
+            //     Debug.LogFormat("[{0}] m_inertiaVelocity.x = {1}, sampleInteriaDeceleration.x = {2}, imageOffset.x = {3}", Time.frameCount, m_inertiaVelocity.x, sampleInteriaDeceleration.x, imageOffset.x);
+
             m_inertiaVelocity.x = 0.0f;
         }
         else
@@ -97,6 +144,9 @@ public class BoardController : MonoBehaviour
 
         if (Mathf.Abs(sampleInteriaDeceleration.y) >= Mathf.Abs(m_inertiaVelocity.y))
         {
+            // if (m_inertiaVelocity.y != 0.0f)
+            //     Debug.LogFormat("[{0}] m_inertiaVelocity.y = {1}, sampleInteriaDeceleration.y = {2}, imageOffset.x = {3}", Time.frameCount, m_inertiaVelocity.y, sampleInteriaDeceleration.y, imageOffset.y);
+
             m_inertiaVelocity.y = 0.0f;
         }
         else
@@ -160,7 +210,7 @@ public class BoardController : MonoBehaviour
         if (timeElapsedSinceLastPinch <= PinchDelay &&
             m_panGestureDetector.TouchDataProvider.GetTouchCount() == 0)
         {
-            Debug.LogFormat("timeElapsedSinceLastPinch = {0}. Skipping HandlePanEnded", timeElapsedSinceLastPinch);
+            // Debug.LogFormat("timeElapsedSinceLastPinch = {0}. Skipping HandlePanEnded", timeElapsedSinceLastPinch);
             return;
         }
 
@@ -171,37 +221,47 @@ public class BoardController : MonoBehaviour
     {
         m_timeFromLastPinch = Time.time;
 
+        if (IsDuringSmoothScale())
+            return;
+
         m_board.Scale(pivot, scale);
     }
 
     private void HandleTapStarted()
     {
-        //if (m_inertiaVelocity != Vector2.zero)
-        //{
-        //    m_ignoreNextTap = true;
-        //    m_inertiaVelocity = Vector2.zero;
-        //}
-        //else
-        //    m_ignoreNextTap = false;
+        if (m_inertiaVelocity != Vector2.zero)
+        {
+            m_ignoreNextTap = true;
+            m_inertiaVelocity = Vector2.zero;
+        }
+        else
+            m_ignoreNextTap = false;
     }
 
     private void HandleTapped(Vector2 position)
     {
-        //if (m_ignoreNextTap)
-        //{
-        //    m_ignoreNextTap = false;
-        //    return;
-        //}
+        if (m_ignoreNextTap)
+        {
+            m_ignoreNextTap = false;
+            return;
+        }
 
         Vector2 localPoint;
         if (RectTransformUtility.RectangleContainsScreenPoint(m_board.m_parentRectTransform, position) &&
             RectTransformUtility.RectangleContainsScreenPoint(m_board.RectTransform, position) &&
             RectTransformUtility.ScreenPointToLocalPointInRectangle(m_board.RectTransform, position, null, out localPoint))
         {
-            int x = (int)(localPoint.x + m_board.RectTransform.rect.width / 2);
-            int y = (int)(localPoint.y + m_board.RectTransform.rect.height / 2);
-            if (BoardTileTapped != null)
-                BoardTileTapped(x, y);
+            if (m_board.IsScaleLessThanOptimal())
+            {
+                SmoothZoom(position, m_board.OptimalScale);
+            }
+            else
+            {
+                int x = (int)(localPoint.x + m_board.RectTransform.rect.width / 2);
+                int y = (int)(localPoint.y + m_board.RectTransform.rect.height / 2);
+                if (BoardTileTapped != null)
+                    BoardTileTapped(x, y);
+            }
         }
     }
 }

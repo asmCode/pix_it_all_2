@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PanGestureDetector : MonoBehaviour
 {
-    private const float m_tapInchThreshold = 0.00f;
+    private const float m_tapInchThreshold = 0.1f;
 
     public event System.Action PanStarted;
     public event System.Action<Vector2, Vector2> PanMoved;
@@ -37,6 +37,7 @@ public class PanGestureDetector : MonoBehaviour
 
         if (!isTouching && m_isPanning)
         {
+            // Debug.Log("!isTouching && m_isPanning");
             m_isPanning = false;
             m_firstTouch = false;
             m_waitingForThreshold = true;
@@ -53,6 +54,10 @@ public class PanGestureDetector : MonoBehaviour
             {
                 m_firstTouch = true;
                 m_startPosition = currentPosition;
+                m_gestureVelocity.Reset();
+                m_gestureVelocity.Track(currentPosition, Time.time);
+                m_numberOfTouches = GetNumberOfTouches();
+                return;
             }
             else
             {
@@ -63,23 +68,27 @@ public class PanGestureDetector : MonoBehaviour
                 {
                     m_waitingForThreshold = false;
                 }
+                else
+                {
+                    m_gestureVelocity.Track(currentPosition, Time.time);
+                    return;
+                }
             }
-
-            return;
         }
 
         if (!m_isPanning)
         {
+            // Debug.Log("!m_isPanning");
             m_isPanning = true;
-            m_lastPosition = GetCurrentTouchPosition();
-            m_gestureVelocity.Reset();
-            m_gestureVelocity.Track(m_lastPosition, Time.time);
+            m_lastPosition = currentPosition;
+            m_gestureVelocity.Track(currentPosition, Time.time);
             OnPanStarted();
             return;
         }
 
         if (NumberOfTouchsChanged())
         {
+            // Debug.Log("NumberOfTouchsChanged()");
             m_numberOfTouches = GetNumberOfTouches();
             m_lastPosition = GetCurrentTouchPosition();
             return;
@@ -90,6 +99,7 @@ public class PanGestureDetector : MonoBehaviour
 
         if (delta != Vector2.zero)
         {
+            // Debug.Log("delta != Vector2.zero");
             m_gestureVelocity.Track(currentPosition, Time.time);
             OnPanMoved(currentPosition, delta);
         }
@@ -97,18 +107,24 @@ public class PanGestureDetector : MonoBehaviour
 
     private void OnPanEnded(Vector2 velocity)
     {
+        // Debug.LogFormat("[{0}] OnPanEnded, velocity = {1},{2}", Time.frameCount, velocity.x, velocity.y);
+
         if (PanEnded != null)
             PanEnded(velocity);
     }
 
     private void OnPanStarted()
     {
+        // Debug.LogFormat("[{0}] OnPanStarted", Time.frameCount);
+
         if (PanStarted != null)
             PanStarted();
     }
 
     private void OnPanMoved(Vector2 position, Vector2 delta)
     {
+        // Debug.LogFormat("[{0}] OnPanMoved p={1},{2} v={3},{4}", Time.frameCount, position.x, position.y, delta.x, delta.y);
+
         if (PanMoved != null)
             PanMoved(position, delta);
     }
