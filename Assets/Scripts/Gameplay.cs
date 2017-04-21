@@ -4,8 +4,17 @@ using System;
 
 public class Gameplay
 {
+    public event System.Action TileRevealedWithSuccess;
+
     private static readonly int PenaltyTime = 10;
     private static readonly float PreviewTimeCostPerSecond = 7.0f;
+
+    private int m_successInRow;
+
+    public int SuccessInRow
+    {
+        get { return m_successInRow; }
+    }
 
     public string BundleId
     {
@@ -123,8 +132,26 @@ public class Gameplay
         return PenaltyTime;
     }
 
+    public void ApplyBonus(float seconds)
+    {
+        // go go go madafaka!!!!
+    }
+
     public void ApplyPreview(float deltaTime)
     {
         Time += PreviewTimeCostPerSecond * deltaTime;
+    }
+
+    public void NotifyTileRevealedWithSuccess()
+    {
+        m_successInRow++;
+
+        if (TileRevealedWithSuccess != null)
+            TileRevealedWithSuccess();
+    }
+
+    public void NotifyTileRevealedWithFailure()
+    {
+        m_successInRow = 0;
     }
 }

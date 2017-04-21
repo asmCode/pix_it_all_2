@@ -12,6 +12,8 @@ public class GameplayController
     private PenaltyView m_penaltyView;
     private Board m_board;
     private BoardController m_boardInputController;
+    private BonusController m_bonusController;
+    private BonusView m_bonusView;
 
     private ImageData m_referenceImage;
 
@@ -21,6 +23,7 @@ public class GameplayController
         PauseView pauseView,
         SummaryView summaryView,
         PenaltyView penaltyView,
+        BonusView bonusView,
         Board board,
         BoardController boardInputController)
     {
@@ -29,6 +32,7 @@ public class GameplayController
         m_pauseView = pauseView;
         m_summaryView = summaryView;
         m_penaltyView = penaltyView;
+        m_bonusView = bonusView;
         m_board = board;
         m_boardInputController = boardInputController;
     }
@@ -67,6 +71,9 @@ public class GameplayController
 
         m_summaryView.BackToMenuClicked += HandleBackToMenuClicked;
         m_summaryView.Hide();
+
+        m_bonusController = new BonusController();
+        m_bonusController.Init(m_gameplay, m_bonusView);
     }
 
     public void Update(float deltaTime)
@@ -99,6 +106,8 @@ public class GameplayController
         m_board.Image.Apply();
 
         m_gameplay.ImageProgress.RevealTile(x, y);
+
+        m_gameplay.NotifyTileRevealedWithSuccess();
 
         if (IsLevelCompleted())
             FinishLevel();
@@ -138,6 +147,8 @@ public class GameplayController
     {
         int penaltySeconds = m_gameplay.ApplyPenalty();
         m_penaltyView.ShowPenalty(penaltySeconds);
+        
+        m_gameplay.NotifyTileRevealedWithSuccess();
     }
 
     private void ShowSummary()

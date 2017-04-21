@@ -73,7 +73,6 @@ public class TapGestureDetector : MonoBehaviour
 
     private bool IsLessThanThreshold()
     {
-        float screenDiag = Mathf.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
         float pixelsMoved = (m_touchStartPosition - m_touchEndPosition).magnitude;
         float inchesMoved = pixelsMoved / Screen.dpi;
         return inchesMoved <= m_tapInchThreshold;

@@ -11,6 +11,7 @@ public class GameplayScene : MonoBehaviour
     public PauseView m_pauseView;
     public SummaryView m_summaryView;
     public PenaltyView m_penaltyView;
+    public BonusView m_bonusView;
     public Board m_board;
     public BoardController m_boardInputController;
 
@@ -30,6 +31,7 @@ public class GameplayScene : MonoBehaviour
             m_pauseView,
             m_summaryView,
             m_penaltyView,
+            m_bonusView,
             m_board,
             m_boardInputController);
     }
