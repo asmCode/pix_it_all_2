@@ -71,6 +71,9 @@ public class Gameplay
     public void AddSeconds(float deltaTime)
     {
         Time += deltaTime;
+
+        if (Time < 0.0f)
+            Time = 0.0f;
     }
 
     public Color GetReferenceColor(int x, int y)
@@ -134,7 +137,7 @@ public class Gameplay
 
     public void ApplyBonus(float seconds)
     {
-        // go go go madafaka!!!!
+        AddSeconds(seconds);
     }
 
     public void ApplyPreview(float deltaTime)

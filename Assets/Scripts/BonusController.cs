@@ -36,6 +36,7 @@ public class BonusController
 				return;
         }
         m_bonusView.ShowBonus(type);
+        m_gameplay.ApplyBonus(-m_gameplay.SuccessInRow * 0.5f);
     }
 
     private void HandleTileRevealedWithSuccess()

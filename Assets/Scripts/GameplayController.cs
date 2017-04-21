@@ -148,7 +148,7 @@ public class GameplayController
         int penaltySeconds = m_gameplay.ApplyPenalty();
         m_penaltyView.ShowPenalty(penaltySeconds);
         
-        m_gameplay.NotifyTileRevealedWithSuccess();
+        m_gameplay.NotifyTileRevealedWithFailure();
     }
 
     private void ShowSummary()
