@@ -17,7 +17,7 @@ public class OptionsController
         m_view.MusicPressed += HandleMusicPressed;
         m_view.RestorePurchasesPressed += HandleRestorePurchasesPressed;
         
-        m_view.SetVersion("1.2.3");
+        m_view.SetVersion(Application.version);
         m_view.SetSoundEnabled(options.IsSoundEnabled);
         m_view.SetMusicEnabled(options.IsMusicEnabled);
     }
