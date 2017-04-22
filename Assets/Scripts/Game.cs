@@ -22,6 +22,12 @@ public class Game : MonoBehaviourSingleton<Game, MonoBehaviourSingletonMeta>
         private set;
     }
 
+    public Options Options
+    {
+        get;
+        private set;
+    }
+
     public void StartLevel(string bundleId, string imageId, bool continueLevel)
     {
         GameplayScene.m_selectedBundleId = bundleId;
@@ -35,6 +41,9 @@ public class Game : MonoBehaviourSingleton<Game, MonoBehaviourSingletonMeta>
     {
         Application.targetFrameRate = 60;
         TouchProxy.Init();
+
+        Options = new Options();
+        Options.Load();
 
         ImageManager = new ImageManager();
         ImageManager.Init();
