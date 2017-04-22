@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelsScene : MonoBehaviour
 {
@@ -137,6 +138,11 @@ public class LevelsScene : MonoBehaviour
         m_selectedBundleId = null;
     }
 
+    private void ShowOptions()
+    {
+        SceneManager.LoadScene("Options", LoadSceneMode.Additive);
+    }
+
     private void OnEnable()
     {
         m_bundleListView.BundleClicked += HandleBundleClicked;
@@ -154,6 +160,11 @@ public class LevelsScene : MonoBehaviour
     public void UiEvent_BackButtonClicked()
     {
         ShowBundles();
+    }
+
+    public void UiEvent_OptionsButtonClicked()
+    {
+        ShowOptions();
     }
 
     private void HandleBundlesChanged()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OptionsController
 {
@@ -24,6 +25,7 @@ public class OptionsController
 
     private void HandleBackPressed()
     {
+        Close();
     }
 
     private void HandleSoundPressed()
@@ -46,5 +48,15 @@ public class OptionsController
 
     private void HandleRestorePurchasesPressed()
     {
+    }
+
+    private void Close()
+    {
+        m_view.BackPressed -= HandleBackPressed;
+        m_view.SoundPressed -= HandleSoundPressed;
+        m_view.MusicPressed -= HandleMusicPressed;
+        m_view.RestorePurchasesPressed -= HandleRestorePurchasesPressed;
+
+        SceneManager.UnloadSceneAsync("Options");
     }
 }
