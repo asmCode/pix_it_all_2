@@ -7,7 +7,7 @@ public class OptionsController
 {
     private OptionsView m_view;
 
-    public void Init(OptionsView view)
+    public void Init(OptionsView view, bool duringLevel)
     {
         m_view = view;
 
@@ -21,6 +21,9 @@ public class OptionsController
         m_view.SetVersion(Application.version);
         m_view.SetSoundEnabled(options.IsSoundEnabled);
         m_view.SetMusicEnabled(options.IsMusicEnabled);
+
+        bool restorePurchaseAvailable = !duringLevel && Game.GetInstance().Purchaser.IsRestoreAvailable();
+        m_view.SetRestorePurchasesEnabled(restorePurchaseAvailable);
     }
 
     private void HandleBackPressed()
@@ -49,7 +52,7 @@ public class OptionsController
     private void HandleRestorePurchasesPressed()
     {
     }
-
+    
     private void Close()
     {
         m_view.BackPressed -= HandleBackPressed;

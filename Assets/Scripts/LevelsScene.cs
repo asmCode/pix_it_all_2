@@ -140,7 +140,7 @@ public class LevelsScene : MonoBehaviour
 
     private void ShowOptions()
     {
-        SceneManager.LoadScene("Options", LoadSceneMode.Additive);
+        OptionsScene.Show(false);
     }
 
     private void OnEnable()

@@ -438,6 +438,7 @@ MonoBehaviour:
   m_labelVersion: {fileID: 1736498549}
   m_labelSound: {fileID: 1558071556}
   m_labelMusic: {fileID: 2140113148}
+  m_buttonRestorePurchases: {fileID: 2014308958}
 --- !u!1 &863099093
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,7 +42,7 @@ public class GameplayController
         m_referenceImage = m_gameplay.ReferenceImage;
         var initialColor = m_referenceImage.Colors[0];
         var imageProgress = m_gameplay.ImageProgress;
- 
+
         m_boardInputController.BoardTileTapped += HandleBoardTileTapped;
 
         m_hud.Init(m_referenceImage.Colors);
@@ -67,6 +67,7 @@ public class GameplayController
 
         m_pauseView.ResumeClicked += HandlePauseViewResumeClicked;
         m_pauseView.BackToMenuClicked += HandlePauseViewBackToMenuClicked;
+        m_pauseView.OptionsClicked += HandlePauseViewOptionsClicked;
         m_pauseView.Hide();
 
         m_summaryView.BackToMenuClicked += HandleBackToMenuClicked;
@@ -98,6 +99,8 @@ public class GameplayController
         m_hud.PauseClicked -= HandlePauseClicked;
         m_pauseView.ResumeClicked -= HandlePauseViewBackToMenuClicked;
         m_pauseView.BackToMenuClicked -= HandlePauseViewResumeClicked;
+        m_pauseView.OptionsClicked -= HandlePauseViewOptionsClicked;
+        m_summaryView.BackToMenuClicked -= HandleBackToMenuClicked;
     }
 
     private void SetBoardColor(int x, int y, Color color)
@@ -147,7 +150,7 @@ public class GameplayController
     {
         int penaltySeconds = m_gameplay.ApplyPenalty();
         m_penaltyView.ShowPenalty(penaltySeconds);
-        
+
         m_gameplay.NotifyTileRevealedWithFailure();
     }
 
@@ -269,7 +272,12 @@ public class GameplayController
         if (m_gameplay.ImageProgress.RevealedTiles > 0)
             SaveProgress();
 
-        SceneManager.LoadScene("Levels");   
+        SceneManager.LoadScene("Levels");
+    }
+
+    private void HandlePauseViewOptionsClicked()
+    {
+        OptionsScene.Show(true);
     }
 
     private void HandlePauseViewResumeClicked()

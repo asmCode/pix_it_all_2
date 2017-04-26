@@ -10,6 +10,7 @@ public class PauseView : MonoBehaviour
 
     public event System.Action ResumeClicked;
     public event System.Action BackToMenuClicked;
+    public event System.Action OptionsClicked;
 
     public bool IsActive
     {
@@ -38,5 +39,11 @@ public class PauseView : MonoBehaviour
     {
         if (BackToMenuClicked != null)
             BackToMenuClicked();
+    }
+
+    public void UiEvent_OptionsClicked()
+    {
+        if (OptionsClicked != null)
+            OptionsClicked();
     }
 }

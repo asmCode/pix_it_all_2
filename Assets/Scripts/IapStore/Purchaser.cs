@@ -15,6 +15,11 @@ public class Purchaser : IStoreListener
     public event Action<bool, string> PurchaseFinished;
     public event Action<bool> InitializationFinished;
 
+    public bool IsRestoreAvailable()
+    {
+        return GameSettings.IsRestoreAvailable;
+    }
+
     public bool IsInitializing()
 	{
 		return m_isInitializing;

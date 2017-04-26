@@ -8,6 +8,7 @@ public class OptionsView : MonoBehaviour
     public Text m_labelVersion;
     public Text m_labelSound;
     public Text m_labelMusic;
+    public GameObject m_buttonRestorePurchases;
 
     public event System.Action SoundPressed;
     public event System.Action MusicPressed;
@@ -32,6 +33,11 @@ public class OptionsView : MonoBehaviour
     public void SetSoundEnabled(bool enabled)
     {
         m_labelSound.text = "SOUND " + (enabled ? "ON" : "OFF");
+    }
+
+    public void SetRestorePurchasesEnabled(bool enabled)
+    {
+        m_buttonRestorePurchases.SetActive(enabled);
     }
 
     public void SetMusicEnabled(bool enabled)
