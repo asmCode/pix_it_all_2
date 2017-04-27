@@ -4,40 +4,67 @@ using UnityEngine;
 
 public class Options
 {
-    private bool m_isSoundEnabled;
-    private bool m_isMusicEnabled;
+    private OptionsData m_data;
 
-    public bool IsSoundEnabled
+    public bool IsSoundEnabled()
     {
-        get { return m_isSoundEnabled; }
+        Init();
+
+        return m_data.IsSoundEnabled;
     }
 
-    public bool IsMusicEnabled
+    public bool IsMusicEnabled()
     {
-        get { return m_isMusicEnabled; }
+        Init();
+
+        return m_data.IsMusicEnabled;
     }
 
     public void ToggleSound()
     {
-        m_isSoundEnabled = !m_isSoundEnabled;
+        Init();
+
+        m_data.IsSoundEnabled = !m_data.IsSoundEnabled;
 
         Save();
     }
 
     public void ToggleMusic()
     {
-        m_isMusicEnabled = !m_isMusicEnabled;
+        Init();
+
+        m_data.IsMusicEnabled = !m_data.IsMusicEnabled;
 
         Save();
     }
 
     public void Load()
     {
+        var filePath = GetFilePath();
 
+        m_data = JsonLoader.LoadFromFile<OptionsData>(filePath);
     }
 
     public void Save()
     {
+        var filePath = GetFilePath();
 
+        JsonLoader.SaveToFile(filePath, m_data);
+    }
+
+    private void Init()
+    {
+        if (m_data != null)
+            return;
+
+        Load();
+
+        if (m_data == null)
+            m_data = new OptionsData();
+    }
+
+    private static string GetFilePath()
+    {
+        return string.Format("{0}/options.json", Application.persistentDataPath);
     }
 }

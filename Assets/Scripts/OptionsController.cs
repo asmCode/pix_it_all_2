@@ -19,8 +19,8 @@ public class OptionsController
         m_view.RestorePurchasesPressed += HandleRestorePurchasesPressed;
         
         m_view.SetVersion(Application.version);
-        m_view.SetSoundEnabled(options.IsSoundEnabled);
-        m_view.SetMusicEnabled(options.IsMusicEnabled);
+        m_view.SetSoundEnabled(options.IsSoundEnabled());
+        m_view.SetMusicEnabled(options.IsMusicEnabled());
 
         bool restorePurchaseAvailable = !duringLevel && Game.GetInstance().Purchaser.IsRestoreAvailable();
         m_view.SetRestorePurchasesEnabled(restorePurchaseAvailable);
@@ -37,7 +37,7 @@ public class OptionsController
 
         options.ToggleSound();
 
-        m_view.SetSoundEnabled(options.IsSoundEnabled);
+        m_view.SetSoundEnabled(options.IsSoundEnabled());
     }
 
     private void HandleMusicPressed()
@@ -46,7 +46,7 @@ public class OptionsController
 
         options.ToggleMusic();
 
-        m_view.SetMusicEnabled(options.IsMusicEnabled);
+        m_view.SetMusicEnabled(options.IsMusicEnabled());
     }
 
     private void HandleRestorePurchasesPressed()

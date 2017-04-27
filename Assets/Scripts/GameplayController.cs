@@ -118,6 +118,9 @@ public class GameplayController
 
     private void FinishLevel()
     {
+        var persistent = Game.GetInstance().Persistent;
+        persistent.SetTotalWins(persistent.GetTotalWins() + 1);
+
         ShowSummary();
 
         m_gameplay.Complete();
@@ -287,6 +290,13 @@ public class GameplayController
 
     private void HandleBackToMenuClicked()
     {
+        if (RateMeController.ShouldShowRateMe())
+        {
+            // TODO: after closing popup, go to Levels automatically
+            RateMeScene.Show();
+            return;
+        }
+
         SceneManager.LoadScene("Levels");
     }
 

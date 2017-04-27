@@ -10,6 +10,9 @@ public class RateMeScene : MonoBehaviour
     public static void Show()
     {
         SceneManager.LoadScene("RateMe", LoadSceneMode.Additive);
+
+        var persistent = Game.GetInstance().Persistent;
+        persistent.SetRateMeTimeWhenPresented(System.DateTime.Now);
     }
 
     private void Awake()

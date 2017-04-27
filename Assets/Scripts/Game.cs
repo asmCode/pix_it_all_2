@@ -28,6 +28,12 @@ public class Game : MonoBehaviourSingleton<Game, MonoBehaviourSingletonMeta>
         private set;
     }
 
+    public Persistent Persistent
+    {
+        get;
+        private set;
+    }
+
     public void StartLevel(string bundleId, string imageId, bool continueLevel)
     {
         GameplayScene.m_selectedBundleId = bundleId;
@@ -44,6 +50,9 @@ public class Game : MonoBehaviourSingleton<Game, MonoBehaviourSingletonMeta>
 
         Options = new Options();
         Options.Load();
+
+        Persistent = new Persistent();
+        Persistent.Load();
 
         ImageManager = new ImageManager();
         ImageManager.Init();

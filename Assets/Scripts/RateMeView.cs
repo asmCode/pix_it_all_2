@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class RateMeView : MonoBehaviour
 {
-    public GameObject m_buttonRestorePurchases;
-
     public event System.Action NowPressed;
     public event System.Action LaterPressed;
     public event System.Action NeverPressed;

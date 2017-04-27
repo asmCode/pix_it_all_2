@@ -10,8 +10,30 @@ public static class GameSettings
 		private set;
 	}
 
-	static GameSettings()
+    public static string RateMeUrl
+    {
+        get;
+        private set;
+    }
+
+    public static int RateMeWinsCount
+    {
+        get;
+        private set;
+    }
+
+    public static int RateMeDaysCount
+    {
+        get;
+        private set;
+    }
+
+    static GameSettings()
 	{		
 		IsRestoreAvailable = true;
-	}
+        RateMeUrl = "http://google.com";
+
+        RateMeWinsCount = 3;
+        RateMeDaysCount = 1;
+    }
 }

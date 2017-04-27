@@ -7,45 +7,61 @@ public class RateMeController
 {
     private RateMeView m_view;
 
+    public static bool ShouldShowRateMe()
+    {
+        var persistent = Game.GetInstance().Persistent;
+
+        var totalWins = persistent.GetTotalWins();
+        var lastTimePresented = persistent.GetRateMeTimeWhenPresented();
+
+        return
+            !persistent.GetRateMeDismissed() &&
+            totalWins > 0 &&
+            totalWins % GameSettings.RateMeWinsCount == 0 &&
+            (System.DateTime.Now - lastTimePresented).TotalDays >= GameSettings.RateMeDaysCount;
+    }
+
     public void Init(RateMeView view)
     {
         m_view = view;
 
         var options = Game.GetInstance().Options;
 
-        // m_view.BackPressed += HandleBackPressed;
-        // m_view.SoundPressed += HandleSoundPressed;
-        // m_view.MusicPressed += HandleMusicPressed;
+        m_view.NowPressed += HandleNowPressed;
+        m_view.LaterPressed += HandleLaterPressed;
+        m_view.NeverPressed += HandleNeverPressed;
     }
 
-    private void HandleBackPressed()
+    private void HandleNowPressed()
+    {
+        Application.OpenURL(GameSettings.RateMeUrl);
+
+        DismissAndClose();
+    }
+
+    private void HandleLaterPressed()
     {
         Close();
     }
 
-    private void HandleSoundPressed()
+    private void HandleNeverPressed()
     {
-        var options = Game.GetInstance().Options;
-
-        options.ToggleSound();
+        DismissAndClose();
     }
 
-    private void HandleMusicPressed()
+    private void DismissAndClose()
     {
-        var options = Game.GetInstance().Options;
+        var persistent = Game.GetInstance().Persistent;
+        persistent.SetRateMeDismissed(true);
 
-        options.ToggleMusic();
-    }
-
-    private void HandleRestorePurchasesPressed()
-    {
+        Close();
     }
     
     private void Close()
     {
-        // m_view.BackPressed -= HandleBackPressed;
-        // m_view.SoundPressed -= HandleSoundPressed;
-        // m_view.MusicPressed -= HandleMusicPressed;
+        m_view.NowPressed -= HandleNowPressed;
+        m_view.LaterPressed -= HandleLaterPressed;
+        m_view.NeverPressed -= HandleNeverPressed;
 
         SceneManager.UnloadSceneAsync("RateMe");
     }
