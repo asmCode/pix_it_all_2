@@ -11,7 +11,7 @@ public class RateMeScene : MonoBehaviour
     {
         SceneManager.LoadScene("RateMe", LoadSceneMode.Additive);
 
-        var persistent = Game.GetInstance().Persistent;
+        var persistent = Pix.Game.GetInstance().Persistent;
         persistent.SetRateMeTimeWhenPresented(System.DateTime.Now);
     }
 

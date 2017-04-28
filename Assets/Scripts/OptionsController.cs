@@ -11,7 +11,7 @@ public class OptionsController
     {
         m_view = view;
 
-        var options = Game.GetInstance().Options;
+        var options = Pix.Game.GetInstance().Options;
 
         m_view.BackPressed += HandleBackPressed;
         m_view.SoundPressed += HandleSoundPressed;
@@ -22,7 +22,7 @@ public class OptionsController
         m_view.SetSoundEnabled(options.IsSoundEnabled());
         m_view.SetMusicEnabled(options.IsMusicEnabled());
 
-        bool restorePurchaseAvailable = !duringLevel && Game.GetInstance().Purchaser.IsRestoreAvailable();
+        bool restorePurchaseAvailable = !duringLevel && Pix.Game.GetInstance().Purchaser.IsRestoreAvailable();
         m_view.SetRestorePurchasesEnabled(restorePurchaseAvailable);
     }
 
@@ -33,7 +33,7 @@ public class OptionsController
 
     private void HandleSoundPressed()
     {
-        var options = Game.GetInstance().Options;
+        var options = Pix.Game.GetInstance().Options;
 
         options.ToggleSound();
 
@@ -42,7 +42,7 @@ public class OptionsController
 
     private void HandleMusicPressed()
     {
-        var options = Game.GetInstance().Options;
+        var options = Pix.Game.GetInstance().Options;
 
         options.ToggleMusic();
 

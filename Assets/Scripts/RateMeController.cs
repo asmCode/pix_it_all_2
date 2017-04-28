@@ -9,7 +9,7 @@ public class RateMeController
 
     public static bool ShouldShowRateMe()
     {
-        var persistent = Game.GetInstance().Persistent;
+        var persistent = Pix.Game.GetInstance().Persistent;
 
         var totalWins = persistent.GetTotalWins();
         var lastTimePresented = persistent.GetRateMeTimeWhenPresented();
@@ -25,7 +25,7 @@ public class RateMeController
     {
         m_view = view;
 
-        var options = Game.GetInstance().Options;
+        var options = Pix.Game.GetInstance().Options;
 
         m_view.NowPressed += HandleNowPressed;
         m_view.LaterPressed += HandleLaterPressed;
@@ -51,7 +51,7 @@ public class RateMeController
 
     private void DismissAndClose()
     {
-        var persistent = Game.GetInstance().Persistent;
+        var persistent = Pix.Game.GetInstance().Persistent;
         persistent.SetRateMeDismissed(true);
 
         Close();

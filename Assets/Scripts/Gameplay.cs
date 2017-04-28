@@ -57,7 +57,7 @@ public class Gameplay
         BundleId = bundleId;
         ImageId = imageId;
 
-        ReferenceImage = Game.GetInstance().ImageManager.GetImageById(bundleId, imageId);
+        ReferenceImage = Pix.Game.GetInstance().ImageManager.GetImageById(bundleId, imageId);
 
         ImageProgress = new ImageProgress();
         ImageProgress.Init(ReferenceImage.Texture.width, ReferenceImage.Texture.height);
@@ -107,7 +107,7 @@ public class Gameplay
     {
         LevelProgress = null;
 
-        var playerProgress = Game.GetInstance().PlayerProgress;
+        var playerProgress = Pix.Game.GetInstance().PlayerProgress;
 
         LevelProgress = playerProgress.GetLevelProgress(BundleId, ImageId);
         if (LevelProgress == null)

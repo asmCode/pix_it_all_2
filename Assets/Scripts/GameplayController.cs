@@ -118,7 +118,7 @@ public class GameplayController
 
     private void FinishLevel()
     {
-        var persistent = Game.GetInstance().Persistent;
+        var persistent = Pix.Game.GetInstance().Persistent;
         persistent.SetTotalWins(persistent.GetTotalWins() + 1);
 
         ShowSummary();

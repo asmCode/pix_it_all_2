@@ -24,7 +24,7 @@ public class LevelsScene : MonoBehaviour
 
     private void RefreshBundles()
     {
-        Game.GetInstance().ImageManager.RefreshBundles();
+        Pix.Game.GetInstance().ImageManager.RefreshBundles();
     }
 
     private void InitView()
@@ -34,7 +34,7 @@ public class LevelsScene : MonoBehaviour
 
     private void InitBundleList()
     {
-        var bundles = Game.GetInstance().ImageManager.Bundles;
+        var bundles = Pix.Game.GetInstance().ImageManager.Bundles;
         if (bundles == null)
             return;
 
@@ -54,7 +54,7 @@ public class LevelsScene : MonoBehaviour
 
     private void HandleBundleClicked(string bundleId)
     {
-        var game = Game.GetInstance();
+        var game = Pix.Game.GetInstance();
 
         if (game.ImageManager.IsBundleAvailable(bundleId))
             ShowImagesInBundle(bundleId);
@@ -83,7 +83,7 @@ public class LevelsScene : MonoBehaviour
 
     private void HandleImageClicked(string imageId)
     {
-        var playerProgress = Game.GetInstance().PlayerProgress;
+        var playerProgress = Pix.Game.GetInstance().PlayerProgress;
         var levelProgress = playerProgress.GetLevelProgress(m_selectedBundleId, imageId);
         if (levelProgress == null)
             return;
@@ -98,11 +98,11 @@ public class LevelsScene : MonoBehaviour
                     levelProgress.Save();
                 }
 
-                Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
+                Pix.Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
             });
         }
         else
-            Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
+            Pix.Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
     }
 
     private void ShowImagesInBundle(string bundleId)
@@ -110,7 +110,7 @@ public class LevelsScene : MonoBehaviour
         m_bundleListView.gameObject.SetActive(false);
         m_imagesPanel.gameObject.SetActive(true);
 
-        var bundle = Game.GetInstance().ImageManager.GetBundleById(bundleId);
+        var bundle = Pix.Game.GetInstance().ImageManager.GetBundleById(bundleId);
         if (bundle == null)
             return;
 
@@ -147,14 +147,14 @@ public class LevelsScene : MonoBehaviour
     {
         m_bundleListView.BundleClicked += HandleBundleClicked;
         m_imageListView.ImageClicked += HandleImageClicked;
-        Game.GetInstance().ImageManager.BundlesChanged += HandleBundlesChanged;
+        Pix.Game.GetInstance().ImageManager.BundlesChanged += HandleBundlesChanged;
     }
 
     private void OnDisable()
     {
         m_bundleListView.BundleClicked -= HandleBundleClicked;
         m_imageListView.ImageClicked -= HandleImageClicked;
-        Game.GetInstance().ImageManager.BundlesChanged -= HandleBundlesChanged;
+        Pix.Game.GetInstance().ImageManager.BundlesChanged -= HandleBundlesChanged;
     }
 
     public void UiEvent_BackButtonClicked()
@@ -181,7 +181,7 @@ public class LevelsScene : MonoBehaviour
         int totalTiles = imageData.Texture.width * imageData.Texture.height;
         int totalColors = imageData.Colors.Length;
 
-        var playerProgress = Game.GetInstance().PlayerProgress;
+        var playerProgress = Pix.Game.GetInstance().PlayerProgress;
         var levelProgress = playerProgress.GetLevelProgress(m_selectedBundleId, imageData.Id);
         int stars = StarRatingCalc.GetStars(levelProgress.BestTime, totalTiles, totalColors);
 
@@ -197,7 +197,7 @@ public class LevelsScene : MonoBehaviour
 
     private BundleViewData CreateBundleViewData(BundleData bundleData)
     {
-        var game = Game.GetInstance();
+        var game = Pix.Game.GetInstance();
 
         var data = new BundleViewData();
 
