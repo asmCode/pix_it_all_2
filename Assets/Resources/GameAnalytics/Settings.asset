@@ -26,17 +26,22 @@ MonoBehaviour:
   CustomArea: 
   gameKey:
   - c57dd80b0ee31c8757a240e76bab023e
+  - 07f624c7874369ff09ccfb60c06a4900
   secretKey:
   - a3f413ab348ddb01ed3e869b421d640a9c5844f1
+  - 414eb00eb8be9d7f5a4b32f14fe4fe3738ef29fb
   Build:
+  - 0.1
   - 0.1
   SelectedPlatformStudio:
   - Semi-Serious Games
+  - 
   SelectedPlatformGame:
   - Pix It All iOS
-  SelectedPlatformGameID: 708a0000
-  SelectedStudio: 01000000
-  SelectedGame: 05000000
+  - 
+  SelectedPlatformGameID: 708a0000136f0000
+  SelectedStudio: 0100000001000000
+  SelectedGame: 0500000002000000
   NewVersion: 
   Changes: 
   SignUpOpen: 0
@@ -60,7 +65,7 @@ MonoBehaviour:
   ResourceItemTypes: []
   ResourceCurrencies: []
   LastCreatedGamePlatform: -1
-  Platforms: 08000000
+  Platforms: 080000000b000000
   CurrentInspectorState: 1
   ClosedHints: 
   DisplayHints: 0
@@ -88,7 +93,7 @@ MonoBehaviour:
   IncludeGooglePlay: 1
   FpsCriticalThreshold: 20
   FpsCirticalSubmitInterval: 1
-  PlatformFoldOut: 01
+  PlatformFoldOut: 0101
   CustomDimensions01FoldOut: 0
   CustomDimensions02FoldOut: 0
   CustomDimensions03FoldOut: 0
