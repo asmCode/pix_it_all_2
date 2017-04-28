@@ -26,22 +26,22 @@ MonoBehaviour:
   CustomArea: 
   gameKey:
   - 07f624c7874369ff09ccfb60c06a4900
-  - 3cfb81605a65b8597eaa7e19a57a5a72
+  - c57dd80b0ee31c8757a240e76bab023e
   secretKey:
   - 414eb00eb8be9d7f5a4b32f14fe4fe3738ef29fb
-  - e91921bda7a6a8621e69b94ba7b9e37a6d4d5cea
+  - a3f413ab348ddb01ed3e869b421d640a9c5844f1
   Build:
   - 0.1
   - 0.1
   SelectedPlatformStudio:
-  - 
+  - Semi-Serious Games
   - Semi-Serious Games
   SelectedPlatformGame:
-  - 
-  - GG Hero iOS
-  SelectedPlatformGameID: 136f0000146f0000
+  - Pix It All GP
+  - Pix It All iOS
+  SelectedPlatformGameID: 768a0000708a0000
   SelectedStudio: 0100000001000000
-  SelectedGame: 0200000001000000
+  SelectedGame: 0400000005000000
   NewVersion: 
   Changes: 
   SignUpOpen: 0
