@@ -4,9 +4,11 @@ using System.Collections;
 
 public class InitScene : MonoBehaviour
 {
-    private IEnumerator Start()
+    private void Start()
     {
-        yield return InitBackend();
+        // Disable GameSparks for now. Remember to change return type to IEnumerator when enabling it again.
+        // yield return InitBackend();
+        // To enable GameSparks again, check the commit 6106806 to find out what should be enabled.
 
         InitDirectories();
 
@@ -49,6 +51,8 @@ public class InitScene : MonoBehaviour
 
     private void InitDirectories()
     {
+        Debug.Log(Application.persistentDataPath);
+
         string path = Application.persistentDataPath + "/Bundles";
         if (!System.IO.Directory.Exists(path))
             System.IO.Directory.CreateDirectory(path);

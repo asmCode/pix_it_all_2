@@ -6,7 +6,8 @@ public class ImageManager
 {
     public event System.Action BundlesChanged;
 
-    private RemoteBundlesController m_remoteBundlesController = new RemoteBundlesController();
+    // Disabling GameSparks
+    // private RemoteBundlesController m_remoteBundlesController = new RemoteBundlesController();
     private PurchasedBundles m_purchasedBundles = new PurchasedBundles();
 
     public BundleData[] Bundles
@@ -25,7 +26,8 @@ public class ImageManager
     /// </summary>
     public void RefreshBundles()
     {
-        m_remoteBundlesController.DownloadMissingBundles(Bundles, DownloadMissingBundlesCallback);
+        // Disabling GameSparks
+        // m_remoteBundlesController.DownloadMissingBundles(Bundles, DownloadMissingBundlesCallback);
     }
 
     public bool LoadImages()
