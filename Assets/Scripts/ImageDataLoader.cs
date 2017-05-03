@@ -95,6 +95,8 @@ public class ImageDataLoader
         var path = Application.streamingAssetsPath + "/Bundles";
 
         pathes.Add(path + "/base.pixbundle");
+        pathes.Add(path + "/holiday.pixbundle");
+        pathes.Add(path + "/extra.pixbundle");
     }
 
     private static void GetDownloadedBundlePathes(List<string> pathes)

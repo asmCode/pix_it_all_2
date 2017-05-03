@@ -66,7 +66,10 @@ public class LevelsScene : MonoBehaviour
 
             var product = game.Purchaser.GetProductById(bundle.ProductId);
             if (product == null)
+            {
+                Debug.LogWarningFormat("Unknown product id: {0}", bundle.ProductId);
                 return;
+            }
 
             var popupText = string.Format("Do you want to buy bundle {0} ({1}) for {2}?",
                                            bundleId, product.Id, product.LocalizedPrice);

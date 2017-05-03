@@ -5,7 +5,8 @@ using UnityEngine;
 public class BundleListView : MonoBehaviour
 {
     public BundleView m_bundleViewPrefab;
-    public RectTransform m_bundlesContainer;
+    public RectTransform m_myCollectionBundlesContainer;
+    public RectTransform m_storeBundlesContainer;
 
     public event System.Action<string> BundleClicked;
 
@@ -18,7 +19,9 @@ public class BundleListView : MonoBehaviour
 
         foreach (var bundleViewData in bundles)
         {
-            var bundleView = Instantiate(m_bundleViewPrefab, m_bundlesContainer);
+            var container = bundleViewData.IsAvailable ? m_myCollectionBundlesContainer : m_storeBundlesContainer;
+
+            var bundleView = Instantiate(m_bundleViewPrefab, container);
             bundleView.transform.localScale = Vector3.one;
             bundleView.SetBundle(bundleViewData);
             bundleView.Clicked += HandleBundleViewClicked;
@@ -27,7 +30,10 @@ public class BundleListView : MonoBehaviour
 
     public void Clear()
     {
-        foreach (Transform child in m_bundlesContainer)
+        foreach (Transform child in m_myCollectionBundlesContainer)
+            Destroy(child.gameObject);
+
+        foreach (Transform child in m_storeBundlesContainer)
             Destroy(child.gameObject);
     }
 
