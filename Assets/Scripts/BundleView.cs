@@ -8,7 +8,7 @@ public class BundleView : MonoBehaviour
     public Text m_id;
     public Text m_name;
     public Text m_numberOfImages;
-    public Text m_price;
+    public Text m_available;
 
     public event System.Action<string> Clicked;
 
@@ -37,18 +37,9 @@ public class BundleView : MonoBehaviour
             m_numberOfImages.text = "0";
 
         if (bundle.IsAvailable)
-            m_price.text = "available";
+            m_available.text = "available";
         else
-        {
-            if (!string.IsNullOrEmpty(bundle.LocalizedPrice))
-            {
-                m_price.text = bundle.LocalizedPrice;
-            }
-            else
-            {
-                m_price.text = "BUY";
-            }
-        }
+            m_available.text = "buy";
     }
 
     public void UiEvent_Clicked()

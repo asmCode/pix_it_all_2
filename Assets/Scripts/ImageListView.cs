@@ -6,12 +6,16 @@ public class ImageListView : MonoBehaviour
 {
     public ImageView m_imageViewPrefab;
     public RectTransform m_imagesContainer;
+    public GameObject m_buyButton;
 
     public event System.Action<string> ImageClicked;
+    public event System.Action BuyClicked;
 
-    public void SetImages(List<ImageViewData> images)
+    public void Init(List<ImageViewData> images, bool storeMode)
     {
         Clear();
+
+        m_buyButton.SetActive(storeMode); 
 
         if (images == null)
             return;
@@ -21,6 +25,7 @@ public class ImageListView : MonoBehaviour
             var imageView = Instantiate(m_imageViewPrefab, m_imagesContainer);
             imageView.transform.localScale = Vector3.one;
             imageView.SetImage(imageData);
+            imageView.SetStoreMode(storeMode);
             imageView.Clicked += HandleBundleViewClicked;
         }
     }
@@ -35,5 +40,11 @@ public class ImageListView : MonoBehaviour
     {
         if (ImageClicked != null)
             ImageClicked(bundleId);
+    }
+
+    public void UiEvent_BuyButtonClicked()
+    {
+        if (BuyClicked != null)
+            BuyClicked();
     }
 }

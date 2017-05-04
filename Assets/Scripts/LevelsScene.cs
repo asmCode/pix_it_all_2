@@ -54,34 +54,36 @@ public class LevelsScene : MonoBehaviour
 
     private void HandleBundleClicked(string bundleId)
     {
-        var game = Pix.Game.GetInstance();
+        ShowImagesInBundle(bundleId);
 
-        if (game.ImageManager.IsBundleAvailable(bundleId))
-            ShowImagesInBundle(bundleId);
-        else
-        {
-            var bundle = game.ImageManager.GetBundleById(bundleId);
-            if (bundle == null)
-                return;
+        // var game = Pix.Game.GetInstance();
 
-            var product = game.Purchaser.GetProductById(bundle.ProductId);
-            if (product == null)
-            {
-                Debug.LogWarningFormat("Unknown product id: {0}", bundle.ProductId);
-                return;
-            }
+        // if (game.ImageManager.IsBundleAvailable(bundleId))
+        //     ShowImagesInBundle(bundleId);
+        // else
+        // {
+        //     var bundle = game.ImageManager.GetBundleById(bundleId);
+        //     if (bundle == null)
+        //         return;
 
-            var popupText = string.Format("Do you want to buy bundle {0} ({1}) for {2}?",
-                                           bundleId, product.Id, product.LocalizedPrice);
+        //     var product = game.Purchaser.GetProductById(bundle.ProductId);
+        //     if (product == null)
+        //     {
+        //         Debug.LogWarningFormat("Unknown product id: {0}", bundle.ProductId);
+        //         return;
+        //     }
 
-            Popup.Show(popupText, (int)(Popup.Button.Yes | Popup.Button.No), (button) =>
-            {
-                if (button == Popup.Button.Yes)
-                {
-                    game.Purchaser.BuyProductId(product.Id);
-                }
-            });
-        }
+        //     var popupText = string.Format("Do you want to buy bundle {0} ({1}) for {2}?",
+        //                                    bundleId, product.Id, product.LocalizedPrice);
+
+        //     Popup.Show(popupText, (int)(Popup.Button.Yes | Popup.Button.No), (button) =>
+        //     {
+        //         if (button == Popup.Button.Yes)
+        //         {
+        //             game.Purchaser.BuyProductId(product.Id);
+        //         }
+        //     });
+        // }
     }
 
     private void HandleImageClicked(string imageId)
@@ -113,7 +115,9 @@ public class LevelsScene : MonoBehaviour
         m_bundleListView.gameObject.SetActive(false);
         m_imagesPanel.gameObject.SetActive(true);
 
-        var bundle = Pix.Game.GetInstance().ImageManager.GetBundleById(bundleId);
+        var game = Pix.Game.GetInstance();
+
+        var bundle = game.ImageManager.GetBundleById(bundleId);
         if (bundle == null)
             return;
 
@@ -130,7 +134,8 @@ public class LevelsScene : MonoBehaviour
             imageViewDataList.Add(imageViewData);
         }
 
-        m_imageListView.SetImages(imageViewDataList);
+        bool storeMode = !game.ImageManager.IsBundleAvailable(bundleId);
+        m_imageListView.Init(imageViewDataList, storeMode);
     }
 
     private void ShowBundles()
@@ -206,15 +211,6 @@ public class LevelsScene : MonoBehaviour
 
         data.BundleData = bundleData;
         data.IsAvailable = game.ImageManager.IsBundleAvailable(bundleData.Id);
-
-        if (!data.IsAvailable)
-        {
-            var product = game.Purchaser.GetProductById(data.BundleData.ProductId);
-            if (product != null)
-            {
-                data.LocalizedPrice = product.LocalizedPrice;
-            }
-        }
 
         return data;
     }

@@ -14,6 +14,11 @@ public class ImageView : MonoBehaviour
     public Text m_completed;
     public Text m_stars;
 
+    public GameObject m_bestTimeGroup;
+    public GameObject m_inProgressGroup;
+    public GameObject m_completedGroup;
+    public GameObject m_starsGroup;
+
     public RawImage m_thumbnail;
 
     public event System.Action<string> Clicked;
@@ -45,6 +50,14 @@ public class ImageView : MonoBehaviour
         m_stars.text = data.Stars.ToString();
 
         m_thumbnail.texture = image.Texture;
+    }
+
+    public void SetStoreMode(bool storeMode)
+    {
+        m_bestTimeGroup.SetActive(!storeMode);
+        m_inProgressGroup.SetActive(!storeMode);
+        m_completedGroup.SetActive(!storeMode);
+        m_starsGroup.SetActive(!storeMode);
     }
 
     public void UiEvent_Clicked()

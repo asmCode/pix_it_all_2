@@ -11,10 +11,4 @@
         get;
         set;
     }
-
-    public string LocalizedPrice
-    {
-        get;
-        set;
-    }
 }
