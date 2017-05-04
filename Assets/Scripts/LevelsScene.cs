@@ -55,39 +55,18 @@ public class LevelsScene : MonoBehaviour
     private void HandleBundleClicked(string bundleId)
     {
         ShowImagesInBundle(bundleId);
-
-        // var game = Pix.Game.GetInstance();
-
-        // if (game.ImageManager.IsBundleAvailable(bundleId))
-        //     ShowImagesInBundle(bundleId);
-        // else
-        // {
-        //     var bundle = game.ImageManager.GetBundleById(bundleId);
-        //     if (bundle == null)
-        //         return;
-
-        //     var product = game.Purchaser.GetProductById(bundle.ProductId);
-        //     if (product == null)
-        //     {
-        //         Debug.LogWarningFormat("Unknown product id: {0}", bundle.ProductId);
-        //         return;
-        //     }
-
-        //     var popupText = string.Format("Do you want to buy bundle {0} ({1}) for {2}?",
-        //                                    bundleId, product.Id, product.LocalizedPrice);
-
-        //     Popup.Show(popupText, (int)(Popup.Button.Yes | Popup.Button.No), (button) =>
-        //     {
-        //         if (button == Popup.Button.Yes)
-        //         {
-        //             game.Purchaser.BuyProductId(product.Id);
-        //         }
-        //     });
-        // }
     }
 
     private void HandleImageClicked(string imageId)
     {
+        var game = Pix.Game.GetInstance();
+
+        if (!game.ImageManager.IsBundleAvailable(m_selectedBundleId))
+        {
+             AttemptToBuyBundle(m_selectedBundleId);
+             return;
+        }
+
         var playerProgress = Pix.Game.GetInstance().PlayerProgress;
         var levelProgress = playerProgress.GetLevelProgress(m_selectedBundleId, imageId);
         if (levelProgress == null)
@@ -108,6 +87,44 @@ public class LevelsScene : MonoBehaviour
         }
         else
             Pix.Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
+    }
+
+    private void AttemptToBuyBundle(string bundleId)
+    {
+        var game = Pix.Game.GetInstance();
+
+        var bundle = game.ImageManager.GetBundleById(bundleId);
+        if (bundle == null)
+            return;
+
+        if (game.ImageManager.IsBundleAvailable(bundleId))
+        {
+            Debug.LogWarningFormat("Attempting to buy available bundle: {0}", bundle.ProductId);
+            return;
+        }
+
+        var product = game.Purchaser.GetProductById(bundle.ProductId);
+        if (product == null)
+        {
+            Debug.LogWarningFormat("Unknown product id: {0}", bundle.ProductId);
+            return;
+        }
+
+        var popupText = string.Format("Do you want to buy bundle {0} ({1}) for {2}?",
+                                        bundleId, product.Id, product.LocalizedPrice);
+
+        Popup.Show(popupText, (int)(Popup.Button.Yes | Popup.Button.No), (button) =>
+        {
+            if (button == Popup.Button.Yes)
+            {
+                game.Purchaser.BuyProductId(product.Id);
+            }
+        });
+    }
+
+    private void HandleBuyClicked()
+    {
+        AttemptToBuyBundle(m_selectedBundleId);
     }
 
     private void ShowImagesInBundle(string bundleId)
@@ -155,6 +172,7 @@ public class LevelsScene : MonoBehaviour
     {
         m_bundleListView.BundleClicked += HandleBundleClicked;
         m_imageListView.ImageClicked += HandleImageClicked;
+        m_imageListView.BuyClicked += HandleBuyClicked;
         Pix.Game.GetInstance().ImageManager.BundlesChanged += HandleBundlesChanged;
     }
 
@@ -162,6 +180,7 @@ public class LevelsScene : MonoBehaviour
     {
         m_bundleListView.BundleClicked -= HandleBundleClicked;
         m_imageListView.ImageClicked -= HandleImageClicked;
+        m_imageListView.BuyClicked -= HandleBuyClicked;
         Pix.Game.GetInstance().ImageManager.BundlesChanged -= HandleBundlesChanged;
     }
 
