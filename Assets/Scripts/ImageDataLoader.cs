@@ -25,6 +25,15 @@ public class ImageDataLoader
         return bundles.ToArray();
     }
 
+    public static void RemoveDownloadedBundles()
+    {
+        var pathes = new List<string>();
+        GetDownloadedBundlePathes(pathes);
+
+        foreach (var path in pathes)
+            System.IO.File.Delete(path);
+    }
+
     private static BundleData LoadBundle(string path)
     {
         var bundleData = FileReader.ReadAllText(path);

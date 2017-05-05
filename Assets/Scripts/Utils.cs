@@ -28,4 +28,16 @@ public class Utils
         var timeSpan = System.TimeSpan.FromMilliseconds(ms);
         return (float)timeSpan.TotalSeconds;
     }
+
+    public static void DeleteDirectoryContent(string path)
+    {
+        if (string.IsNullOrEmpty(path))
+            return;
+
+        if (!System.IO.Directory.Exists(path))
+            return;
+
+        System.IO.Directory.Delete(path, true);
+        System.IO.Directory.CreateDirectory(path);
+    }
 }

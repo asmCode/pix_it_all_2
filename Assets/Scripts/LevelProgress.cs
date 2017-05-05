@@ -124,9 +124,15 @@ public class LevelProgress
 
     private static string GetFilePath(string bundleId, string imageId)
     {
-        return string.Format("{0}/progress/{1}-{2}.progress",
-            Application.persistentDataPath,
+        return string.Format("{0}{1}-{2}.progress",
+            GetBasePath(),
             bundleId,
             imageId);
+    }
+
+    // TODO: move this to the Paths class
+    public static string GetBasePath()
+    {
+        return string.Format("{0}/progress/", Application.persistentDataPath);
     }
 }
