@@ -1,17 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ImageListView : MonoBehaviour
 {
     public ImageView m_imageViewPrefab;
     public RectTransform m_imagesContainer;
     public GameObject m_buyButton;
+    public Text m_buyButtonLabel;
 
     public event System.Action<string> ImageClicked;
     public event System.Action BuyClicked;
 
-    public void Init(List<ImageViewData> images, bool storeMode)
+    public void Init(List<ImageViewData> images, bool storeMode, string localizedPrice)
     {
         Clear();
 
@@ -19,6 +21,11 @@ public class ImageListView : MonoBehaviour
 
         if (images == null)
             return;
+
+        if (string.IsNullOrEmpty(localizedPrice))
+            m_buyButtonLabel.text = "BUY";
+        else
+            m_buyButtonLabel.text = "BUY " + localizedPrice;
 
         foreach (var imageData in images)
         {

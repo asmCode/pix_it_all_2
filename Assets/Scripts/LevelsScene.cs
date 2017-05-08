@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class LevelsScene : MonoBehaviour
@@ -158,7 +159,16 @@ public class LevelsScene : MonoBehaviour
         }
 
         bool storeMode = !game.ImageManager.IsBundleAvailable(bundleId);
-        m_imageListView.Init(imageViewDataList, storeMode);
+        m_imageListView.Init(imageViewDataList, storeMode, GetLocalizedPrice(bundle.ProductId));
+    }
+
+    private string GetLocalizedPrice(string productId)
+    {
+        var product = Pix.Game.GetInstance().Purchaser.GetProductById(productId);
+        if (product == null || string.IsNullOrEmpty(product.LocalizedPrice))
+            return null;
+        else
+            return product.LocalizedPrice;
     }
 
     private void ShowBundles()

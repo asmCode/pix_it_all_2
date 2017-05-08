@@ -110,6 +110,9 @@ public class Purchaser : IStoreListener
 
     public IapStore.Product GetProductById(string id)
     {
+        if (string.IsNullOrEmpty(id))
+            return null;
+
         if (!IsInitialized())
             return null;
 

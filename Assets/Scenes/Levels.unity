@@ -679,8 +679,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 392, y: 0}
+  m_SizeDelta: {x: 744, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &854180520
 MonoBehaviour:
@@ -1123,8 +1123,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 392, y: 0}
+  m_SizeDelta: {x: 744, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1131628309
 MonoBehaviour:
@@ -1815,6 +1815,7 @@ MonoBehaviour:
     type: 2}
   m_imagesContainer: {fileID: 631014391}
   m_buyButton: {fileID: 794472298}
+  m_buyButtonLabel: {fileID: 357764752}
 --- !u!222 &1760988885
 CanvasRenderer:
   m_ObjectHideFlags: 0
