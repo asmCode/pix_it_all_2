@@ -10,6 +10,7 @@ public class LevelsScene : MonoBehaviour
     public ImageListView m_imageListView;
 
     private string m_selectedBundleId;
+    private bool m_refreshBundlesOnNextEnter;
 
     private void Awake()
     {
@@ -50,6 +51,11 @@ public class LevelsScene : MonoBehaviour
         }
 
         m_bundleListView.SetBundles(bundleViews.ToArray());
+    }
+
+    private bool IsInImageListView()
+    {
+        return m_imageListView.gameObject.activeSelf;
     }
 
     private void HandleBundleClicked(string bundleId)
@@ -160,6 +166,12 @@ public class LevelsScene : MonoBehaviour
         m_bundleListView.gameObject.SetActive(true);
         m_imagesPanel.gameObject.SetActive(false);
 
+        if (m_refreshBundlesOnNextEnter)
+        {
+            m_refreshBundlesOnNextEnter = false;
+            InitBundleList();
+        }
+
         m_selectedBundleId = null;
     }
 
@@ -196,7 +208,14 @@ public class LevelsScene : MonoBehaviour
 
     private void HandleBundlesChanged()
     {
-        InitBundleList();
+        if (IsInImageListView())
+        {
+            // Set the flag to refresh bundle view next time when we enter to the bundles view
+            m_refreshBundlesOnNextEnter = true;
+            ShowImagesInBundle(m_selectedBundleId);
+        }
+        else
+            InitBundleList();
     }
 
     private ImageViewData CreateImageViewData(ImageData imageData)
