@@ -9,6 +9,9 @@ public class BundleView : MonoBehaviour
     public Text m_name;
     public Text m_numberOfImages;
     public Text m_available;
+    public RawImage m_icon;
+
+    private AspectRatioFitter m_aspect;
 
     public event System.Action<string> Clicked;
 
@@ -40,11 +43,31 @@ public class BundleView : MonoBehaviour
             m_available.text = "available";
         else
             m_available.text = "buy";
+
+        SetIcon(bundle.BundleData);
     }
 
     public void UiEvent_Clicked()
     {
         if (Clicked != null)
             Clicked(BundleId);
+    }
+
+    private void SetIcon(BundleData bundle)
+    {
+        var images = bundle.GetImages();
+        if (images == null || images.Length == 0)
+            return;
+        
+        var icon = images[0];
+
+        m_icon.texture = icon.Texture;
+
+        m_aspect.aspectRatio = (float)icon.Texture.width / (float)icon.Texture.height;
+    }
+
+    private void Awake()
+    {
+        m_aspect = m_icon.GetComponent<AspectRatioFitter>();
     }
 }
