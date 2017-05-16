@@ -56,7 +56,7 @@ public class LevelsScene : MonoBehaviour
 
     private bool IsInImageListView()
     {
-        return m_imageListView.gameObject.activeSelf;
+        return m_imageListView.gameObject.activeInHierarchy;
     }
 
     private void HandleBundleClicked(string bundleId)
@@ -185,11 +185,6 @@ public class LevelsScene : MonoBehaviour
         m_selectedBundleId = null;
     }
 
-    private void ShowOptions()
-    {
-        OptionsScene.Show(false);
-    }
-
     private void OnEnable()
     {
         m_bundleListView.BundleClicked += HandleBundleClicked;
@@ -208,12 +203,10 @@ public class LevelsScene : MonoBehaviour
 
     public void UiEvent_BackButtonClicked()
     {
-        ShowBundles();
-    }
-
-    public void UiEvent_OptionsButtonClicked()
-    {
-        ShowOptions();
+        if (IsInImageListView())
+            ShowBundles();
+        else
+            SceneManager.LoadScene("Wellcome");
     }
 
     private void HandleBundlesChanged()
