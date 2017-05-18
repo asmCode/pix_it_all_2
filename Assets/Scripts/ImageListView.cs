@@ -17,15 +17,17 @@ public class ImageListView : MonoBehaviour
     {
         Clear();
 
-        m_buyButton.SetActive(storeMode); 
+        m_buyButton.SetActive(storeMode);
+        m_buyButton.SetActive(!storeMode);
+        m_buyButton.SetActive(storeMode);
 
         if (images == null)
             return;
 
         if (string.IsNullOrEmpty(localizedPrice))
-            m_buyButtonLabel.text = "BUY";
+            m_buyButtonLabel.text = "";
         else
-            m_buyButtonLabel.text = "BUY " + localizedPrice;
+            m_buyButtonLabel.text = localizedPrice;
 
         foreach (var imageData in images)
         {
