@@ -7,19 +7,19 @@ public class ImageView : MonoBehaviour
 {
     public Text m_id;
     public Text m_name;
-    public Text m_numberOfColors;
+    public Transform m_colors;
+    public Transform m_stars;
 
     public Text m_bestTime;
     public Text m_inProgress;
-    public Text m_completed;
-    public Text m_stars;
+    public Text m_dimensions;
 
     public GameObject m_bestTimeGroup;
     public GameObject m_inProgressGroup;
-    public GameObject m_completedGroup;
     public GameObject m_starsGroup;
 
     public RawImage m_thumbnail;
+    public AspectRatioFitter m_imageAspectRatio;
 
     public event System.Action<string> Clicked;
 
@@ -42,22 +42,54 @@ public class ImageView : MonoBehaviour
 
         m_id.text = image.Id;
         m_name.text = image.Name;
-        m_numberOfColors.text = image.Colors.Length.ToString();
 
-        m_bestTime.text = Utils.TimeToString(data.BestTime);
+        Debug.LogFormat("Best time = {0}", data.BestTime);
+        if (data.BestTime != 0)
+        {
+            UiUtils.ShowChildren(m_stars, data.Stars);
+            m_bestTime.text = Utils.TimeToString(data.BestTime);
+            m_bestTimeGroup.gameObject.SetActive(true);
+            m_starsGroup.gameObject.SetActive(true);
+        }
+        else 
+        {
+            m_bestTimeGroup.gameObject.SetActive(false);
+            m_starsGroup.gameObject.SetActive(false);
+        }
+
+        UiUtils.ShowChildren(m_colors, image.Colors.Length);
+        
+        SetColors(image.Colors);
+
         m_inProgress.text = data.InProgress.ToString();
-        m_completed.text = data.BestTime != 0 ? true.ToString() : false.ToString();
-        m_stars.text = data.Stars.ToString();
+        m_dimensions.text = string.Format("{0} x {1}", image.Texture.width, image.Texture.height);
+
+        m_imageAspectRatio.aspectRatio = (float)image.Texture.width / (float)image.Texture.height;
 
         m_thumbnail.texture = image.Texture;
     }
 
+    private void SetColors(Color[] colors)
+    {
+        if (m_colors.childCount < colors.Length)
+            return;
+
+        for (int i = 0; i < colors.Length; i++)
+        {
+            var child = m_colors.GetChild(i);
+            var image = child.GetComponent<Image>();
+            if (image == null)
+                continue;
+            
+            image.color = colors[i];
+        }
+    }
+
     public void SetStoreMode(bool storeMode)
     {
-        m_bestTimeGroup.SetActive(!storeMode);
-        m_inProgressGroup.SetActive(!storeMode);
-        m_completedGroup.SetActive(!storeMode);
-        m_starsGroup.SetActive(!storeMode);
+        // m_bestTimeGroup.SetActive(!storeMode);
+        // m_inProgressGroup.SetActive(!storeMode);
+        // m_starsGroup.gameObject.SetActive(!storeMode);
     }
 
     public void UiEvent_Clicked()

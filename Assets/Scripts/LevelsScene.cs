@@ -9,6 +9,7 @@ public class LevelsScene : MonoBehaviour
     public BundleListView m_bundleListView;
     public RectTransform m_imagesPanel;
     public ImageListView m_imageListView;
+    public Text m_topBarTitle;
 
     private string m_selectedBundleId;
     private bool m_refreshBundlesOnNextEnter;
@@ -158,6 +159,8 @@ public class LevelsScene : MonoBehaviour
             imageViewDataList.Add(imageViewData);
         }
 
+        m_topBarTitle.text = bundle.Name;
+
         bool storeMode = !game.ImageManager.IsBundleAvailable(bundleId);
         m_imageListView.Init(imageViewDataList, storeMode, GetLocalizedPrice(bundle.ProductId));
     }
@@ -173,6 +176,7 @@ public class LevelsScene : MonoBehaviour
 
     private void ShowBundles()
     {
+        m_topBarTitle.text = "Choose Bundle";
         m_bundleListView.gameObject.SetActive(true);
         m_imagesPanel.gameObject.SetActive(false);
 
