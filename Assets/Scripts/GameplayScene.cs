@@ -13,6 +13,7 @@ public class GameplayScene : MonoBehaviour
     public PenaltyView m_penaltyView;
     public BonusView m_bonusView;
     public Board m_board;
+    public LevelIntroView m_levelIntroView;
     public BoardController m_boardInputController;
 
     private Gameplay m_gameplay;
@@ -33,7 +34,8 @@ public class GameplayScene : MonoBehaviour
             m_penaltyView,
             m_bonusView,
             m_board,
-            m_boardInputController);
+            m_boardInputController,
+            m_levelIntroView);
     }
 
     private void Start()

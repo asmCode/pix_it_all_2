@@ -6,19 +6,13 @@
         set;
     }
 
-    public float BestTime
+    public LevelProgress LevelProgress
     {
         get;
         set;
     }
 
     public int Stars
-    {
-        get;
-        set;
-    }
-
-    public bool InProgress
     {
         get;
         set;

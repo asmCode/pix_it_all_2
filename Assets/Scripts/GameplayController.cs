@@ -14,6 +14,7 @@ public class GameplayController
     private BoardController m_boardInputController;
     private BonusController m_bonusController;
     private BonusView m_bonusView;
+    private LevelIntroView m_levelIntroView;
 
     private ImageData m_referenceImage;
 
@@ -25,7 +26,8 @@ public class GameplayController
         PenaltyView penaltyView,
         BonusView bonusView,
         Board board,
-        BoardController boardInputController)
+        BoardController boardInputController, 
+        LevelIntroView levelIntroView)
     {
         m_gameplay = gameplay;
         m_hud = hud;
@@ -34,6 +36,7 @@ public class GameplayController
         m_penaltyView = penaltyView;
         m_bonusView = bonusView;
         m_board = board;
+        m_levelIntroView = levelIntroView;
         m_boardInputController = boardInputController;
     }
 
@@ -75,6 +78,12 @@ public class GameplayController
 
         m_bonusController = new BonusController();
         m_bonusController.Init(m_gameplay, m_bonusView);
+
+        m_levelIntroView.StartPressed += HandleLevelIntroStartPressed;
+        m_levelIntroView.BackPressed += HandleLevelIntroBackPressed;
+        var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);
+        m_board.ShowPreview();
+        m_levelIntroView.Show(imageViewData);
     }
 
     public void Update(float deltaTime)
@@ -101,6 +110,13 @@ public class GameplayController
         m_pauseView.BackToMenuClicked -= HandlePauseViewResumeClicked;
         m_pauseView.OptionsClicked -= HandlePauseViewOptionsClicked;
         m_summaryView.BackToMenuClicked -= HandleBackToMenuClicked;
+        m_levelIntroView.StartPressed -= HandleLevelIntroStartPressed;
+        m_levelIntroView.BackPressed -= HandleLevelIntroBackPressed;
+    }
+
+    private bool IsLevelIntroViewVisible()
+    {
+        return m_levelIntroView.gameObject.activeSelf;
     }
 
     private void SetBoardColor(int x, int y, Color color)
@@ -222,7 +238,7 @@ public class GameplayController
 
     private bool IsGameRunning()
     {
-        return !IsPauseActive() && !IsSumaryActive();
+        return !IsPauseActive() && !IsSumaryActive() && !IsLevelIntroViewVisible();
     }
 
     private bool IsPauseActive()
@@ -288,7 +304,7 @@ public class GameplayController
         Resume();
     }
 
-    private void HandleBackToMenuClicked()
+    private void GoToLevels()
     {
         if (RateMeController.ShouldShowRateMe())
         {
@@ -300,11 +316,27 @@ public class GameplayController
         SceneManager.LoadScene("Levels");
     }
 
+    private void HandleBackToMenuClicked()
+    {
+        GoToLevels();
+    }
+
     private void PaletteShown()
     {
     }
 
     private void PaletteClosed()
     {
+    }
+
+    private void HandleLevelIntroStartPressed()
+    {
+        m_board.HidePreview();
+        m_levelIntroView.Close();
+    }
+    
+    private void HandleLevelIntroBackPressed()
+    {
+        GoToLevels();
     }
 }

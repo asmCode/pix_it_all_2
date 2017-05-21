@@ -43,11 +43,10 @@ public class ImageView : MonoBehaviour
         m_id.text = image.Id;
         m_name.text = image.Name;
 
-        Debug.LogFormat("Best time = {0}", data.BestTime);
-        if (data.BestTime != 0)
+        if (data.LevelProgress.BestTime != 0)
         {
             UiUtils.ShowChildren(m_stars, data.Stars);
-            m_bestTime.text = Utils.TimeToString(data.BestTime);
+            m_bestTime.text = Utils.TimeToString(data.LevelProgress.BestTime);
             m_bestTimeGroup.gameObject.SetActive(true);
             m_starsGroup.gameObject.SetActive(true);
         }
@@ -61,7 +60,7 @@ public class ImageView : MonoBehaviour
         
         SetColors(image.Colors);
 
-        m_inProgress.text = data.InProgress.ToString();
+        m_inProgress.text = data.LevelProgress.IsInProgress.ToString();
         m_dimensions.text = string.Format("{0} x {1}", image.Texture.width, image.Texture.height);
 
         m_imageAspectRatio.aspectRatio = (float)image.Texture.width / (float)image.Texture.height;

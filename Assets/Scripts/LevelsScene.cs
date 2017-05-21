@@ -155,7 +155,7 @@ public class LevelsScene : MonoBehaviour
         List<ImageViewData> imageViewDataList = new List<ImageViewData>();
         foreach (var image in images)
         {
-            var imageViewData = CreateImageViewData(image);
+            var imageViewData = CreateImageViewData(image, m_selectedBundleId);
             imageViewDataList.Add(imageViewData);
         }
 
@@ -225,7 +225,7 @@ public class LevelsScene : MonoBehaviour
             InitBundleList();
     }
 
-    private ImageViewData CreateImageViewData(ImageData imageData)
+    public static ImageViewData CreateImageViewData(ImageData imageData, string bundleId)
     {
         var data = new ImageViewData();
 
@@ -235,15 +235,11 @@ public class LevelsScene : MonoBehaviour
         int totalColors = imageData.Colors.Length;
 
         var playerProgress = Pix.Game.GetInstance().PlayerProgress;
-        var levelProgress = playerProgress.GetLevelProgress(m_selectedBundleId, imageData.Id);
+        var levelProgress = playerProgress.GetLevelProgress(bundleId, imageData.Id);
         int stars = StarRatingCalc.GetStars(levelProgress.BestTime, totalTiles, totalColors);
 
-        if (levelProgress != null)
-        {
-            data.BestTime = levelProgress.BestTime;
-            data.InProgress = levelProgress.IsInProgress;
-            data.Stars = levelProgress.IsCompleted ? stars : 0;
-        }
+        data.LevelProgress = levelProgress;
+        data.Stars = levelProgress.IsCompleted ? stars : 0;
 
         return data;
     }
