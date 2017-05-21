@@ -32,6 +32,16 @@ public class Board : MonoBehaviour
         get { return m_referenceImage.gameObject.activeSelf;  }
     }
 
+    public float MaxScale
+    {
+        get { return m_scaleMax; }
+    }
+
+    public float MinScale
+    {
+        get { return m_scaleMin; }
+    }
+
     public float OptimalScale
     {
         get { return m_scaleOptimal; }

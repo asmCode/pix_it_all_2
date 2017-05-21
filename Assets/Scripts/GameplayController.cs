@@ -81,7 +81,9 @@ public class GameplayController
 
         m_levelIntroView.StartPressed += HandleLevelIntroStartPressed;
         m_levelIntroView.BackPressed += HandleLevelIntroBackPressed;
-        var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);
+        var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);        
+        m_board.SetScale(Vector2.zero, m_board.MinScale);
+        m_board.SetLocalPosition(Vector2.zero);
         m_board.ShowPreview();
         m_levelIntroView.Show(imageViewData);
     }
