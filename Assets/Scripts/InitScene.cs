@@ -13,6 +13,8 @@ public class InitScene : MonoBehaviour
         InitDirectories();
 
         SceneManager.LoadScene("Levels");
+
+        PlayMusic();
     }
 
     private IEnumerator InitBackend()
