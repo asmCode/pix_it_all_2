@@ -494,6 +494,7 @@ GameObject:
   - component: {fileID: 114287511207125870}
   - component: {fileID: 114673848787131274}
   - component: {fileID: 114283102402504384}
+  - component: {fileID: 114025294805012314}
   m_Layer: 5
   m_Name: ImageView
   m_TagString: Untagged
@@ -1276,6 +1277,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114025294805012314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1351525342950734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107d1417812b94c6681b5554541d341b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114027512718863760
 MonoBehaviour:
   m_ObjectHideFlags: 1

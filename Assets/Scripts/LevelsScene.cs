@@ -20,6 +20,8 @@ public class LevelsScene : MonoBehaviour
 
     void Start()
     {
+        InitScene.PlayMusic();
+
         RefreshBundles();
         InitView();
         InitBundleList();

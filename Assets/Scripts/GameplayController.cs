@@ -160,9 +160,11 @@ public class GameplayController
         if (activeColor == requiredColor)
         {
             SetBoardColor(x, y, activeColor);
+            AudioManager.GetInstance().PlayPixelSound();
         }
         else
         {
+            AudioManager.GetInstance().SoundFail.Play();
             ApplyPenalty();
         }
     }

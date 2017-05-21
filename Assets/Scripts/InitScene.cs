@@ -61,4 +61,11 @@ public class InitScene : MonoBehaviour
         if (!System.IO.Directory.Exists(path))
             System.IO.Directory.CreateDirectory(path);
     }
+
+    public static void PlayMusic()
+    {
+        var audioManager = AudioManager.GetInstance();
+        if (audioManager.MusicEnabled)
+            audioManager.SoundMusic.Play();
+    }
 }

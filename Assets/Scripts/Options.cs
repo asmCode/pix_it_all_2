@@ -6,6 +6,9 @@ public class Options
 {
     private OptionsData m_data;
 
+    public event System.Action SoundChanged;
+    public event System.Action MusicChanged;
+
     public bool IsSoundEnabled()
     {
         Init();
@@ -27,6 +30,9 @@ public class Options
         m_data.IsSoundEnabled = !m_data.IsSoundEnabled;
 
         Save();
+
+        if (SoundChanged != null)
+            SoundChanged();
     }
 
     public void ToggleMusic()
@@ -36,6 +42,9 @@ public class Options
         m_data.IsMusicEnabled = !m_data.IsMusicEnabled;
 
         Save();
+
+        if (MusicChanged != null)
+            MusicChanged();
     }
 
     public void Load()

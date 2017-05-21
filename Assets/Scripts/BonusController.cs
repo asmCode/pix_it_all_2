@@ -18,24 +18,30 @@ public class BonusController
     private void ShowBonus(int inRow)
     {
         int type = 0;
+        Sound bonusSound = null;
+
         switch (inRow)
         {
             case 5:
                 type = 0;
+                bonusSound = AudioManager.GetInstance().SoundBonus1;
                 break;
 
             case 10:
                 type = 1;
+                bonusSound = AudioManager.GetInstance().SoundBonus2;
                 break;
 
             case 20:
                 type = 2;
+                bonusSound = AudioManager.GetInstance().SoundBonus3;
                 break;
 
 			default:
 				return;
         }
         m_bonusView.ShowBonus(type);
+        bonusSound.Play();
         m_gameplay.ApplyBonus(-m_gameplay.SuccessInRow * 0.5f);
     }
 
