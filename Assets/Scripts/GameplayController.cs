@@ -160,7 +160,10 @@ public class GameplayController
         if (activeColor == requiredColor)
         {
             SetBoardColor(x, y, activeColor);
-            AudioManager.GetInstance().PlayPixelSound();
+
+            // Don't play pixel sound if it was the last pixel. We want to avoid collision with the Victory sound.
+            if (!IsLevelCompleted())
+                AudioManager.GetInstance().PlayPixelSound();
         }
         else
         {
@@ -191,6 +194,8 @@ public class GameplayController
 
         m_hud.gameObject.SetActive(false);
         m_summaryView.Show(starsCount, time, record, timeFor3Stars, timeFor2Stars);
+
+        AudioManager.GetInstance().SoundVictory.Play();
     }
 
     private void Pause()
