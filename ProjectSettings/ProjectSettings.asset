@@ -198,7 +198,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: D:/stuff/Projetcs/pix_it_all/certs/pixitall_release.keystore
+  AndroidKeystoreName: 
   AndroidKeyaliasName: release
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
