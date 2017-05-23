@@ -31,8 +31,8 @@ MonoBehaviour:
   - 414eb00eb8be9d7f5a4b32f14fe4fe3738ef29fb
   - a3f413ab348ddb01ed3e869b421d640a9c5844f1
   Build:
-  - 0.1
-  - 0.1
+  - 2.0.5
+  - 2.0.5
   SelectedPlatformStudio:
   - Semi-Serious Games
   - Semi-Serious Games
@@ -85,7 +85,7 @@ MonoBehaviour:
   macIcon: {fileID: 0}
   windowsPhoneIcon: {fileID: 0}
   UseCustomId: 0
-  UsePlayerSettingsBundleVersion: 0
+  UsePlayerSettingsBundleVersion: 1
   SubmitErrors: 1
   MaxErrorCount: 10
   SubmitFpsAverage: 1

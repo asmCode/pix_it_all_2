@@ -72,7 +72,7 @@
 #elif UNITY_IOS
             m_impl = new SocialImplUnity();
 #elif UNITY_ANDROID
-            GooglePlayGames.PlayGamesPlatform.DebugLogEnabled = GGHeroGame.Debug;
+            GooglePlayGames.PlayGamesPlatform.DebugLogEnabled = true;
             GooglePlayGames.PlayGamesPlatform.Activate();
             m_impl = new SocialImplUnity();
 #endif

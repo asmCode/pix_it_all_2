@@ -127,7 +127,7 @@ PlayerSettings:
   xboxOneDisableKinectGpuReservation: 0
   protectGraphicsMemory: 0
   AndroidBundleVersionCode: 5
-  AndroidMinSdkVersion: 15
+  AndroidMinSdkVersion: 18
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   apiCompatibilityLevel: 2
@@ -198,7 +198,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
+  AndroidKeystoreName: D:/stuff/Projetcs/pix_it_all/certs/pixitall_release.keystore
   AndroidKeyaliasName: release
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
@@ -440,7 +440,8 @@ PlayerSettings:
   webGLUseEmbeddedResources: 0
   webGLUseWasm: 0
   webGLCompressionFormat: 1
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    4: NO_GPGS
   platformArchitecture:
     iOS: 2
   scriptingBackend:
