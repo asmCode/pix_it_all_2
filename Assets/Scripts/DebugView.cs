@@ -7,6 +7,12 @@ using UnityEngine.UI;
 // All logic is achieved here, which is not cool.
 public class DebugView : MonoBehaviour
 {
+    public void UiEvent_RemoveGamePersistentData()
+    {
+        var path = Persistent.GetFilePath();
+        System.IO.File.Delete(path);   
+    }
+
     public void UiEvent_RemoveDownloadedBundles()
     {
         ImageDataLoader.RemoveDownloadedBundles();

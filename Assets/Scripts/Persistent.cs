@@ -54,6 +54,38 @@ public class Persistent
         Save();
     }
 
+    public bool GetSkipSocial()
+    {
+        Init();
+
+        return m_data.SkipSocial;
+    }
+
+    public void SetSkipSocial(bool skipSocial)
+    {
+        Init();
+
+        m_data.SkipSocial = true;
+
+        Save();
+    }
+
+    public int GetTotalPixelsRevealed()
+    {
+        Init();
+
+        return m_data.TotalPixelsRevealed;
+    }
+
+    public void AddToTotalPixelsRevealed(int count)
+    {
+        Init();
+
+        m_data.TotalPixelsRevealed += count;
+
+        Save();
+    }
+
     public void Load()
     {
         var filePath = GetFilePath();
@@ -79,7 +111,7 @@ public class Persistent
             m_data = new PersistentData();
     }
 
-    private static string GetFilePath()
+    public static string GetFilePath()
     {
         return string.Format("{0}/persistent.json", Application.persistentDataPath);
     }

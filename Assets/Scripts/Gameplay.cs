@@ -88,6 +88,8 @@ public class Gameplay
 
         LevelProgress.Complete(Time);
         LevelProgress.Save();
+
+        Pix.Game.GetInstance().ReportScores();
     }
 
     public void SaveProgress(Texture2D image)
@@ -101,6 +103,8 @@ public class Gameplay
 
         LevelProgress.SaveProgress(Time, tiles);
         LevelProgress.Save();
+
+        Pix.Game.GetInstance().ReportScores();
     }
 
     private void InitLevelProgress()
@@ -148,6 +152,8 @@ public class Gameplay
     public void NotifyTileRevealedWithSuccess()
     {
         m_successInRow++;
+
+        Pix.Game.GetInstance().Persistent.AddToTotalPixelsRevealed(1);
 
         if (TileRevealedWithSuccess != null)
             TileRevealedWithSuccess();

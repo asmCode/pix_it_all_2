@@ -11,10 +11,13 @@ public class InitScene : MonoBehaviour
         // To enable GameSparks again, check the commit 6106806 to find out what should be enabled.
 
         InitDirectories();
-
-        SceneManager.LoadScene("Levels");
-
         PlayMusic();
+
+        Pix.Game.GetInstance().Init();
+
+        InitSocial();
+
+        SceneManager.LoadScene("Wellcome");
     }
 
     private IEnumerator InitBackend()
@@ -62,6 +65,22 @@ public class InitScene : MonoBehaviour
         path = Application.persistentDataPath + "/progress";
         if (!System.IO.Directory.Exists(path))
             System.IO.Directory.CreateDirectory(path);
+    }
+
+    private void InitSocial()
+    {
+        var persistent = Pix.Game.GetInstance().Persistent;
+
+        Ssg.Social.Social.GetInstance().LogEnabled = true;
+
+        if (!persistent.GetSkipSocial())
+        {
+            Ssg.Social.Social.GetInstance().Authenticate(success =>
+            {
+                if (!success)
+                    persistent.SetSkipSocial(true);
+            });
+        }
     }
 
     public static void PlayMusic()

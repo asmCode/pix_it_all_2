@@ -23,6 +23,19 @@ public class WellcomeController
 
     private void HandleLeaderboardsPressed()
     {
+        var social = Ssg.Social.Social.GetInstance();
+
+        if (social.IsAuthenticated)
+            social.ShowLeaderboards();
+        else
+        {
+            social.Authenticate(success =>
+            {
+                // Debug.Log("****************************************** Authenticated: " + success.ToString());
+                // if (success)
+                social.ShowLeaderboards();
+            });
+        }
     }
 
     private void HandleOptionsPressed()

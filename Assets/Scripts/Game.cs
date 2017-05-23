@@ -36,6 +36,11 @@ namespace Pix
             private set;
         }
 
+        public void Init()
+        {
+            Ssg.Social.Social.GetInstance().Authenticated += HandleSocialAuthenticated;
+        }
+
         public void StartLevel(string bundleId, string imageId, bool continueLevel)
         {
             GameplayScene.m_selectedBundleId = bundleId;
@@ -78,6 +83,21 @@ namespace Pix
         private void Update()
         {
             TouchProxy.Update();
+        }
+
+        public void ReportScores()
+        {
+            var social =  Ssg.Social.Social.GetInstance();
+
+            if (!social.IsAuthenticated)
+                return;
+
+            social.ReportLocalUserScore(SocialIds.LeaderboardTotalPixels, Persistent.GetTotalPixelsRevealed(), null);
+        }
+
+        private void HandleSocialAuthenticated(bool success)
+        {
+            ReportScores();
         }
     }
 }
