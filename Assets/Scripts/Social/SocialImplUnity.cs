@@ -19,6 +19,41 @@ namespace Ssg.Social
             }
         }
 
+        public string UserName
+        {
+            get
+            {
+                var localUser = UnityEngine.Social.localUser;
+                if (localUser == null)
+                    return null;
+
+                return localUser.userName;
+            }
+        }
+
+        public bool IsManualSignOutSupported
+        {
+            get
+            {
+#if UNITY_ANDROID
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
+        public void SignOut()
+        {
+            #if UNITY_ANDROID
+                var gpgsSocial = UnityEngine.Social as GooglePlayGames.PlayGamesPlatform;
+                if (gpgsSocial == null)
+                    return;
+
+                gpgsSocial.SignOut();
+            #endif
+        }
+
         public void Authenticate(System.Action<bool> callback)
         {
             if (IsLogEnabled)

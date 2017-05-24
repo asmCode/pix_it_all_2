@@ -14,6 +14,21 @@
             }
         }
 
+        public string UserName
+        {
+            get { return "Majak"; }
+        }
+
+        public bool IsManualSignOutSupported
+        {
+            get { return true; }
+        }
+
+        public void SignOut()
+        {
+            m_isAuthenticated = false;
+        }
+
         public void Authenticate(System.Action<bool> callback)
         {
             m_isAuthenticated = true;

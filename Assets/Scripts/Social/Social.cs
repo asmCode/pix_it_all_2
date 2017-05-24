@@ -23,6 +23,34 @@
             }
         }
 
+        public string UserName
+        {
+            get
+            {
+                if (m_impl != null)
+                    return m_impl.UserName;
+                else
+                    return null;
+            }
+        }
+
+        public bool IsManualSignOutSupported
+        {
+            get
+            {
+                if (m_impl != null)
+                    return m_impl.IsManualSignOutSupported;
+                else
+                    return false;
+            }
+        }
+
+        public void SignOut()
+        {
+            if (m_impl != null)
+                m_impl.SignOut();
+        }
+
         public void Authenticate(System.Action<bool> callback)
         {
             if (m_impl != null)

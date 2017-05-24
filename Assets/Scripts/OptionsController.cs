@@ -17,6 +17,7 @@ public class OptionsController
         m_view.SoundPressed += HandleSoundPressed;
         m_view.MusicPressed += HandleMusicPressed;
         m_view.RestorePurchasesPressed += HandleRestorePurchasesPressed;
+        m_view.GPGSPressed += HandleGPGSPressed;
         
         m_view.SetVersion(Application.version);
         m_view.SetSoundEnabled(options.IsSoundEnabled());
@@ -24,6 +25,8 @@ public class OptionsController
 
         bool restorePurchaseAvailable = !duringLevel && Pix.Game.GetInstance().Purchaser.IsRestoreAvailable();
         m_view.SetRestorePurchasesEnabled(restorePurchaseAvailable);
+
+        UpdateSocial();
     }
 
     private void HandleBackPressed()
@@ -52,6 +55,24 @@ public class OptionsController
     private void HandleRestorePurchasesPressed()
     {
     }
+
+    private void HandleGPGSPressed()
+    {
+        var social = Ssg.Social.Social.GetInstance();
+
+        if (social.IsAuthenticated)
+        {
+            Ssg.Social.Social.GetInstance().SignOut();
+            UpdateSocial();
+        }
+        else
+        {
+            social.Authenticate(success =>
+            {
+                UpdateSocial();
+            });
+        }
+    }
     
     private void Close()
     {
@@ -59,7 +80,22 @@ public class OptionsController
         m_view.SoundPressed -= HandleSoundPressed;
         m_view.MusicPressed -= HandleMusicPressed;
         m_view.RestorePurchasesPressed -= HandleRestorePurchasesPressed;
+        m_view.GPGSPressed -= HandleGPGSPressed;
 
         SceneManager.UnloadSceneAsync("Options");
+    }
+
+    private void UpdateSocial()
+    {
+        var social = Ssg.Social.Social.GetInstance();
+        if (social.IsManualSignOutSupported)
+        {
+            if (social.IsAuthenticated)
+                m_view.SetSocial(true, social.UserName);
+            else
+                m_view.SetSocial(true, null);
+        }
+        else
+            m_view.SetSocial(false, null);
     }
 }
