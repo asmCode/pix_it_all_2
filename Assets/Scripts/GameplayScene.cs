@@ -68,4 +68,9 @@ public class GameplayScene : MonoBehaviour
             m_continueLevel = true;
         }
     }
+
+    private void OnApplicationPause(bool paused)
+    {
+        m_gameplayController.NotifyOnApplicationPause(paused);
+    }
 }

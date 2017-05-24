@@ -313,6 +313,15 @@ public class GameplayController
         Resume();
     }
 
+    public void NotifyOnApplicationPause(bool paused)
+    {
+        if (paused)
+        {
+            SaveProgress();
+            Pause();
+        }
+    }
+
     private void GoToLevels()
     {
         if (RateMeController.ShouldShowRateMe())
