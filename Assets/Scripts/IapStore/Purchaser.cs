@@ -163,8 +163,6 @@ public class Purchaser : IStoreListener
         m_storeController = controller;
         m_storeExtensionProvider = extensions;
 
-        RestorePurchases();
-
         if (InitializationFinished != null)
             InitializationFinished(true);
     }

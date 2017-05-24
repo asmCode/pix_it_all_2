@@ -29,8 +29,12 @@ public static class GameSettings
     }
 
     static GameSettings()
-	{		
+	{
+#if UNITY_IPHONE
 		IsRestoreAvailable = true;
+#else
+        IsRestoreAvailable = false;
+#endif
         RateMeUrl = "http://google.com";
 
         RateMeWinsCount = 3;

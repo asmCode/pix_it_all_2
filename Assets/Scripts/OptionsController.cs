@@ -54,6 +54,7 @@ public class OptionsController
 
     private void HandleRestorePurchasesPressed()
     {
+        Pix.Game.GetInstance().Purchaser.RestorePurchases();
     }
 
     private void HandleGPGSPressed()
