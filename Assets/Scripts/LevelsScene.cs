@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelsScene : MonoBehaviour
 {
+    public static string m_bundleIdToSelect;
+
     public BundleListView m_bundleListView;
     public RectTransform m_imagesPanel;
     public ImageListView m_imageListView;
@@ -25,6 +27,11 @@ public class LevelsScene : MonoBehaviour
         RefreshBundles();
         InitView();
         InitBundleList();
+
+        if (!string.IsNullOrEmpty(m_bundleIdToSelect))
+            ShowImagesInBundle(m_bundleIdToSelect);
+
+        m_bundleIdToSelect = null;
     }
 
     private void RefreshBundles()
@@ -84,8 +91,11 @@ public class LevelsScene : MonoBehaviour
 
         if (levelProgress.IsInProgress)
         {
-            Popup.Show("CONTINUE?\nTAP \"NO\" TO START FROM SCRATCH", (int)Popup.Button.No | (int)Popup.Button.Yes, (button) =>
+            Popup.Show("CONTINUE?\nTAP \"NO\" TO START FROM SCRATCH", (int)Popup.Button.No | (int)Popup.Button.Yes | (int)Popup.Button.Cancel, Popup.Button.Cancel, (button) =>
             {
+                if (button == Popup.Button.Cancel)
+                    return;
+
                 if (button == Popup.Button.No)
                 {
                     levelProgress.ClearContinue();
@@ -123,7 +133,7 @@ public class LevelsScene : MonoBehaviour
         var popupText = string.Format("Do you want to buy bundle {0} ({1}) for {2}?",
                                         bundleId, product.Id, product.LocalizedPrice);
 
-        Popup.Show(popupText, (int)(Popup.Button.Yes | Popup.Button.No), (button) =>
+        Popup.Show(popupText, (int)(Popup.Button.Yes | Popup.Button.No), Popup.Button.No, (button) =>
         {
             if (button == Popup.Button.Yes)
             {
@@ -209,10 +219,7 @@ public class LevelsScene : MonoBehaviour
 
     public void UiEvent_BackButtonClicked()
     {
-        if (IsInImageListView())
-            ShowBundles();
-        else
-            SceneManager.LoadScene("Wellcome");
+        GoBack();
     }
 
     private void HandleBundlesChanged()
@@ -256,5 +263,30 @@ public class LevelsScene : MonoBehaviour
         data.IsAvailable = game.ImageManager.IsBundleAvailable(bundleData.Id);
 
         return data;
+    }
+
+    public void HandleBackButton()
+    {
+        // First try to handle back button in the popup (if visible)
+        if (Popup.IsVisible() && Popup.HandleBackButton())
+            return;
+
+        GoBack();
+    }
+
+    private void GoBack()
+    {
+        if (IsInImageListView())
+            ShowBundles();
+        else
+            SceneManager.LoadScene("Wellcome");
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            HandleBackButton();
+        }
     }
 }

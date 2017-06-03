@@ -29,6 +29,11 @@ public class OptionsController
         UpdateSocial();
     }
 
+    public void HandleBackButton()
+    {
+        Close();
+    }
+
     private void HandleBackPressed()
     {
         Close();

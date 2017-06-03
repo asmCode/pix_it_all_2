@@ -20,4 +20,12 @@ public class OptionsScene : MonoBehaviour
         m_optionsController = new OptionsController();
         m_optionsController.Init(m_optionsView, m_duringGameplay);
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            m_optionsController.HandleBackButton();
+        }
+    }
 }

@@ -12,4 +12,12 @@ public class WellcomeScene : MonoBehaviour
         m_controller = new WellcomeController();
         m_controller.Init(m_wellcomeView);
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            m_controller.HandleBackButton();
+        }
+    }
 }

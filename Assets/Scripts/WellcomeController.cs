@@ -18,7 +18,7 @@ public class WellcomeController
 
     private void HandlePlayPressed()
     {
-        SceneManager.LoadScene("Levels");
+        Pix.Game.GetInstance().ShowBundlesScene();
     }
 
     private void HandleLeaderboardsPressed()
@@ -41,5 +41,10 @@ public class WellcomeController
     private void HandleOptionsPressed()
     {
         OptionsScene.Show(false);
+    }
+
+    public void HandleBackButton()
+    {
+        Application.Quit();
     }
 }

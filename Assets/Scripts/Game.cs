@@ -50,6 +50,18 @@ namespace Pix
             SceneManager.LoadScene("Gameplay");
         }
 
+        public void ShowBundlesScene()
+        {
+            LevelsScene.m_bundleIdToSelect = null;
+            SceneManager.LoadScene("Levels");
+        }
+
+        public void ShowLevelsScene(string bundleId)
+        {
+            LevelsScene.m_bundleIdToSelect = bundleId;
+            SceneManager.LoadScene("Levels");
+        }
+
         protected override void Awake()
         {
             Application.targetFrameRate = 60;

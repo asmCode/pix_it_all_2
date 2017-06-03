@@ -88,6 +88,26 @@ public class GameplayController
         m_levelIntroView.Show(imageViewData);
     }
 
+    public void HandleBackButton()
+    {
+        if (IsLevelIntroViewVisible())
+        {
+            HandleLevelIntroBackPressed();
+        }
+        else if (IsSumaryActive())
+        {
+            HandleBackToMenuClicked();
+        }
+        else if (IsPauseActive())
+        {
+            HandlePauseViewBackToMenuClicked();
+        }
+        else
+        {
+            Pause();
+        }
+    }
+
     public void Update(float deltaTime)
     {
         if (IsGameRunning())
@@ -300,7 +320,7 @@ public class GameplayController
         if (m_gameplay.ImageProgress.RevealedTiles > 0)
             SaveProgress();
 
-        SceneManager.LoadScene("Levels");
+        Pix.Game.GetInstance().ShowLevelsScene(m_gameplay.BundleId);
     }
 
     private void HandlePauseViewOptionsClicked()
@@ -331,7 +351,7 @@ public class GameplayController
             return;
         }
 
-        SceneManager.LoadScene("Levels");
+        Pix.Game.GetInstance().ShowLevelsScene(m_gameplay.BundleId);
     }
 
     private void HandleBackToMenuClicked()
