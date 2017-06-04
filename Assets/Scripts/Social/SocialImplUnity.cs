@@ -46,7 +46,7 @@ namespace Ssg.Social
         public void SignOut()
         {
             #if UNITY_ANDROID
-                var gpgsSocial = UnityEngine.Social as GooglePlayGames.PlayGamesPlatform;
+                var gpgsSocial = GooglePlayGames.PlayGamesPlatform.Instance;
                 if (gpgsSocial == null)
                     return;
 
