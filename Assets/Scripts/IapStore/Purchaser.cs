@@ -222,10 +222,10 @@ public class Purchaser : IStoreListener
 
 #if UNITY_IPHONE
         GameAnalyticsSDK.GameAnalytics.NewBusinessEventIOS(
-            metadata.isoCurrencyCode,
-            (int)metadata.localizedPrice,
-            metadata.localizedTitle,
-            args.purchasedProduct.definition.id,
+            product.metadata.isoCurrencyCode,
+            (int)product.metadata.localizedPrice,
+            product.metadata.localizedTitle,
+            product.definition.id,
             "levels",
             receipt.Payload);
 #elif UNITY_ANDROID
