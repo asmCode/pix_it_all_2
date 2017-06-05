@@ -26,7 +26,7 @@ public class GameplayController
         PenaltyView penaltyView,
         BonusView bonusView,
         Board board,
-        BoardController boardInputController, 
+        BoardController boardInputController,
         LevelIntroView levelIntroView)
     {
         m_gameplay = gameplay;
@@ -81,7 +81,7 @@ public class GameplayController
 
         m_levelIntroView.StartPressed += HandleLevelIntroStartPressed;
         m_levelIntroView.BackPressed += HandleLevelIntroBackPressed;
-        var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);        
+        var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);
         m_board.SetScale(Vector2.zero, m_board.MinScale);
         m_board.SetLocalPosition(Vector2.zero);
         m_board.ShowPreview();
@@ -164,6 +164,8 @@ public class GameplayController
     {
         var persistent = Pix.Game.GetInstance().Persistent;
         persistent.SetTotalWins(persistent.GetTotalWins() + 1);
+
+        SendProgressionFinishedEvent(m_gameplay.Time);
 
         ShowSummary();
 
@@ -373,14 +375,43 @@ public class GameplayController
     {
     }
 
+    private bool IsInProgress()
+    {
+        var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);
+        if (imageViewData == null || imageViewData.LevelProgress == null)
+            return false;
+
+        return imageViewData.LevelProgress.IsInProgress;
+    }
+
     private void HandleLevelIntroStartPressed()
     {
         m_board.HidePreview();
         m_levelIntroView.Close();
+
+        if (!IsInProgress())
+            SendProgressionStartEvent();
     }
-    
+
     private void HandleLevelIntroBackPressed()
     {
         GoToLevels();
+    }
+
+    private void SendProgressionStartEvent()
+    {
+        GameAnalyticsSDK.GameAnalytics.NewProgressionEvent(
+            GameAnalyticsSDK.GAProgressionStatus.Start,
+            m_gameplay.BundleId,
+            m_gameplay.ImageId);
+    }
+
+    private void SendProgressionFinishedEvent(float time)
+    {
+        GameAnalyticsSDK.GameAnalytics.NewProgressionEvent(
+            GameAnalyticsSDK.GAProgressionStatus.Complete,
+            m_gameplay.BundleId,
+            m_gameplay.ImageId,
+            (int)(time));
     }
 }
