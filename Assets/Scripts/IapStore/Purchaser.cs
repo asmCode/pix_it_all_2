@@ -4,19 +4,19 @@ using UnityEngine;
 using UnityEngine.Purchasing;
 
 [Serializable]
+public class AndroidPayload
+{
+    public string json;
+    public string signature;
+}
+
+[Serializable]
 public class Receipt
 {
     public string Store;
     public string TransactionID;
     public string Payload;
 }
-
-//public class Receipt
-//{
-//    public string Store;
-//    public string TransactionID;
-//    public string Payload;
-//}
 
 public class Purchaser : IStoreListener
 {
@@ -198,12 +198,27 @@ public class Purchaser : IStoreListener
     {
         m_isPurchasing = false;
 
-        Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
-
-        if (args == null || args.purchasedProduct == null || args.purchasedProduct.definition == null || args.purchasedProduct.metadata == null)
+        if (args == null || args.purchasedProduct == null || args.purchasedProduct.definition == null)
             return PurchaseProcessingResult.Complete;
 
-        var metadata = args.purchasedProduct.metadata;
+        Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
+
+        SendAnalyticsEvent(args.purchasedProduct);
+
+        if (PurchaseFinished != null)
+            PurchaseFinished(true, args.purchasedProduct.definition.id);
+
+        return PurchaseProcessingResult.Complete;
+    }
+
+    private void SendAnalyticsEvent(Product product)
+    {
+        if (product == null || product.definition == null || product.metadata == null)
+            return;
+
+        Receipt receipt = JsonUtility.FromJson<Receipt>(product.receipt);
+        if (receipt == null || receipt.Payload == null)
+            return;
 
 #if UNITY_IPHONE
         GameAnalyticsSDK.GameAnalytics.NewBusinessEventIOS(
@@ -212,35 +227,40 @@ public class Purchaser : IStoreListener
             metadata.localizedTitle,
             args.purchasedProduct.definition.id,
             "levels",
-            args.purchasedProduct.receipt);
+            receipt.Payload);
 #elif UNITY_ANDROID
+
+        var androidPayload = JsonUtility.FromJson<AndroidPayload>(receipt.Payload);
+        if (androidPayload == null)
+            return;
+
         GameAnalyticsSDK.GameAnalytics.NewBusinessEventGooglePlay(
-            metadata.isoCurrencyCode,
-            (int)metadata.localizedPrice,
-            metadata.localizedTitle,
-            args.purchasedProduct.definition.id,
+            product.metadata.isoCurrencyCode,
+            (int)product.metadata.localizedPrice,
+            product.metadata.localizedTitle,
+            product.definition.id,
             "levels",
-            args.purchasedProduct.receipt,
-            args.purchasedProduct.receipt);
+            androidPayload.json,
+            androidPayload.signature);
 #endif
 
-        Debug.LogFormat("******************** receipt: {0}", args.purchasedProduct.receipt);
+        //Debug.LogFormat("******************** receipt: {0}", args.purchasedProduct.receipt);
 
-        Receipt receipt = JsonUtility.FromJson<Receipt>(args.purchasedProduct.receipt);
+        //Receipt receipt = JsonUtility.FromJson<Receipt>(args.purchasedProduct.receipt);
 
-        if (receipt != null)
-        {
-            Debug.LogFormat("******************** Store: {0}", receipt.Store);
-            Debug.LogFormat("******************** TransactionID: {0}", receipt.TransactionID);
-            Debug.LogFormat("******************** Payload: {0}", receipt.Payload);
-        }
-        else
-            Debug.LogFormat("******************** receipt is null");
+        //if (receipt != null)
+        //{
+        //    Debug.LogFormat("******************** Store: {0}", receipt.Store);
+        //    Debug.LogFormat("******************** TransactionID: {0}", receipt.TransactionID);
+        //    Debug.LogFormat("******************** Payload {0}", receipt.Payload);
 
-        if (PurchaseFinished != null)
-            PurchaseFinished(true, args.purchasedProduct.definition.id);
+        //    var androidPayload = JsonUtility.FromJson<AndroidPayload>(receipt.Payload);
 
-        return PurchaseProcessingResult.Complete;
+        //    Debug.LogFormat("******************** Payload.json {0}", androidPayload.json);
+        //    Debug.LogFormat("******************** Payload.signature {0}", androidPayload.signature);
+        //}
+        //else
+        //    Debug.LogFormat("******************** receipt is null");
     }
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
