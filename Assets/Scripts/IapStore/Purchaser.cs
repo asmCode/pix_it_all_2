@@ -75,6 +75,7 @@ public class Purchaser : IStoreListener
 		foreach (var itemId in IapIds.Ids)
 			builder.AddProduct(itemId, ProductType.NonConsumable);
 
+        // TODO: remove that in release version
         builder.AddProduct("test.pixitallfree.consume_01", ProductType.Consumable);
 
         UnityPurchasing.Initialize(this, builder);
@@ -229,7 +230,6 @@ public class Purchaser : IStoreListener
             "levels",
             receipt.Payload);
 #elif UNITY_ANDROID
-
         var androidPayload = JsonUtility.FromJson<AndroidPayload>(receipt.Payload);
         if (androidPayload == null)
             return;
@@ -243,24 +243,6 @@ public class Purchaser : IStoreListener
             androidPayload.json,
             androidPayload.signature);
 #endif
-
-        //Debug.LogFormat("******************** receipt: {0}", args.purchasedProduct.receipt);
-
-        //Receipt receipt = JsonUtility.FromJson<Receipt>(args.purchasedProduct.receipt);
-
-        //if (receipt != null)
-        //{
-        //    Debug.LogFormat("******************** Store: {0}", receipt.Store);
-        //    Debug.LogFormat("******************** TransactionID: {0}", receipt.TransactionID);
-        //    Debug.LogFormat("******************** Payload {0}", receipt.Payload);
-
-        //    var androidPayload = JsonUtility.FromJson<AndroidPayload>(receipt.Payload);
-
-        //    Debug.LogFormat("******************** Payload.json {0}", androidPayload.json);
-        //    Debug.LogFormat("******************** Payload.signature {0}", androidPayload.signature);
-        //}
-        //else
-        //    Debug.LogFormat("******************** receipt is null");
     }
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
