@@ -221,10 +221,12 @@ public class Purchaser : IStoreListener
         if (receipt == null || receipt.Payload == null)
             return;
 
+        int amount = (int)(product.metadata.localizedPrice * 100.0m);
+
 #if UNITY_IPHONE
         GameAnalyticsSDK.GameAnalytics.NewBusinessEventIOS(
             product.metadata.isoCurrencyCode,
-            (int)product.metadata.localizedPrice,
+            amount,
             product.metadata.localizedTitle,
             product.definition.id,
             "levels",
@@ -236,7 +238,7 @@ public class Purchaser : IStoreListener
 
         GameAnalyticsSDK.GameAnalytics.NewBusinessEventGooglePlay(
             product.metadata.isoCurrencyCode,
-            (int)product.metadata.localizedPrice,
+            amount,
             product.metadata.localizedTitle,
             product.definition.id,
             "levels",
