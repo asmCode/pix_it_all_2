@@ -23,6 +23,8 @@ public class WellcomeController
 
     private void HandleLeaderboardsPressed()
     {
+        GameAnalyticsSDK.GameAnalytics.NewDesignEvent("button.wellcome.leaderboards");
+
         var social = Ssg.Social.Social.GetInstance();
 
         if (social.IsAuthenticated)

@@ -325,6 +325,8 @@ public class GameplayController
 
     private void HandlePauseViewBackToMenuClicked()
     {
+        GameAnalyticsSDK.GameAnalytics.NewDesignEvent("button.gameplay.pause.back");
+
         if (m_gameplay.ImageProgress.RevealedTiles > 0)
             SaveProgress();
 
@@ -391,6 +393,8 @@ public class GameplayController
 
         if (!IsInProgress())
             SendProgressionStartEvent();
+        else
+            GameAnalyticsSDK.GameAnalytics.NewDesignEvent("gameplay.intro.continue");
     }
 
     private void HandleLevelIntroBackPressed()
