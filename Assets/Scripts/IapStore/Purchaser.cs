@@ -3,6 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
 
+[Serializable]
+public class Receipt
+{
+    public string Store;
+    public string TransactionID;
+    public string Payload;
+}
+
+//public class Receipt
+//{
+//    public string Store;
+//    public string TransactionID;
+//    public string Payload;
+//}
+
 public class Purchaser : IStoreListener
 {
     private IStoreController m_storeController;
@@ -59,7 +74,9 @@ public class Purchaser : IStoreListener
 		
 		foreach (var itemId in IapIds.Ids)
 			builder.AddProduct(itemId, ProductType.NonConsumable);
-        
+
+        builder.AddProduct("test.pixitallfree.consume_01", ProductType.Consumable);
+
         UnityPurchasing.Initialize(this, builder);
     }
 
@@ -182,6 +199,43 @@ public class Purchaser : IStoreListener
         m_isPurchasing = false;
 
         Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
+
+        if (args == null || args.purchasedProduct == null || args.purchasedProduct.definition == null || args.purchasedProduct.metadata == null)
+            return PurchaseProcessingResult.Complete;
+
+        var metadata = args.purchasedProduct.metadata;
+
+#if UNITY_IPHONE
+        GameAnalyticsSDK.GameAnalytics.NewBusinessEventIOS(
+            metadata.isoCurrencyCode,
+            (int)metadata.localizedPrice,
+            metadata.localizedTitle,
+            args.purchasedProduct.definition.id,
+            "levels",
+            args.purchasedProduct.receipt);
+#elif UNITY_ANDROID
+        GameAnalyticsSDK.GameAnalytics.NewBusinessEventGooglePlay(
+            metadata.isoCurrencyCode,
+            (int)metadata.localizedPrice,
+            metadata.localizedTitle,
+            args.purchasedProduct.definition.id,
+            "levels",
+            args.purchasedProduct.receipt,
+            args.purchasedProduct.receipt);
+#endif
+
+        Debug.LogFormat("******************** receipt: {0}", args.purchasedProduct.receipt);
+
+        Receipt receipt = JsonUtility.FromJson<Receipt>(args.purchasedProduct.receipt);
+
+        if (receipt != null)
+        {
+            Debug.LogFormat("******************** Store: {0}", receipt.Store);
+            Debug.LogFormat("******************** TransactionID: {0}", receipt.TransactionID);
+            Debug.LogFormat("******************** Payload: {0}", receipt.Payload);
+        }
+        else
+            Debug.LogFormat("******************** receipt is null");
 
         if (PurchaseFinished != null)
             PurchaseFinished(true, args.purchasedProduct.definition.id);
