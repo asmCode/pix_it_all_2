@@ -94,6 +94,12 @@ public class GameplayController
         {
             HandleLevelIntroBackPressed();
         }
+        else if (RateMeScene.IsVisible())
+        {
+            var controller = RateMeScene.GetController();
+            if (controller != null)
+                controller.FireLater();
+        }
         else if (IsSumaryActive())
         {
             HandleBackToMenuClicked();

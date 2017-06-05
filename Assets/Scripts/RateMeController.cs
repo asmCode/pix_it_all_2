@@ -32,6 +32,11 @@ public class RateMeController
         m_view.NeverPressed += HandleNeverPressed;
     }
 
+    public void FireLater()
+    {
+        HandleLaterPressed();
+    }
+
     private void HandleNowPressed()
     {
         Application.OpenURL(GameSettings.RateMeUrl);
@@ -63,6 +68,6 @@ public class RateMeController
         m_view.LaterPressed -= HandleLaterPressed;
         m_view.NeverPressed -= HandleNeverPressed;
 
-        SceneManager.UnloadSceneAsync("RateMe");
+        RateMeScene.Close();
     }
 }
