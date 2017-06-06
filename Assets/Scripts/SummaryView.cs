@@ -5,19 +5,25 @@ using UnityEngine.UI;
 
 public class SummaryView : MonoBehaviour
 {
-    public Text m_labelStarsValue;
+    public Transform m_stars;
     public Text m_labelTimeValue;
+    public GameObject m_newRecord;
+    public GameObject m_record;
+    public Text m_labelLevelName;
     public Text m_labelRecordValue;
     public Text m_timeFor3Stars;
     public Text m_timeFor2Stars;
 
     public event System.Action BackToMenuClicked;
 
-    public void Show(int stars, float time, bool record, float timeFor3Stars, float timeFor2Stars)
+    public void Show(string levelName, int stars, float time, bool record, float currentRecord, float timeFor3Stars, float timeFor2Stars)
     {
-        m_labelStarsValue.text = stars.ToString();
+        UiUtils.ShowChildren(m_stars, stars);
         m_labelTimeValue.text = Utils.TimeToString(time);
-        m_labelRecordValue.text = record.ToString().ToUpper();
+        m_labelLevelName.text = levelName;
+        m_newRecord.SetActive(record);
+        m_record.SetActive(!record);
+        m_labelRecordValue.text = Utils.TimeToString(currentRecord);
         m_timeFor3Stars.text = Utils.TimeToString(timeFor3Stars);
         m_timeFor2Stars.text = Utils.TimeToString(timeFor2Stars);
 

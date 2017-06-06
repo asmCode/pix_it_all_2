@@ -220,8 +220,12 @@ public class GameplayController
         float timeFor2Stars = StarRatingCalc.RequiredTimeForStars(2, tilesCount, colorsCount);
         int starsCount = StarRatingCalc.GetStars(time, tilesCount, colorsCount);
 
+        var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);
+        if (imageViewData == null)
+            return;
+
         m_hud.gameObject.SetActive(false);
-        m_summaryView.Show(starsCount, time, record, timeFor3Stars, timeFor2Stars);
+        m_summaryView.Show(imageViewData.ImageData.Name, starsCount, time, record, imageViewData.LevelProgress.BestTime, timeFor3Stars, timeFor2Stars);
 
         AudioManager.GetInstance().SoundVictory.Play();
     }
@@ -327,7 +331,8 @@ public class GameplayController
     {
         GameAnalyticsSDK.GameAnalytics.NewDesignEvent("button.gameplay.pause.back");
 
-        if (m_gameplay.ImageProgress.RevealedTiles > 0)
+        if (m_gameplay.ImageProgress.RevealedTiles > 0 &&
+            m_gameplay.ImageProgress.RevealedTiles < m_gameplay.ImageProgress.TotalTiles)
             SaveProgress();
 
         Pix.Game.GetInstance().ShowLevelsScene(m_gameplay.BundleId);
@@ -345,7 +350,7 @@ public class GameplayController
 
     public void NotifyOnApplicationPause(bool paused)
     {
-        if (paused)
+        if (paused && !IsSumaryActive())
         {
             SaveProgress();
             Pause();
