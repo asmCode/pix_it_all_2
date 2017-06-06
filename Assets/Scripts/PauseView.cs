@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class PauseView : MonoBehaviour
 {
-    private static readonly string SaveAndBackToMenuButtonTitle = "SAVE AND BACK TO MENU";
-    private static readonly string BackToMenuButtonTitle = "BACK TO MENU";
+    private static readonly string SaveAndBackToMenuButtonTitle = "SAVE AND EXIT";
+    private static readonly string BackToMenuButtonTitle = "EXIT";
 
     public Text m_backToMenuButton;
 
