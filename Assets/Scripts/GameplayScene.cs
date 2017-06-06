@@ -51,6 +51,11 @@ public class GameplayScene : MonoBehaviour
         {
             m_gameplayController.HandleBackButton();
         }
+
+        //if (Input.GetKeyUp(KeyCode.S))
+        //{
+        //    m_summaryView.Show("Poznan", 2, 2145, true, 1243, 1000, 2000);
+        //}
     }
 
     private void SetupSceneInputVariables()
