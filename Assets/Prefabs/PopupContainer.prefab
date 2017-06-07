@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222676584632820406}
   - component: {fileID: 114712302613538426}
   - component: {fileID: 114701394813211206}
+  - component: {fileID: 114445400339123120}
   m_Layer: 5
   m_Name: ButtonCancel
   m_TagString: Untagged
@@ -91,6 +92,7 @@ GameObject:
   - component: {fileID: 222240291742654886}
   - component: {fileID: 114123917285744698}
   - component: {fileID: 114679156164157820}
+  - component: {fileID: 114978064083650120}
   m_Layer: 5
   m_Name: ButtonYes
   m_TagString: Untagged
@@ -126,6 +128,7 @@ GameObject:
   - component: {fileID: 222897373610521224}
   - component: {fileID: 114844040324777876}
   - component: {fileID: 114003490149207528}
+  - component: {fileID: 114648493967336346}
   m_Layer: 5
   m_Name: ButtonNo
   m_TagString: Untagged
@@ -144,6 +147,7 @@ GameObject:
   - component: {fileID: 222463963507050896}
   - component: {fileID: 114103381156483088}
   - component: {fileID: 114466395063316180}
+  - component: {fileID: 114698625314593122}
   m_Layer: 5
   m_Name: ButtonOK
   m_TagString: Untagged
@@ -526,6 +530,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: OK
+--- !u!114 &114445400339123120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1066259118128168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107d1417812b94c6681b5554541d341b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114466395063316180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -567,6 +582,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114648493967336346
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1559996865022802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107d1417812b94c6681b5554541d341b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114679156164157820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -608,6 +634,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114698625314593122
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1628550379031622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107d1417812b94c6681b5554541d341b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114701394813211206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -779,6 +816,17 @@ MonoBehaviour:
   m_buttonYes: {fileID: 114679156164157820}
   m_buttonNo: {fileID: 114003490149207528}
   m_buttonCancel: {fileID: 114701394813211206}
+--- !u!114 &114978064083650120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1449274433007814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107d1417812b94c6681b5554541d341b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222144953254304720
 CanvasRenderer:
   m_ObjectHideFlags: 1
