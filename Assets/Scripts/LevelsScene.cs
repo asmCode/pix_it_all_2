@@ -91,7 +91,7 @@ public class LevelsScene : MonoBehaviour
 
         if (levelProgress.IsInProgress)
         {
-            Popup.Show("CONTINUE?\nTAP \"NO\" TO START FROM SCRATCH", (int)Popup.Button.No | (int)Popup.Button.Yes | (int)Popup.Button.Cancel, Popup.Button.Cancel, (button) =>
+            Popup.Show("LEVEL IN PROGRESS\n\nCONTINUE?", (int)Popup.Button.No | (int)Popup.Button.Yes | (int)Popup.Button.Cancel, Popup.Button.Cancel, (button) =>
             {
                 if (button == Popup.Button.Cancel)
                     return;
