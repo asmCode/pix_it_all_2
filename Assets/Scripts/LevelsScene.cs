@@ -130,16 +130,7 @@ public class LevelsScene : MonoBehaviour
             return;
         }
 
-        var popupText = string.Format("Do you want to buy bundle {0} ({1}) for {2}?",
-                                        bundleId, product.Id, product.LocalizedPrice);
-
-        Popup.Show(popupText, (int)(Popup.Button.Yes | Popup.Button.No), Popup.Button.No, (button) =>
-        {
-            if (button == Popup.Button.Yes)
-            {
-                game.Purchaser.BuyProductId(product.Id);
-            }
-        });
+        game.Purchaser.BuyProductId(product.Id);
     }
 
     private void HandleBuyClicked()
