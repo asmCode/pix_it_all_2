@@ -11,6 +11,7 @@ public class Palette : MonoBehaviour
     public event System.Action PaletteClosed;
 
     private const int MaxStripsInColumn = 6;
+    private Animator m_animator;
 
     public bool IsPaletteVisible
     {
@@ -65,13 +66,15 @@ public class Palette : MonoBehaviour
     {
         gameObject.SetActive(true);
 
+        m_animator.Play("PaletteRollOut", 0, 0.0f);
+
         if (PaletteShown != null)
             PaletteShown();
     }
 
     public void HidePalette()
     {
-        gameObject.SetActive(false);
+        m_animator.Play("PaletteRollIn", 0, 0.0f);
 
         if (PaletteClosed != null)
             PaletteClosed();
@@ -97,5 +100,15 @@ public class Palette : MonoBehaviour
     {
         if (ColorClicked != null)
             ColorClicked(paletteStrip.Color);
+    }
+
+    private void Awake()
+    {
+        m_animator = GetComponent<Animator>();
+    }
+
+    public void Anim_PaletteRollInFinished()
+    {
+        gameObject.SetActive(false);
     }
 }
