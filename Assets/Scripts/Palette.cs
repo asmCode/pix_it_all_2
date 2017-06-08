@@ -12,6 +12,7 @@ public class Palette : MonoBehaviour
 
     private const int MaxStripsInColumn = 6;
     private Animator m_animator;
+    private bool m_initialized;
 
     public bool IsPaletteVisible
     {
@@ -47,6 +48,16 @@ public class Palette : MonoBehaviour
         }
     }
 
+    private void Init()
+    {
+        if (m_initialized)
+            return;
+
+        m_animator = GetComponent<Animator>();
+
+        m_initialized = true;
+    }
+
     private PaletteStrip CreatePaletteStrip(Vector2 offset, Color color)
     {
         var paletteStrip = Instantiate(m_paletteStripPrefab);
@@ -64,6 +75,8 @@ public class Palette : MonoBehaviour
 
     public void ShowPalette()
     {
+        Init();
+
         gameObject.SetActive(true);
 
         m_animator.Play("PaletteRollOut", 0, 0.0f);
@@ -74,6 +87,8 @@ public class Palette : MonoBehaviour
 
     public void HidePalette()
     {
+        Init();
+
         m_animator.Play("PaletteRollIn", 0, 0.0f);
 
         if (PaletteClosed != null)
@@ -104,7 +119,7 @@ public class Palette : MonoBehaviour
 
     private void Awake()
     {
-        m_animator = GetComponent<Animator>();
+        Init();
     }
 
     public void Anim_PaletteRollInFinished()

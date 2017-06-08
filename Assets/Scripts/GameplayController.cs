@@ -62,7 +62,6 @@ public class GameplayController
         m_board.HidePreview();
 
         m_hud.m_palette.ColorClicked += HandleColorClicked;
-        m_hud.m_palette.HidePalette();
         m_hud.m_palette.SetActiveColor(initialColor);
 
         m_hud.m_palette.PaletteShown += PaletteShown;
