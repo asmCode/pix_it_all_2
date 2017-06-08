@@ -5,7 +5,7 @@ using System.Collections;
 public class Hud : MonoBehaviour
 {
     public Palette m_palette;
-    public Button m_paletteButton;
+    public Image m_paletteColor;
     public Text m_labelTime;
 
     public event System.Action PreviewPressed;
@@ -26,7 +26,7 @@ public class Hud : MonoBehaviour
 
     public void SetPaleteButtonColor(Color color)
     {
-        m_paletteButton.image.color = color;
+        m_paletteColor.color = color;
     }
 
     public void UiEventPreviewPressed()
