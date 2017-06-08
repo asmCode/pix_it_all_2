@@ -37,6 +37,20 @@ public class BoardController : MonoBehaviour
         m_isDuringSmoothScale = true;
     }
 
+    public void PauseInput()
+    {
+        m_panGestureDetector.gameObject.SetActive(false);
+        m_pinchGestureDetector.gameObject.SetActive(false);
+        m_tapGestureDetector.gameObject.SetActive(false);
+    }
+
+    public void ResumeInput()
+    {
+        m_panGestureDetector.gameObject.SetActive(true);
+        m_pinchGestureDetector.gameObject.SetActive(true);
+        m_tapGestureDetector.gameObject.SetActive(true);
+    }
+
     private bool IsDuringSmoothScale()
     {
         return m_isDuringSmoothScale;

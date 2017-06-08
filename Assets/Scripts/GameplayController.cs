@@ -79,12 +79,12 @@ public class GameplayController
         m_bonusController = new BonusController();
         m_bonusController.Init(m_gameplay, m_bonusView);
 
-        m_levelIntroView.StartPressed += HandleLevelIntroStartPressed;
-        m_levelIntroView.BackPressed += HandleLevelIntroBackPressed;
         var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);
+        m_boardInputController.PauseInput();
         m_board.SetScale(Vector2.zero, m_board.MinScale);
         m_board.SetLocalPosition(Vector2.zero);
         m_board.ShowPreview();
+        m_levelIntroView.Finished += HandleLevelIntroViewFinished;
         m_levelIntroView.Show(imageViewData);
     }
 
@@ -92,7 +92,7 @@ public class GameplayController
     {
         if (IsLevelIntroViewVisible())
         {
-            HandleLevelIntroBackPressed();
+            // Do nothing
         }
         else if (RateMeScene.IsVisible())
         {
@@ -116,6 +116,11 @@ public class GameplayController
 
     public void Update(float deltaTime)
     {
+        if (IsLevelIntroViewVisible())
+        {
+            m_hud.gameObject.SetActive(m_levelIntroView.m_hudVisible);
+        }
+
         if (IsGameRunning())
         {
             m_gameplay.AddSeconds(deltaTime);
@@ -138,8 +143,6 @@ public class GameplayController
         m_pauseView.BackToMenuClicked -= HandlePauseViewResumeClicked;
         m_pauseView.OptionsClicked -= HandlePauseViewOptionsClicked;
         m_summaryView.BackToMenuClicked -= HandleBackToMenuClicked;
-        m_levelIntroView.StartPressed -= HandleLevelIntroStartPressed;
-        m_levelIntroView.BackPressed -= HandleLevelIntroBackPressed;
     }
 
     private bool IsLevelIntroViewVisible()
@@ -389,20 +392,17 @@ public class GameplayController
         return imageViewData.LevelProgress.IsInProgress;
     }
 
-    private void HandleLevelIntroStartPressed()
+    private void HandleLevelIntroViewFinished()
     {
         m_board.HidePreview();
         m_levelIntroView.Close();
+        m_hud.gameObject.SetActive(true);
+        m_boardInputController.ResumeInput();
 
         if (!IsInProgress())
             SendProgressionStartEvent();
         else
             GameAnalyticsSDK.GameAnalytics.NewDesignEvent("gameplay.intro.continue");
-    }
-
-    private void HandleLevelIntroBackPressed()
-    {
-        GoToLevels();
     }
 
     private void SendProgressionStartEvent()
