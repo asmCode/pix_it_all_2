@@ -4427,7 +4427,7 @@ Prefab:
     - target: {fileID: 224239066273529480, guid: 7f8adb2d8b22533488e0a6a59bb7e702,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 224239066273529480, guid: 7f8adb2d8b22533488e0a6a59bb7e702,
         type: 2}
@@ -4437,7 +4437,7 @@ Prefab:
     - target: {fileID: 224239066273529480, guid: 7f8adb2d8b22533488e0a6a59bb7e702,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -113
       objectReference: {fileID: 0}
     - target: {fileID: 224239066273529480, guid: 7f8adb2d8b22533488e0a6a59bb7e702,
         type: 2}
@@ -6377,8 +6377,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.25}
-  m_SizeDelta: {x: 0, y: -0.5}
+  m_AnchoredPosition: {x: 0, y: 15.25}
+  m_SizeDelta: {x: 0, y: -194.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1787603506
 GameObject:
