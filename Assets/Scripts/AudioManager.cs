@@ -25,6 +25,7 @@ class AudioManager : MonoBehaviourSingleton<AudioManager, AudioManager.Meta>
     public Sound SoundBonus3;
     public Sound SoundPaletteRollOut;
     public Sound SoundPaletteRollIn;
+    public Sound SoundPreview;
 
     public bool MusicEnabled { get; private set; }
     public bool SoundsEnabled { get; private set; }

@@ -299,12 +299,14 @@ public class GameplayController
 
     private void HandlePreviewPressed()
     {
+        AudioManager.GetInstance().SoundPreview.Play();
         m_board.ShowPreview();
         m_gameplay.NotifyPreviewStarted();
     }
 
     private void HandlePreviewReleased()
     {
+        AudioManager.GetInstance().SoundPreview.Stop();
         m_board.HidePreview();
         m_gameplay.NotifyPreviewEnded();
     }
