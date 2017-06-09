@@ -79,6 +79,7 @@ public class Palette : MonoBehaviour
 
         gameObject.SetActive(true);
 
+        AudioManager.GetInstance().SoundPaletteRollOut.Play();
         m_animator.Play("PaletteRollOut", 0, 0.0f);
 
         if (PaletteShown != null)
@@ -89,6 +90,7 @@ public class Palette : MonoBehaviour
     {
         Init();
 
+        AudioManager.GetInstance().SoundPaletteRollIn.Play();
         m_animator.Play("PaletteRollIn", 0, 0.0f);
 
         if (PaletteClosed != null)
