@@ -220,7 +220,9 @@ public class GameplayController
         int tilesCount = m_gameplay.ImageProgress.Width * m_gameplay.ImageProgress.Height;
         int colorsCount = m_referenceImage.Colors.Length;
         float time = m_gameplay.Time;
-        bool record = m_gameplay.LevelProgress.BestTime > time;
+        bool record =
+            !m_gameplay.LevelProgress.IsCompleted ||
+            m_gameplay.LevelProgress.BestTime > time;
         float timeFor3Stars = StarRatingCalc.RequiredTimeForStars(3, tilesCount, colorsCount);
         float timeFor2Stars = StarRatingCalc.RequiredTimeForStars(2, tilesCount, colorsCount);
         int starsCount = StarRatingCalc.GetStars(time, tilesCount, colorsCount);
