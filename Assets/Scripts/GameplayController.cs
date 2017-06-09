@@ -127,7 +127,7 @@ public class GameplayController
             if (m_board.IsPreviewActive)
             {
                 m_gameplay.ApplyPreview(deltaTime);
-                m_hud.ShowPenalty();
+                m_hud.ShowPenalty(m_gameplay.PreviewCost * m_gameplay.PreviewTime);
             }
         }
 
@@ -208,8 +208,9 @@ public class GameplayController
     private void ApplyPenalty()
     {
         int penaltySeconds = m_gameplay.ApplyPenalty();
-        m_penaltyView.ShowPenalty(penaltySeconds);
-        m_hud.ShowPenalty();
+        // Skip that for now
+        // m_penaltyView.ShowPenalty(penaltySeconds);
+        m_hud.ShowPenalty(penaltySeconds);
 
         m_gameplay.NotifyTileRevealedWithFailure();
     }
@@ -299,11 +300,13 @@ public class GameplayController
     private void HandlePreviewPressed()
     {
         m_board.ShowPreview();
+        m_gameplay.NotifyPreviewStarted();
     }
 
     private void HandlePreviewReleased()
     {
         m_board.HidePreview();
+        m_gameplay.NotifyPreviewEnded();
     }
 
     private void HandlePaletteClicked()

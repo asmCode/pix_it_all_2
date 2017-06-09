@@ -7,13 +7,25 @@ public class Gameplay
     public event System.Action TileRevealedWithSuccess;
 
     private static readonly int PenaltyTime = 10;
-    private static readonly float PreviewTimeCostPerSecond = 7.0f;
+    private static readonly float PreviewTimeCostPerSecond = 12.0f;
 
     private int m_successInRow;
+    private float m_previewTime;
 
     public int SuccessInRow
     {
         get { return m_successInRow; }
+    }
+
+    public float PreviewTime
+    {
+        get
+        {
+            if (m_previewTime == 0.0f)
+                return 0.0f;
+
+            return UnityEngine.Time.time - m_previewTime;
+        }
     }
 
     public string BundleId
@@ -44,6 +56,11 @@ public class Gameplay
     {
         get;
         private set;
+    }
+
+    public float PreviewCost
+    {
+        get { return PreviewTimeCostPerSecond; }
     }
 
     public float Time
@@ -162,5 +179,15 @@ public class Gameplay
     public void NotifyTileRevealedWithFailure()
     {
         m_successInRow = 0;
+    }
+
+    public void NotifyPreviewStarted()
+    {
+        m_previewTime = UnityEngine.Time.time;
+    }
+
+    public void NotifyPreviewEnded()
+    {
+        m_previewTime = 0.0f;
     }
 }

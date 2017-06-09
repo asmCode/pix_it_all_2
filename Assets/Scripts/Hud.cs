@@ -24,14 +24,14 @@ public class Hud : MonoBehaviour
         m_timeView.SetTime(time);
     }
 
-    public void ShowPenalty()
+    public void ShowPenalty(float seconds)
     {
-        m_timeView.BlinkRed();
+        m_timeView.BlinkRed(seconds);
     }
 
-    public void ShowBonus()
+    public void ShowBonus(float seconds)
     {
-        m_timeView.BlinkGreen();
+        m_timeView.BlinkGreen(seconds);
     }
 
     public void SetPaleteButtonColor(Color color)

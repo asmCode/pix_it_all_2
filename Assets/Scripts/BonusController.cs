@@ -44,8 +44,11 @@ public class BonusController
         }
         m_bonusView.ShowBonus(type);
         bonusSound.Play();
-        m_hud.ShowBonus();
-        m_gameplay.ApplyBonus(-m_gameplay.SuccessInRow * 0.5f);
+
+        float bonusTime = -m_gameplay.SuccessInRow * 0.5f;
+
+        m_hud.ShowBonus(bonusTime);
+        m_gameplay.ApplyBonus(bonusTime);
     }
 
     private void HandleTileRevealedWithSuccess()
