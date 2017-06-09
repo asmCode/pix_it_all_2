@@ -76,7 +76,7 @@ public class GameplayController
         m_summaryView.Hide();
 
         m_bonusController = new BonusController();
-        m_bonusController.Init(m_gameplay, m_bonusView);
+        m_bonusController.Init(m_gameplay, m_bonusView, m_hud);
 
         var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);
         m_boardInputController.PauseInput();
@@ -125,7 +125,10 @@ public class GameplayController
             m_gameplay.AddSeconds(deltaTime);
 
             if (m_board.IsPreviewActive)
+            {
                 m_gameplay.ApplyPreview(deltaTime);
+                m_hud.ShowPenalty();
+            }
         }
 
         m_hud.SetTime(m_gameplay.Time);
@@ -206,6 +209,7 @@ public class GameplayController
     {
         int penaltySeconds = m_gameplay.ApplyPenalty();
         m_penaltyView.ShowPenalty(penaltySeconds);
+        m_hud.ShowPenalty();
 
         m_gameplay.NotifyTileRevealedWithFailure();
     }

@@ -6,11 +6,13 @@ public class BonusController
 {
     private Gameplay m_gameplay;
     private BonusView m_bonusView;
+    private Hud m_hud;
 
-    public void Init(Gameplay gameplay, BonusView bonusView)
+    public void Init(Gameplay gameplay, BonusView bonusView, Hud hud)
     {
         m_bonusView = bonusView;
         m_gameplay = gameplay;
+        m_hud = hud;
 
         m_gameplay.TileRevealedWithSuccess += HandleTileRevealedWithSuccess;
     }
@@ -42,6 +44,7 @@ public class BonusController
         }
         m_bonusView.ShowBonus(type);
         bonusSound.Play();
+        m_hud.ShowBonus();
         m_gameplay.ApplyBonus(-m_gameplay.SuccessInRow * 0.5f);
     }
 

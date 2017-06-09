@@ -6,7 +6,7 @@ public class Hud : MonoBehaviour
 {
     public Palette m_palette;
     public Image m_paletteColor;
-    public Text m_labelTime;
+    public TimeView m_timeView;
 
     public event System.Action PreviewPressed;
     public event System.Action PreviewReleased;
@@ -21,7 +21,17 @@ public class Hud : MonoBehaviour
 
     public void SetTime(float time)
     {
-        m_labelTime.text = Utils.TimeToString(time);
+        m_timeView.SetTime(time);
+    }
+
+    public void ShowPenalty()
+    {
+        m_timeView.BlinkRed();
+    }
+
+    public void ShowBonus()
+    {
+        m_timeView.BlinkGreen();
     }
 
     public void SetPaleteButtonColor(Color color)
