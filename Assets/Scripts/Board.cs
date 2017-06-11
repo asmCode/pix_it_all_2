@@ -170,6 +170,11 @@ public class Board : MonoBehaviour
         m_scaleMin = CalculateScaleMin();
         m_scaleMax = CalculateScaleMax();
         m_scaleOptimal = CalculateScaleOptimal();
+
+        if (m_scaleMax < m_scaleMin)
+            m_scaleMax = m_scaleMin;
+
+        m_scaleOptimal = Mathf.Clamp(m_scaleOptimal, m_scaleMin, m_scaleMax);
     }
 
     private void ChangeLocalPositionInternal(Vector2 delta)
