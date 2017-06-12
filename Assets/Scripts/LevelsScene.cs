@@ -15,9 +15,12 @@ public class LevelsScene : MonoBehaviour
 
     private string m_selectedBundleId;
     private bool m_refreshBundlesOnNextEnter;
+    // This prevents from one frame glitch related to wrong layouting in level list
+    private bool m_fadeOutOnNextUpdate;
 
     private void Awake()
     {
+        m_fadeOutOnNextUpdate = true;
     }
 
     void Start()
@@ -30,6 +33,8 @@ public class LevelsScene : MonoBehaviour
 
         if (!string.IsNullOrEmpty(m_bundleIdToSelect))
             ShowImagesInBundle(m_bundleIdToSelect);
+        
+        Fade.SetFadeValue(null, false, 1.0f);
 
         m_bundleIdToSelect = null;
     }
@@ -71,7 +76,7 @@ public class LevelsScene : MonoBehaviour
 
     private void HandleBundleClicked(string bundleId)
     {
-        ShowImagesInBundle(bundleId);
+        ShowImagesInBundleWithFade(bundleId);
     }
 
     private void HandleImageClicked(string imageId)
@@ -80,8 +85,8 @@ public class LevelsScene : MonoBehaviour
 
         if (!game.ImageManager.IsBundleAvailable(m_selectedBundleId))
         {
-             AttemptToBuyBundle(m_selectedBundleId);
-             return;
+            AttemptToBuyBundle(m_selectedBundleId);
+            return;
         }
 
         var playerProgress = Pix.Game.GetInstance().PlayerProgress;
@@ -102,11 +107,19 @@ public class LevelsScene : MonoBehaviour
                     levelProgress.Save();
                 }
 
-                Pix.Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
+                StartLevelWithFade(m_selectedBundleId, imageId, levelProgress.IsInProgress);
             });
         }
         else
-            Pix.Game.GetInstance().StartLevel(m_selectedBundleId, imageId, levelProgress.IsInProgress);
+            StartLevelWithFade(m_selectedBundleId, imageId, levelProgress.IsInProgress);
+    }
+
+    private void StartLevelWithFade(string bundleId, string imageId, bool isInProgress)
+    {
+        Fade.FadeIn(null, true, () =>
+        {
+            Pix.Game.GetInstance().StartLevel(bundleId, imageId, isInProgress);
+        });
     }
 
     private void AttemptToBuyBundle(string bundleId)
@@ -136,6 +149,15 @@ public class LevelsScene : MonoBehaviour
     private void HandleBuyClicked()
     {
         AttemptToBuyBundle(m_selectedBundleId);
+    }
+
+    private void ShowImagesInBundleWithFade(string bundleId, bool fadeOutOnly = false)
+    {
+        Fade.FadeIn(null, true, () =>
+        {
+            ShowImagesInBundle(bundleId);
+            Fade.FadeOut(null, false, null);
+        });
     }
 
     private void ShowImagesInBundle(string bundleId)
@@ -219,7 +241,7 @@ public class LevelsScene : MonoBehaviour
         {
             // Set the flag to refresh bundle view next time when we enter to the bundles view
             m_refreshBundlesOnNextEnter = true;
-            ShowImagesInBundle(m_selectedBundleId);
+            ShowImagesInBundleWithFade(m_selectedBundleId);
         }
         else
             InitBundleList();
@@ -267,14 +289,26 @@ public class LevelsScene : MonoBehaviour
 
     private void GoBack()
     {
-        if (IsInImageListView())
-            ShowBundles();
-        else
-            SceneManager.LoadScene("Wellcome");
+        Fade.FadeIn(null, true, () =>
+        {
+            if (IsInImageListView())
+            {
+                ShowBundles();
+                Fade.FadeOut(null, false, null);
+            }
+            else
+                SceneManager.LoadScene("Wellcome");
+        });
     }
 
     private void Update()
     {
+        if (m_fadeOutOnNextUpdate)
+        {
+            m_fadeOutOnNextUpdate = false;
+             Fade.FadeOut(null, false, null);    
+        }
+
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             HandleBackButton();

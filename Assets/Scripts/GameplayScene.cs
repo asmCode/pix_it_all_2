@@ -41,6 +41,8 @@ public class GameplayScene : MonoBehaviour
     private void Start()
     {
         m_gameplayController.SetupGameplay();
+
+        Fade.FadeOut(null, false, null);
     }
 
     private void Update()
