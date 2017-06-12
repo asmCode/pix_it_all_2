@@ -63,8 +63,8 @@ public class GameplayScene : MonoBehaviour
         if (string.IsNullOrEmpty(m_selectedBundleId) ||
             string.IsNullOrEmpty(m_selectedLevelId))
         {
-            m_selectedBundleId = "extra";
-            m_selectedLevelId = "motorowka";
+            m_selectedBundleId = "test_bundle";
+            m_selectedLevelId = "flower";
             m_continueLevel = true;
         }
     }
