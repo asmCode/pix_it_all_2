@@ -13,6 +13,11 @@ public class WellcomeScene : MonoBehaviour
         m_controller.Init(m_wellcomeView);
     }
 
+    private void Start()
+    {
+        Fade.FadeOut(null, false, null);
+    }
+
     private void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape))

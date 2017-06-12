@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class OptionsController
 {
     private OptionsView m_view;
+    private Fade m_fade;
 
-    public void Init(OptionsView view, bool duringLevel)
+    public void Init(OptionsView view, Fade fade, bool duringLevel)
     {
         m_view = view;
+        m_fade = fade;
 
         var options = Pix.Game.GetInstance().Options;
 
@@ -88,7 +90,10 @@ public class OptionsController
         m_view.RestorePurchasesPressed -= HandleRestorePurchasesPressed;
         m_view.GPGSPressed -= HandleGPGSPressed;
 
-        SceneManager.UnloadSceneAsync("Options");
+        Fade.FadeIn(m_fade, true, () =>
+        {
+            SceneManager.UnloadSceneAsync("Options");
+        });
     }
 
     private void UpdateSocial()

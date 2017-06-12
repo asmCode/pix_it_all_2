@@ -22,6 +22,7 @@ public class Popup : MonoBehaviour
 
     public static void Show(string text, int buttons, Button defaultBackButton, System.Action<Button> callback)
     {
+        // TODO: those lines can be replaced by GetPopupInstance
         var popupContainer = GameObject.Find("PopupContainer");
         if (popupContainer == null)
             return;

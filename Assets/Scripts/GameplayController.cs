@@ -346,12 +346,15 @@ public class GameplayController
             m_gameplay.ImageProgress.RevealedTiles < m_gameplay.ImageProgress.TotalTiles)
             SaveProgress();
 
-        Pix.Game.GetInstance().ShowLevelsScene(m_gameplay.BundleId);
+        ShowLevelsSceneWithFade(m_gameplay.BundleId);
     }
 
     private void HandlePauseViewOptionsClicked()
     {
-        OptionsScene.Show(true);
+        OptionsScene.Show(true, () =>
+        {
+            Fade.FadeOut(null, false, null);
+        });
     }
 
     private void HandlePauseViewResumeClicked()
@@ -377,7 +380,15 @@ public class GameplayController
             return;
         }
 
-        Pix.Game.GetInstance().ShowLevelsScene(m_gameplay.BundleId);
+        ShowLevelsSceneWithFade(m_gameplay.BundleId);
+    }
+
+    private void ShowLevelsSceneWithFade(string bundleId)
+    {
+        Fade.FadeIn(null, true, () =>
+        {
+            Pix.Game.GetInstance().ShowLevelsScene(bundleId);
+        }); 
     }
 
     private void HandleBackToMenuClicked()

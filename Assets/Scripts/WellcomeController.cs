@@ -18,7 +18,10 @@ public class WellcomeController
 
     private void HandlePlayPressed()
     {
-        Pix.Game.GetInstance().ShowBundlesScene();
+        Fade.FadeIn(null, true, () =>
+        {
+            Pix.Game.GetInstance().ShowBundlesScene();
+        });
     }
 
     private void HandleLeaderboardsPressed()
@@ -42,7 +45,13 @@ public class WellcomeController
 
     private void HandleOptionsPressed()
     {
-        OptionsScene.Show(false);
+        Fade.FadeIn(null, true, () =>
+        {
+            OptionsScene.Show(false, () =>
+            {
+                Fade.FadeOut(null, false, null);
+            });
+        });
     }
 
     public void HandleBackButton()
