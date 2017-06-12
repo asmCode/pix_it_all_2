@@ -15,6 +15,7 @@ public class GameplayScene : MonoBehaviour
     public Board m_board;
     public LevelIntroView m_levelIntroView;
     public BoardController m_boardInputController;
+    public TutorialView m_tutorialView;
 
     private Gameplay m_gameplay;
     private GameplayController m_gameplayController;
@@ -35,7 +36,8 @@ public class GameplayScene : MonoBehaviour
             m_bonusView,
             m_board,
             m_boardInputController,
-            m_levelIntroView);
+            m_levelIntroView,
+            m_tutorialView);
     }
 
     private void Start()

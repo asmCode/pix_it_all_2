@@ -1482,6 +1482,7 @@ GameObject:
   - component: {fileID: 203942276}
   - component: {fileID: 203942275}
   - component: {fileID: 203942277}
+  - component: {fileID: 203942278}
   m_Layer: 5
   m_Name: Tutorial
   m_TagString: Untagged
@@ -1553,6 +1554,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214c9e2af5d61524ba4a67a40afbc1cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_paletteButton: {fileID: 616135961}
+  m_previewButton: {fileID: 855796298}
+  m_boardImage: {fileID: 206787149}
+  m_paletteContainer: {fileID: 1040005365}
+  m_indicator: {fileID: 993158133}
+  m_steps:
+  - {fileID: 225291616}
+  - {fileID: 1655940626}
+  - {fileID: 591784}
+  - {fileID: 686313771}
+  - {fileID: 549401398}
+  - {fileID: 344780562}
+  - {fileID: 1173661351}
+--- !u!114 &203942278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 203942273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 203942277}
+          m_MethodName: UiEvent_Tapped
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &206075032
 GameObject:
   m_ObjectHideFlags: 0
@@ -5268,6 +5312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 993158132}
   - component: {fileID: 993158133}
+  - component: {fileID: 993158134}
   m_Layer: 5
   m_Name: TutorialIndicator
   m_TagString: Untagged
@@ -5306,6 +5351,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
+--- !u!114 &993158134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 993158131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 203942277}
+          m_MethodName: UiEvent_IndicatorTapped
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1 &1001982717
 GameObject:
   m_ObjectHideFlags: 0
@@ -7808,6 +7883,7 @@ MonoBehaviour:
   m_board: {fileID: 1487821942}
   m_levelIntroView: {fileID: 858255426}
   m_boardInputController: {fileID: 1487821943}
+  m_tutorialView: {fileID: 203942277}
 --- !u!1 &1575039832
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ public class GameplayController
     private BonusController m_bonusController;
     private BonusView m_bonusView;
     private LevelIntroView m_levelIntroView;
+    private TutorialController m_tutorial;
+    private TutorialView m_tutorialView;
 
     private ImageData m_referenceImage;
 
@@ -27,7 +29,8 @@ public class GameplayController
         BonusView bonusView,
         Board board,
         BoardController boardInputController,
-        LevelIntroView levelIntroView)
+        LevelIntroView levelIntroView,
+        TutorialView tutorialView)
     {
         m_gameplay = gameplay;
         m_hud = hud;
@@ -38,6 +41,7 @@ public class GameplayController
         m_board = board;
         m_levelIntroView = levelIntroView;
         m_boardInputController = boardInputController;
+        m_tutorialView = tutorialView;
     }
 
     public void SetupGameplay()
@@ -77,6 +81,9 @@ public class GameplayController
 
         m_bonusController = new BonusController();
         m_bonusController.Init(m_gameplay, m_bonusView, m_hud);
+
+        m_tutorial = new TutorialController();
+        m_tutorial.Init(m_tutorialView);
 
         var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);
         m_boardInputController.PauseInput();
