@@ -92,14 +92,12 @@ public class GameplayController
         m_bonusController = new BonusController();
         m_bonusController.Init(m_gameplay, m_bonusView, m_hud);
 
+        m_tutorialView.Hide();
         if (m_gameplay.IsTutorialImage)
         {
             m_tutorial = new TutorialController();
             m_tutorial.Init(m_tutorialView, this);
-            m_tutorialView.Show();
-        }
-        else
-            m_tutorialView.Hide();
+        }           
 
         var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);
         m_boardInputController.PauseInput();
@@ -469,6 +467,9 @@ public class GameplayController
         m_levelIntroView.Close();
         m_hud.gameObject.SetActive(true);
         m_boardInputController.ResumeInput();
+
+        if (m_gameplay.IsTutorialImage)
+            m_tutorialView.Show();
 
         if (!IsInProgress())
             SendProgressionStartEvent();
