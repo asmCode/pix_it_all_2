@@ -7,30 +7,32 @@ public class TutorialController
     private TutorialView m_view;
     private List<TutorialStep> m_steps;
     private int m_currentStep;
+    private GameplayController m_gameplayController;
 
-    public void Init(TutorialView view)
+    public void Init(TutorialView view, GameplayController gameplayController)
     {
         m_view = view;
+        m_gameplayController = gameplayController;
         m_view.IndicatorTapped += HandleIndicatorTapped;
         m_view.Tapped += HandleTapped;
 
         m_steps = new List<TutorialStep>();
         m_steps.Add(new TutorialStep1(this, view));
-        m_steps.Add(new TutorialStep2(this, view));
+        m_steps.Add(new TutorialStep2(this, view, gameplayController));
+        m_steps.Add(new TutorialStep3(this, view, gameplayController));
+        m_steps.Add(new TutorialStep4(this, view, gameplayController));
 
         SetStep(0);
     }
 
-    private void HandleIndicatorTapped()
+    private void HandleIndicatorTapped(Vector2 screenPoint)
     {
-        m_steps[m_currentStep].NotifyIndicatorTapped();
-        NextStep();
+        m_steps[m_currentStep].NotifyIndicatorTapped(screenPoint);
     }
 
     private void HandleTapped()
     {
         m_steps[m_currentStep].NotifyTapped();
-        NextStep();
     }
 
     public void NextStep()

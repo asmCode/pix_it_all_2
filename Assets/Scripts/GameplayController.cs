@@ -20,6 +20,16 @@ public class GameplayController
 
     private ImageData m_referenceImage;
 
+    public Gameplay Gameplay
+    {
+        get { return m_gameplay; }
+    }
+
+    public BoardController BoardController
+    {
+        get { return m_boardInputController; }
+    }
+
     public GameplayController(
         Gameplay gameplay,
         Hud hud,
@@ -83,7 +93,7 @@ public class GameplayController
         m_bonusController.Init(m_gameplay, m_bonusView, m_hud);
 
         m_tutorial = new TutorialController();
-        m_tutorial.Init(m_tutorialView);
+        m_tutorial.Init(m_tutorialView, this);
 
         var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);
         m_boardInputController.PauseInput();
@@ -189,7 +199,7 @@ public class GameplayController
         m_gameplay.SaveProgress(m_board.Image);
     }
 
-    private void HandleBoardTileTapped(int x, int y)
+    public void HandleBoardTileTapped(int x, int y)
     {
         if (IsTileFilled(x, y))
             return;
@@ -322,16 +332,38 @@ public class GameplayController
 
     private void HandlePaletteClicked()
     {
+        TogglePalette();
+    }
+
+    public void TogglePalette()
+    {
         if (m_hud.m_palette.IsPaletteVisible)
-            m_hud.m_palette.HidePalette();
+            HidePalette();
         else
-            m_hud.m_palette.ShowPalette();
+            ShowPalette();
+    }
+
+    public void ShowPalette()
+    {
+        m_hud.m_palette.ShowPalette();
+    }
+
+    public void HidePalette()
+    {
+        m_hud.m_palette.HidePalette();
     }
 
     private void HandleColorClicked(Color color)
     {
         m_hud.m_palette.SetActiveColor(color);
         m_hud.m_palette.HidePalette();
+        m_hud.SetPaleteButtonColor(color);
+    }
+
+    public void SetColor(int index)
+    {
+        var color = m_hud.m_palette.GetColor(index);
+        m_hud.m_palette.SetActiveColor(color);
         m_hud.SetPaleteButtonColor(color);
     }
 

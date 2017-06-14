@@ -124,7 +124,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -322, y: 420}
+  m_AnchoredPosition: {x: -322, y: 892}
   m_SizeDelta: {x: 261, y: 157}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7335520
@@ -1556,7 +1556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_paletteButton: {fileID: 616135961}
   m_previewButton: {fileID: 855796298}
-  m_boardImage: {fileID: 206787149}
+  m_board: {fileID: 1487821941}
   m_paletteContainer: {fileID: 1040005365}
   m_indicator: {fileID: 993158133}
   m_steps:
@@ -5369,7 +5369,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 203942277}
           m_MethodName: UiEvent_IndicatorTapped
-          m_Mode: 1
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

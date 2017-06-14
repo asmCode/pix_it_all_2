@@ -22,4 +22,9 @@ public class Vu
         result.y = y;
         return result;
     }
+
+    public static Vector2 XY(Vector3 v)
+    {
+        return new Vector2(v.x, v.y);
+    }
 }

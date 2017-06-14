@@ -51,6 +51,21 @@ public class BoardController : MonoBehaviour
         m_tapGestureDetector.gameObject.SetActive(true);
     }
 
+    public bool ScreenPointToTile(Vector2 screenPoint, out int x, out int y)
+    {
+        x = 0;
+        y = 0;
+
+        Vector2 localPoint;
+        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(m_board.RectTransform, screenPoint, null, out localPoint))
+            return false;
+
+        x = (int)(localPoint.x + m_board.RectTransform.rect.width / 2);
+        y = (int)(localPoint.y + m_board.RectTransform.rect.height / 2);
+
+        return true;
+    }
+
     private bool IsDuringSmoothScale()
     {
         return m_isDuringSmoothScale;
@@ -260,22 +275,23 @@ public class BoardController : MonoBehaviour
             return;
         }
 
-        Vector2 localPoint;
-        if (RectTransformUtility.RectangleContainsScreenPoint(m_board.m_parentRectTransform, position) &&
-            RectTransformUtility.RectangleContainsScreenPoint(m_board.RectTransform, position) &&
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(m_board.RectTransform, position, null, out localPoint))
+        if (!RectTransformUtility.RectangleContainsScreenPoint(m_board.m_parentRectTransform, position) ||
+            !RectTransformUtility.RectangleContainsScreenPoint(m_board.RectTransform, position))
+            return;
+
+        int tileX;
+        int tileY;
+        if (!ScreenPointToTile(position, out tileX, out tileY))
+            return;
+
+        if (m_board.IsScaleLessThanOptimal())
         {
-            if (m_board.IsScaleLessThanOptimal())
-            {
-                SmoothZoom(position, m_board.OptimalScale);
-            }
-            else
-            {
-                int x = (int)(localPoint.x + m_board.RectTransform.rect.width / 2);
-                int y = (int)(localPoint.y + m_board.RectTransform.rect.height / 2);
-                if (BoardTileTapped != null)
-                    BoardTileTapped(x, y);
-            }
+            SmoothZoom(position, m_board.OptimalScale);
+        }
+        else
+        {
+            if (BoardTileTapped != null)
+                BoardTileTapped(tileX, tileY);
         }
     }
 }

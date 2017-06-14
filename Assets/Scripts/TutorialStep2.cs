@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class TutorialStep2 : TutorialStep
 {
-    public TutorialStep2(TutorialController ctrl, TutorialView view) : base(ctrl, view)
-    {
+    private GameplayController m_gameplayController;
 
+    public TutorialStep2(TutorialController ctrl, TutorialView view, GameplayController gameplayController) :
+        base(ctrl, view)
+    {
+        m_gameplayController = gameplayController;
     }
 
     public override void Activate()
@@ -18,5 +21,11 @@ public class TutorialStep2 : TutorialStep
     public override void Dectivate()
     {
 
+    }
+
+    public override void NotifyIndicatorTapped(Vector2 screenPoint)
+    {
+        m_gameplayController.ShowPalette();
+        m_ctrl.NextStep();
     }
 }

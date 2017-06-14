@@ -19,4 +19,9 @@ public class TutorialStep1 : TutorialStep
     {
 
     }
+
+    public override void NotifyTapped()
+    {
+        m_ctrl.NextStep();
+    }
 }

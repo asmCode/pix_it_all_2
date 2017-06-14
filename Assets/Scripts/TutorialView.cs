@@ -1,17 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TutorialView : MonoBehaviour
 {
     public RectTransform m_paletteButton;
     public RectTransform m_previewButton;
-    public RectTransform m_boardImage;
+    public RectTransform m_board;
     public Transform m_paletteContainer;
     public TutorialIndicator m_indicator;
     public GameObject[] m_steps;
 
-    public System.Action IndicatorTapped;
+    public System.Action<Vector2> IndicatorTapped;
     public System.Action Tapped;
 
     public void Show()
@@ -34,18 +35,17 @@ public class TutorialView : MonoBehaviour
 
     public void SetIndicatorTarget(RectTransform target)
     {
-        if (target != null)
-        {
-            m_indicator.m_target = target;
-            m_indicator.gameObject.SetActive(true);
-        }
-        else
-            m_indicator.gameObject.SetActive(false);
+        m_indicator.m_target = target;
+        m_indicator.gameObject.SetActive(target != null);
     }
 
     public void SetIndicatorTarget(Vector2 worldPosition, Vector2 size)
     {
-
+        m_indicator.m_target = null;
+        
+        var rectTr = m_indicator.GetComponent<RectTransform>();
+        rectTr.position = worldPosition;
+        rectTr.sizeDelta = size;
     }
 
     // Use this for initialization
@@ -60,10 +60,14 @@ public class TutorialView : MonoBehaviour
 
     }
 
-    public void UiEvent_IndicatorTapped()
+    public void UiEvent_IndicatorTapped(BaseEventData eventData)
     {
+        var pointerEventData = eventData as PointerEventData;
+        if (pointerEventData == null)
+            return;
+
         if (IndicatorTapped != null)
-            IndicatorTapped();
+            IndicatorTapped(pointerEventData.position);
     }
 
     public void UiEvent_Tapped()

@@ -48,6 +48,19 @@ public class Palette : MonoBehaviour
         }
     }
 
+    public Color GetColor(int index)
+    {
+        var colorObject = m_stripContainer.GetChild(index);
+        if (colorObject == null)
+            return Color.black;
+
+        var paletteStrip = colorObject.GetComponent<PaletteStrip>();
+        if (paletteStrip == null)
+            return Color.black;
+        
+        return paletteStrip.Color;
+    }
+
     private void Init()
     {
         if (m_initialized)

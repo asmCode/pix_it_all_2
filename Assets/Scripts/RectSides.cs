@@ -32,6 +32,11 @@ public class RectSides
         get { return new Vector2(CenterHori, CenterVert); }
     }
 
+    public Vector2 Size
+    {
+        get { return new Vector2(Width, Height); }
+    }
+
     public bool IsInsideHori(RectSides insideRect)
     {
         return
