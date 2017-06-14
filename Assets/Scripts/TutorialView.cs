@@ -13,6 +13,8 @@ public class TutorialView : MonoBehaviour
     public GameObject[] m_steps;
 
     public System.Action<Vector2> IndicatorTapped;
+    public System.Action<Vector2> IndicatorPressed;
+    public System.Action<Vector2> IndicatorReleased;
     public System.Action Tapped;
 
     public void Show()
@@ -48,18 +50,6 @@ public class TutorialView : MonoBehaviour
         rectTr.sizeDelta = size;
     }
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void UiEvent_IndicatorTapped(BaseEventData eventData)
     {
         var pointerEventData = eventData as PointerEventData;
@@ -68,6 +58,26 @@ public class TutorialView : MonoBehaviour
 
         if (IndicatorTapped != null)
             IndicatorTapped(pointerEventData.position);
+    }
+
+    public void UiEvent_IndicatorPressed(BaseEventData eventData)
+    {
+        var pointerEventData = eventData as PointerEventData;
+        if (pointerEventData == null)
+            return;
+
+        if (IndicatorPressed != null)
+            IndicatorPressed(pointerEventData.position);
+    }
+
+    public void UiEvent_IndicatorReleased(BaseEventData eventData)
+    {
+        var pointerEventData = eventData as PointerEventData;
+        if (pointerEventData == null)
+            return;
+
+        if (IndicatorReleased != null)
+            IndicatorReleased(pointerEventData.position);
     }
 
     public void UiEvent_Tapped()

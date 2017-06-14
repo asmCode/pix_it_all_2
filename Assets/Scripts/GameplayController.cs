@@ -92,8 +92,14 @@ public class GameplayController
         m_bonusController = new BonusController();
         m_bonusController.Init(m_gameplay, m_bonusView, m_hud);
 
-        m_tutorial = new TutorialController();
-        m_tutorial.Init(m_tutorialView, this);
+        if (m_gameplay.IsTutorialImage)
+        {
+            m_tutorial = new TutorialController();
+            m_tutorial.Init(m_tutorialView, this);
+            m_tutorialView.Show();
+        }
+        else
+            m_tutorialView.Hide();
 
         var imageViewData = LevelsScene.CreateImageViewData(m_referenceImage, m_gameplay.BundleId);
         m_boardInputController.PauseInput();
@@ -256,7 +262,9 @@ public class GameplayController
 
     private void Pause()
     {
-        bool is_save_available = m_gameplay.ImageProgress.RevealedTiles > 0;
+        bool is_save_available =
+            m_gameplay.ImageProgress.RevealedTiles > 0 &&
+            !m_gameplay.IsTutorialImage;
 
         m_pauseView.Show(is_save_available);
     }
@@ -316,14 +324,14 @@ public class GameplayController
         return m_summaryView.gameObject.activeSelf;
     }
 
-    private void HandlePreviewPressed()
+    public void HandlePreviewPressed()
     {
         AudioManager.GetInstance().SoundPreview.Play();
         m_board.ShowPreview();
         m_gameplay.NotifyPreviewStarted();
     }
 
-    private void HandlePreviewReleased()
+    public void HandlePreviewReleased()
     {
         AudioManager.GetInstance().SoundPreview.Stop();
         m_board.HidePreview();
@@ -382,7 +390,8 @@ public class GameplayController
         GameAnalyticsSDK.GameAnalytics.NewDesignEvent("button.gameplay.pause.back");
 
         if (m_gameplay.ImageProgress.RevealedTiles > 0 &&
-            m_gameplay.ImageProgress.RevealedTiles < m_gameplay.ImageProgress.TotalTiles)
+            m_gameplay.ImageProgress.RevealedTiles < m_gameplay.ImageProgress.TotalTiles &&
+            !m_gameplay.IsTutorialImage)
             SaveProgress();
 
         ShowLevelsSceneWithFade(m_gameplay.BundleId);
@@ -405,7 +414,9 @@ public class GameplayController
     {
         if (paused && !IsSumaryActive())
         {
-            SaveProgress();
+            if (!m_gameplay.IsTutorialImage)
+                SaveProgress();
+
             Pause();
         }
     }

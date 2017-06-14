@@ -14,6 +14,8 @@ public class TutorialController
         m_view = view;
         m_gameplayController = gameplayController;
         m_view.IndicatorTapped += HandleIndicatorTapped;
+        m_view.IndicatorPressed += HandleIndicatorPressed;
+        m_view.IndicatorReleased += HandleIndicatorReleased;
         m_view.Tapped += HandleTapped;
 
         m_steps = new List<TutorialStep>();
@@ -21,6 +23,9 @@ public class TutorialController
         m_steps.Add(new TutorialStep2(this, view, gameplayController));
         m_steps.Add(new TutorialStep3(this, view, gameplayController));
         m_steps.Add(new TutorialStep4(this, view, gameplayController));
+        m_steps.Add(new TutorialStep5(this, view));
+        m_steps.Add(new TutorialStep6(this, view, gameplayController));
+        m_steps.Add(new TutorialStep7(this, view));
 
         SetStep(0);
     }
@@ -28,6 +33,16 @@ public class TutorialController
     private void HandleIndicatorTapped(Vector2 screenPoint)
     {
         m_steps[m_currentStep].NotifyIndicatorTapped(screenPoint);
+    }
+
+    private void HandleIndicatorPressed(Vector2 screenPoint)
+    {
+        m_steps[m_currentStep].NotifyIndicatorPressed(screenPoint);
+    }
+
+    private void HandleIndicatorReleased(Vector2 screenPoint)
+    {
+        m_steps[m_currentStep].NotifyIndicatorReleased(screenPoint);
     }
 
     private void HandleTapped()

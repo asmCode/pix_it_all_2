@@ -40,6 +40,15 @@ public class Gameplay
         private set;
     }
 
+    public bool IsTutorialImage
+    {
+        get
+        {
+            // TODO: Also check bundle id
+            return ImageId == "flower";
+        }
+    }
+
     public ImageData ReferenceImage
     {
         get;

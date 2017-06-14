@@ -25,11 +25,17 @@ public class TutorialStep : MonoBehaviour
 
     public virtual void NotifyIndicatorTapped(Vector2 screenPoint)
     {
-        Debug.Log("Indicator tapped");
+    }
+
+    public virtual void NotifyIndicatorPressed(Vector2 screenPoint)
+    {
+    }
+
+    public virtual void NotifyIndicatorReleased(Vector2 screenPoint)
+    {
     }
 
     public virtual void NotifyTapped()
     {
-        Debug.Log("Tapped");
     }
 }
