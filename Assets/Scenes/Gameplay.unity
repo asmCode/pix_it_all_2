@@ -1562,6 +1562,7 @@ MonoBehaviour:
   m_board: {fileID: 1487821941}
   m_paletteContainer: {fileID: 1040005365}
   m_indicator: {fileID: 993158133}
+  m_rootCanvas: {fileID: 1585151225}
   m_steps:
   - {fileID: 225291616}
   - {fileID: 1655940626}

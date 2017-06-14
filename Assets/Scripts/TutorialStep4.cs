@@ -31,6 +31,8 @@ public class TutorialStep4 : TutorialStep
         rect.Bottom = corners[0].y;
 
         var size = rightTopWorld - leftBottomWorld;
+        size.x /= m_view.m_rootCanvas.transform.localScale.x;
+        size.y /= m_view.m_rootCanvas.transform.localScale.y;
 
         m_view.SetIndicatorTarget(leftBottomWorld, size);
     }
