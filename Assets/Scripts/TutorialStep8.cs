@@ -46,6 +46,8 @@ public class TutorialStep8 : TutorialStep
 
     private void HandleTileRevealFailed()
     {
+        SendFailureTrackingEvent();
+
         // If 4 tiles are revealed successfully, we are assuming that player know how to play
         if (m_totalSuccess >= 4)
             return;
@@ -57,5 +59,10 @@ public class TutorialStep8 : TutorialStep
             m_view.m_paletteColorImage.color = m_gameplayController.Hud.m_palette.ActiveColor;
             m_view.Show();
         }
+    }
+
+    private void SendFailureTrackingEvent()
+    {
+        GameAnalyticsSDK.GameAnalytics.NewDesignEvent("tutorial.fail");
     }
 }

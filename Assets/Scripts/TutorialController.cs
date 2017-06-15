@@ -74,6 +74,17 @@ public class TutorialController
 
         m_currentStep = step;
 
+        SendTrackingEvent(m_currentStep);
+
         m_steps[m_currentStep].Activate();
+    }
+
+    private void SendTrackingEvent(int step)
+    {
+        string progressName = "tutorial_step_" + step.ToString();
+
+        GameAnalyticsSDK.GameAnalytics.NewProgressionEvent(
+            GameAnalyticsSDK.GAProgressionStatus.Complete,
+            progressName);
     }
 }
