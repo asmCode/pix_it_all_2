@@ -39,7 +39,7 @@ public class TutorialStep6 : TutorialStep
             return;
 
         var duration = Time.time - m_previewTime;
-        if (duration < 0.6f)
+        if (duration < 0.7f)
             return;
 
         m_gameplayController.HandlePreviewReleased();
