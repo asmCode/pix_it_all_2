@@ -141,6 +141,9 @@ public class GameplayController
 
     public void Update(float deltaTime)
     {
+        if (m_tutorial != null)
+            m_tutorial.Update();
+
         if (IsLevelIntroViewVisible())
         {
             m_hud.gameObject.SetActive(m_levelIntroView.m_hudVisible);

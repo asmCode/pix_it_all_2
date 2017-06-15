@@ -31,6 +31,11 @@ public class TutorialController
         SetStep(0);
     }
 
+    public void Update()
+    {
+        m_steps[m_currentStep].Update();
+    }
+
     private void HandleIndicatorTapped(Vector2 screenPoint)
     {
         m_steps[m_currentStep].NotifyIndicatorTapped(screenPoint);

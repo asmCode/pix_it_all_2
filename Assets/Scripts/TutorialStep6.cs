@@ -8,6 +8,7 @@ public class TutorialStep6 : TutorialStep
     
     private GameplayController m_gameplayController;
     private float m_previewTime;
+    private bool m_previewWasReleased;
 
     public TutorialStep6(TutorialController ctrl, TutorialView view, GameplayController gameplayController) :
         base(ctrl, view)
@@ -29,12 +30,19 @@ public class TutorialStep6 : TutorialStep
 
     public override void NotifyIndicatorReleased(Vector2 screenPoint)
     {
-        m_gameplayController.HandlePreviewReleased();
+        m_previewWasReleased = true;
+    }
 
-        var duration = Time.time - m_previewTime;
-        if (duration < 0.08f)
+    public override void Update()
+    {
+        if (!m_previewWasReleased || m_previewTime == 0.0f)
             return;
 
+        var duration = Time.time - m_previewTime;
+        if (duration < 0.6f)
+            return;
+
+        m_gameplayController.HandlePreviewReleased();
         m_ctrl.NextStep();
     }
 }

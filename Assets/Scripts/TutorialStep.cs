@@ -38,4 +38,8 @@ public class TutorialStep : MonoBehaviour
     public virtual void NotifyTapped()
     {
     }
+
+    public virtual void Update()
+    {
+    }
 }
