@@ -26,6 +26,7 @@ public class TutorialController
         m_steps.Add(new TutorialStep5(this, view));
         m_steps.Add(new TutorialStep6(this, view, gameplayController));
         m_steps.Add(new TutorialStep7(this, view));
+        m_steps.Add(new TutorialStep8(this, view, gameplayController));
 
         SetStep(0);
     }
@@ -64,7 +65,7 @@ public class TutorialController
     private void SetStep(int step)
     {
         if (m_currentStep != -1)
-            m_steps[m_currentStep].Dectivate();
+            m_steps[m_currentStep].Deactivate();
 
         m_currentStep = step;
 

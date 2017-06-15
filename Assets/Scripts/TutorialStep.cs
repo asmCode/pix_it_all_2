@@ -18,7 +18,7 @@ public class TutorialStep : MonoBehaviour
 
     }
 
-    public virtual void Dectivate()
+    public virtual void Deactivate()
     {
 
     }

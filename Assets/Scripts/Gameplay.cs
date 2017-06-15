@@ -5,6 +5,7 @@ using System;
 public class Gameplay
 {
     public event System.Action TileRevealedWithSuccess;
+    public event System.Action TileRevealFailed;
 
     private static readonly int PenaltyTime = 10;
     private static readonly float PreviewTimeCostPerSecond = 12.0f;
@@ -188,6 +189,9 @@ public class Gameplay
     public void NotifyTileRevealedWithFailure()
     {
         m_successInRow = 0;
+
+        if (TileRevealFailed != null)
+            TileRevealFailed();
     }
 
     public void NotifyPreviewStarted()

@@ -18,11 +18,6 @@ public class TutorialStep2 : TutorialStep
         m_view.SetIndicatorTarget(m_view.m_paletteButton);
     }
 
-    public override void Dectivate()
-    {
-
-    }
-
     public override void NotifyIndicatorTapped(Vector2 screenPoint)
     {
         m_gameplayController.ShowPalette();

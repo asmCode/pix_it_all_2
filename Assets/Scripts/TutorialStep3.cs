@@ -22,11 +22,6 @@ public class TutorialStep3 : TutorialStep
         m_view.SetIndicatorTarget(redColor);
     }
 
-    public override void Dectivate()
-    {
-
-    }
-
     public override void NotifyIndicatorTapped(Vector2 screenPoint)
     {
         m_gameplayController.SetColor(RedColorIndex);

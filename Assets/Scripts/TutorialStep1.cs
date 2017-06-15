@@ -15,11 +15,6 @@ public class TutorialStep1 : TutorialStep
         m_view.SetIndicatorTarget(null);
     }
 
-    public override void Dectivate()
-    {
-
-    }
-
     public override void NotifyTapped()
     {
         m_ctrl.NextStep();

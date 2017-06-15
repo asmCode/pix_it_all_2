@@ -37,11 +37,6 @@ public class TutorialStep4 : TutorialStep
         m_view.SetIndicatorTarget(leftBottomWorld, size);
     }
 
-    public override void Dectivate()
-    {
-
-    }
-
     public override void NotifyIndicatorTapped(Vector2 screenPoint)
     {
         int x;
