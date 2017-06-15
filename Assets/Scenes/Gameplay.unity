@@ -1715,6 +1715,7 @@ MonoBehaviour:
   m_board: {fileID: 1487821941}
   m_paletteContainer: {fileID: 1040005365}
   m_indicator: {fileID: 993158133}
+  m_paletteColorImage: {fileID: 197977764}
   m_rootCanvas: {fileID: 1585151225}
   m_steps:
   - {fileID: 225291616}
@@ -10573,7 +10574,7 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 0.76
   m_Text: "WHOA! SLOW DOWN PICASSO!\nREMEMBER, EACH TILE CAN BE COLORED USING EXACTLY
-    ONE, SPECIFIC COLOR.\n\nPRESS          TO CHANGE THE ACTIVE COLOR\nPRESS          TO
+    ONE, SPECIFIC COLOR.\n\nPRESS          TO CHANGE THE ACTIVE COLOR\nHOLD          TO
     SHOW REFERENCE IMAGE \n\n"
 --- !u!222 &1973809328
 CanvasRenderer:

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class TutorialView : MonoBehaviour
@@ -10,6 +11,7 @@ public class TutorialView : MonoBehaviour
     public RectTransform m_board;
     public Transform m_paletteContainer;
     public TutorialIndicator m_indicator;
+    public Image m_paletteColorImage;
     // Different resolutions have different scales in Unity UI engine. For example, 768x1280 
     // has 1.0, and 1080x1920 has 1.5. This variable is required to read that scale.
     public RectTransform m_rootCanvas;

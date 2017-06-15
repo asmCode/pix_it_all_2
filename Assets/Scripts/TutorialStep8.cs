@@ -54,6 +54,7 @@ public class TutorialStep8 : TutorialStep
         if (m_failsInARow == 3)
         {
             m_failsInARow = 0;
+            m_view.m_paletteColorImage.color = m_gameplayController.Hud.m_palette.ActiveColor;
             m_view.Show();
         }
     }

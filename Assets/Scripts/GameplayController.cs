@@ -25,6 +25,11 @@ public class GameplayController
         get { return m_gameplay; }
     }
 
+    public Hud Hud
+    {
+        get { return m_hud; }
+    }
+
     public BoardController BoardController
     {
         get { return m_boardInputController; }
