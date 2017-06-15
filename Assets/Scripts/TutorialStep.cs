@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialStep : MonoBehaviour
+public class TutorialStep
 {
     protected TutorialView m_view;
     protected TutorialController m_ctrl;

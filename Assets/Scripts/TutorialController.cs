@@ -60,6 +60,7 @@ public class TutorialController
     {
         if (m_currentStep == m_steps.Count - 1)
         {
+            SendTrackingEvent(m_currentStep + 1);  // HACK: fix it some day
             m_view.Hide();
             return;
         }
@@ -81,7 +82,12 @@ public class TutorialController
 
     private void SendTrackingEvent(int step)
     {
-        string progressName = "tutorial_step_" + step.ToString();
+        if (step == 0)
+            return;
+
+        var prevStep = step - 1;
+            
+        string progressName = "tutorial_step_" + prevStep.ToString();
 
         GameAnalyticsSDK.GameAnalytics.NewProgressionEvent(
             GameAnalyticsSDK.GAProgressionStatus.Complete,

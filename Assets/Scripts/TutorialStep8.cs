@@ -5,6 +5,7 @@ using UnityEngine;
 public class TutorialStep8 : TutorialStep
 {
     private const int RedColorIndex = 0;
+    private const int NumSuccessTilesToFinishTutorial = 4;
     
     private GameplayController m_gameplayController;
     private int m_failsInARow;
@@ -42,14 +43,17 @@ public class TutorialStep8 : TutorialStep
     {
         m_failsInARow = 0;
         m_totalSuccess++;
+
+        if (m_totalSuccess == NumSuccessTilesToFinishTutorial)
+            m_ctrl.NextStep();  // This will finish the tutorial
     }
 
     private void HandleTileRevealFailed()
     {
         SendFailureTrackingEvent();
 
-        // If 4 tiles are revealed successfully, we are assuming that player know how to play
-        if (m_totalSuccess >= 4)
+        // If NumSuccessTilesToFinishTutorial tiles are revealed successfully, we are assuming that player know how to play
+        if (m_totalSuccess >= NumSuccessTilesToFinishTutorial)
             return;
 
         m_failsInARow++;
