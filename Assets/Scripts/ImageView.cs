@@ -8,6 +8,8 @@ public class ImageView : MonoBehaviour
     public Text m_name;
     public Transform m_colors;
     public Transform m_stars;
+    public Transform m_completedIndicator;
+    public Transform m_inProgressIndicator;
 
     public Text m_bestTime;
     public Text m_dimensions;
@@ -20,6 +22,8 @@ public class ImageView : MonoBehaviour
     public AspectRatioFitter m_imageAspectRatio;
 
     public event System.Action<string> Clicked;
+
+    private Animator m_animator;
 
     public string ImageId
     {
@@ -64,6 +68,34 @@ public class ImageView : MonoBehaviour
         m_thumbnail.texture = image.Texture;
     }
 
+    public void ShowCompletedIndicator(bool show, bool animated)
+    {
+        if (!show)
+        {
+            m_completedIndicator.gameObject.SetActive(false);
+            return;
+        }
+
+        m_completedIndicator.gameObject.SetActive(true);
+
+        if (animated)
+            m_animator.Play("ImageViewCompleted", 0, 0.0f);
+    }
+
+    public void ShowInProgressIndicator(bool show, bool animated)
+    {
+        if (!show)
+        {
+            m_inProgressIndicator.gameObject.SetActive(false);
+            return;
+        }
+
+        m_inProgressIndicator.gameObject.SetActive(true);
+
+        if (animated)
+            m_animator.Play("ImageViewInProgress", 0, 0.0f);
+    }
+
     private void SetColors(Color[] colors)
     {
         if (m_colors.childCount < colors.Length)
@@ -85,6 +117,17 @@ public class ImageView : MonoBehaviour
         // m_bestTimeGroup.SetActive(!storeMode);
         // m_inProgressGroup.SetActive(!storeMode);
         // m_starsGroup.gameObject.SetActive(!storeMode);
+    }
+
+    private void Awake()
+    {
+        m_animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        ShowCompletedIndicator(false, false);
+        ShowInProgressIndicator(false, false);
     }
 
     public void UiEvent_Clicked()

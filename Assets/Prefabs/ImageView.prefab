@@ -493,6 +493,7 @@ GameObject:
   - component: {fileID: 114673848787131274}
   - component: {fileID: 114283102402504384}
   - component: {fileID: 114025294805012314}
+  - component: {fileID: 95086012041157076}
   m_Layer: 5
   m_Name: ImageView
   m_TagString: Untagged
@@ -1175,6 +1176,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &95086012041157076
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1351525342950734}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 379eb45308142453386340e1a6b1b2b9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114019539577564090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1665,10 +1683,12 @@ MonoBehaviour:
   m_name: {fileID: 114703295417616732}
   m_colors: {fileID: 224687995144782800}
   m_stars: {fileID: 224260596550455134}
+  m_completedIndicator: {fileID: 224497997599119352}
+  m_inProgressIndicator: {fileID: 224589772474362314}
   m_bestTime: {fileID: 114587707451546690}
   m_dimensions: {fileID: 114275708810131496}
   m_bestTimeGroup: {fileID: 1196497628755162}
-  m_inProgressGroup: {fileID: 0}
+  m_inProgressGroup: {fileID: 1904803294085270}
   m_starsGroup: {fileID: 1277740185673684}
   m_thumbnail: {fileID: 114764291725835514}
   m_imageAspectRatio: {fileID: 114601360512628300}
@@ -1684,7 +1704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8476427, g: 0.9852941, b: 0.9055512, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4010,9 +4030,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -87.75003, y: -77.70001}
+  m_AnchoredPosition: {x: 0.049926758, y: -77.69998}
   m_SizeDelta: {x: 175.6, y: 50.6}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224508327270439476
 RectTransform:
   m_ObjectHideFlags: 1
@@ -4157,9 +4177,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -87.79999, y: -134.3}
+  m_AnchoredPosition: {x: 0, y: -134.29999}
   m_SizeDelta: {x: 175.6, y: 50.6}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224602824076064334
 RectTransform:
   m_ObjectHideFlags: 1
