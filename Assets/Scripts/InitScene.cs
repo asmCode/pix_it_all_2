@@ -13,11 +13,23 @@ public class InitScene : MonoBehaviour
         InitDirectories();
         PlayMusic();
 
-        Pix.Game.GetInstance().Init();
+        var game = Pix.Game.GetInstance();
+
+        game.Init();
 
         InitSocial();
 
-        SceneManager.LoadScene("Wellcome");
+        if (game.Persistent.GetFirstRun())
+        {
+            // It may be to early to reset that flag here. Chenge this logic if some other components
+            // will depend on that flag in the future.
+            game.Persistent.SetFirstRun(false);
+
+            // Play tutorial level right after splash screen
+            Pix.Game.GetInstance().StartLevel(GameSettings.TutorialBundleId, GameSettings.TutorialImageId, false);
+        }
+        else
+            SceneManager.LoadScene("Wellcome");
     }
 
     private IEnumerator InitBackend()

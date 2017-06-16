@@ -8,4 +8,5 @@ public class PersistentData
     public bool RateMeDismissed;
     public long RateMeTimeWhenPresentedTimestamp;
     public int TotalWins;
+    public bool FirstRun = true;
 }

@@ -6,6 +6,22 @@ public class Persistent
 {
     private PersistentData m_data;
 
+    public bool GetFirstRun()
+    {
+        Init();
+
+        return m_data.FirstRun;
+    }
+
+    public void SetFirstRun(bool value)
+    {
+        Init();
+
+        m_data.FirstRun = value;
+
+        Save();
+    }
+
     public bool GetRateMeDismissed()
     {
         Init();

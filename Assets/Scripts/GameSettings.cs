@@ -4,6 +4,18 @@ using UnityEngine;
 
 public static class GameSettings
 {
+    public static string TutorialBundleId
+    {
+        get;
+        private set;
+    }
+
+    public static string TutorialImageId
+    {
+        get;
+        private set;
+    }
+
 	public static bool IsRestoreAvailable
 	{
 		get;
@@ -39,5 +51,8 @@ public static class GameSettings
 
         RateMeWinsCount = 3;
         RateMeDaysCount = 1;
+
+        TutorialBundleId = "test_bundle";
+        TutorialImageId = "flower";
     }
 }
