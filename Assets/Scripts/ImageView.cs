@@ -5,13 +5,11 @@ using UnityEngine.UI;
 
 public class ImageView : MonoBehaviour
 {
-    public Text m_id;
     public Text m_name;
     public Transform m_colors;
     public Transform m_stars;
 
     public Text m_bestTime;
-    public Text m_inProgress;
     public Text m_dimensions;
 
     public GameObject m_bestTimeGroup;
@@ -40,7 +38,6 @@ public class ImageView : MonoBehaviour
 
         ImageId = image.Id;
 
-        m_id.text = image.Id;
         m_name.text = image.Name;
 
         if (data.LevelProgress.BestTime != 0)
@@ -60,7 +57,6 @@ public class ImageView : MonoBehaviour
         
         SetColors(image.Colors);
 
-        m_inProgress.text = data.LevelProgress.IsInProgress.ToString();
         m_dimensions.text = string.Format("{0} x {1}", image.Texture.width, image.Texture.height);
 
         m_imageAspectRatio.aspectRatio = (float)image.Texture.width / (float)image.Texture.height;
