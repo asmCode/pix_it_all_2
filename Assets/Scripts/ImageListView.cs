@@ -13,6 +13,8 @@ public class ImageListView : MonoBehaviour
     public event System.Action<string> ImageClicked;
     public event System.Action BuyClicked;
 
+    private List<ImageView> m_imageViews = new List<ImageView>();
+
     public void Init(List<ImageViewData> images, bool storeMode, string localizedPrice)
     {
         Clear();
@@ -36,27 +38,50 @@ public class ImageListView : MonoBehaviour
             imageView.SetImage(imageData);
             imageView.SetStoreMode(storeMode);
             imageView.Clicked += HandleBundleViewClicked;
+
+            m_imageViews.Add(imageView);
         }
     }
 
     public ImageView GetImageView(string imageId)
     {
-        for (int i = 0; i < m_imagesContainer.childCount; i++)
+        int index = GetImageIndex(imageId);
+        if (index == -1)
+            return null;
+
+        return m_imageViews[index];
+    }
+
+    public int GetImageIndex(string imageId)
+    {
+        for (int i = 0; i < m_imageViews.Count; i++)
         {
-            var child = m_imagesContainer.GetChild(i);
+            var child = m_imageViews[i];
             var imageView = child.GetComponent<ImageView>();
             if (imageView == null)
                 continue;
 
             if (imageView.ImageId == imageId)
-                return imageView;
+                return i;
         }
 
-        return null;
+        return -1;
+    }
+
+    public void ScrollToImage(string imageId)
+    {
+        int index = GetImageIndex(imageId);
+        if (index == -1 || m_imagesContainer.childCount == 0)
+            return;
+
+        float normalizePosition = (float)index / (float)m_imagesContainer.childCount;
+        GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - normalizePosition;
     }
 
     public void Clear()
     {
+        m_imageViews.Clear();
+
         foreach (Transform child in m_imagesContainer)
             Destroy(child.gameObject);
     }
