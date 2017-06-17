@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class LevelsScene : MonoBehaviour
 {
     public static string m_bundleIdToSelect;
+    public static string m_imageIdToComplete;
 
     public BundleListView m_bundleListView;
     public RectTransform m_imagesPanel;
@@ -32,7 +33,7 @@ public class LevelsScene : MonoBehaviour
         InitBundleList();
 
         if (!string.IsNullOrEmpty(m_bundleIdToSelect))
-            ShowImagesInBundle(m_bundleIdToSelect);
+            ShowImagesInBundle(m_bundleIdToSelect, m_imageIdToComplete);
         
         Fade.SetFadeValue(null, false, 1.0f);
 
@@ -155,12 +156,12 @@ public class LevelsScene : MonoBehaviour
     {
         Fade.FadeIn(null, true, () =>
         {
-            ShowImagesInBundle(bundleId);
+            ShowImagesInBundle(bundleId, null);
             Fade.FadeOut(null, false, null);
         });
     }
 
-    private void ShowImagesInBundle(string bundleId)
+    private void ShowImagesInBundle(string bundleId, string m_imageIdToComplete)
     {
         m_bundleListView.gameObject.SetActive(false);
         m_imagesPanel.gameObject.SetActive(true);
@@ -188,6 +189,14 @@ public class LevelsScene : MonoBehaviour
 
         bool storeMode = !game.ImageManager.IsBundleAvailable(bundleId);
         m_imageListView.Init(imageViewDataList, storeMode, GetLocalizedPrice(bundle.ProductId));
+        
+        // Play COMPLETED animation if needed
+        if (!string.IsNullOrEmpty(m_imageIdToComplete))
+        {
+            var imageView = m_imageListView.GetImageView(m_imageIdToComplete);
+            if (imageView != null)
+                imageView.ShowCompletedIndicator(true, true);
+        }
     }
 
     private string GetLocalizedPrice(string productId)

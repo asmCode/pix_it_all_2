@@ -65,18 +65,18 @@ public class ImageView : MonoBehaviour
 
         m_imageAspectRatio.aspectRatio = (float)image.Texture.width / (float)image.Texture.height;
 
+        m_inProgressIndicator.gameObject.SetActive(data.LevelProgress.IsInProgress);
+        m_completedIndicator.gameObject.SetActive(data.LevelProgress.IsCompleted);
+
         m_thumbnail.texture = image.Texture;
     }
 
     public void ShowCompletedIndicator(bool show, bool animated)
     {
-        if (!show)
-        {
-            m_completedIndicator.gameObject.SetActive(false);
-            return;
-        }
+        m_completedIndicator.gameObject.SetActive(show);
 
-        m_completedIndicator.gameObject.SetActive(true);
+        if (!show)
+            return;
 
         if (animated)
             m_animator.Play("ImageViewCompleted", 0, 0.0f);
@@ -126,8 +126,8 @@ public class ImageView : MonoBehaviour
 
     private void Start()
     {
-        ShowCompletedIndicator(false, false);
-        ShowInProgressIndicator(false, false);
+        // ShowCompletedIndicator(false, false);
+        // ShowInProgressIndicator(false, false);
     }
 
     public void UiEvent_Clicked()

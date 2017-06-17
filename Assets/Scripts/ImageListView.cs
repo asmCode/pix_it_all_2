@@ -39,6 +39,22 @@ public class ImageListView : MonoBehaviour
         }
     }
 
+    public ImageView GetImageView(string imageId)
+    {
+        for (int i = 0; i < m_imagesContainer.childCount; i++)
+        {
+            var child = m_imagesContainer.GetChild(i);
+            var imageView = child.GetComponent<ImageView>();
+            if (imageView == null)
+                continue;
+
+            if (imageView.ImageId == imageId)
+                return imageView;
+        }
+
+        return null;
+    }
+
     public void Clear()
     {
         foreach (Transform child in m_imagesContainer)

@@ -56,9 +56,10 @@ namespace Pix
             SceneManager.LoadScene("Levels");
         }
 
-        public void ShowLevelsScene(string bundleId)
+        public void ShowLevelsScene(string bundleId, string imageIdToComplete)
         {
             LevelsScene.m_bundleIdToSelect = bundleId;
+            LevelsScene.m_imageIdToComplete = imageIdToComplete;
             SceneManager.LoadScene("Levels");
         }
 
