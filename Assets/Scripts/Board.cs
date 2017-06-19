@@ -13,6 +13,9 @@ public class Board : MonoBehaviour
     private float m_scaleMax;
     private float m_scaleOptimal;
     private float m_scale = 1.0f;
+    private float m_previewFade;
+    private float m_previewFadeDir = 0.0f;
+    private Color m_previewImageColor = new Color(1, 1, 1, 1);
 
     private bool m_isInitialized;
 
@@ -66,12 +69,13 @@ public class Board : MonoBehaviour
 
     public void ShowPreview()
     {
+        m_previewFadeDir = 1.0f;
         m_referenceImage.gameObject.SetActive(true);
     }
 
     public void HidePreview()
     {
-        m_referenceImage.gameObject.SetActive(false);
+        m_previewFadeDir = -1.0f;
     }
 
     public void SetReferenceImage(Texture2D texture)
@@ -148,6 +152,28 @@ public class Board : MonoBehaviour
     private void Awake()
     {
         Init();
+    }
+
+    private void Update()
+    {
+        const float fadeSpeed = 8.0f;
+        if (m_previewFadeDir >= 1.0f)
+        {
+            m_previewFade = Mathf.MoveTowards(m_previewFade, 1.0f, m_previewFadeDir * Time.deltaTime * fadeSpeed);
+            if (m_previewFade >= 1.0f)
+                m_previewFadeDir = 0.0f;
+        } else if (m_previewFadeDir <= -1.0f)
+        {
+            m_previewFade = Mathf.MoveTowards(m_previewFade, 0.0f, -m_previewFadeDir * Time.deltaTime * fadeSpeed);
+            if (m_previewFade <= 0.0f)
+            {
+                m_previewFadeDir = 0.0f;
+                m_referenceImage.gameObject.SetActive(false);
+            }
+        }
+
+        m_previewImageColor.a = m_previewFade;
+        m_referenceImage.color = m_previewImageColor;
     }
 
     private void Init()
