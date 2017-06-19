@@ -103,6 +103,7 @@ public class ImageDataLoader
     {
         var path = Application.streamingAssetsPath + "/Bundles";
 
+        pathes.Add(path + "/bundles2.pixbundle");
         pathes.Add(path + "/base.pixbundle");
         pathes.Add(path + "/test_bundle.pixbundle");
         pathes.Add(path + "/holiday.pixbundle");

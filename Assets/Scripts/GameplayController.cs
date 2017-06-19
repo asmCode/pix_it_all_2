@@ -400,7 +400,7 @@ public class GameplayController
             !m_gameplay.IsTutorialImage)
             SaveProgress();
 
-        ShowLevelsSceneWithFade(m_gameplay.BundleId, null);
+        ShowLevelsSceneWithFade(m_gameplay.BundleId, m_gameplay.ImageId, null);
     }
 
     private void HandlePauseViewOptionsClicked()
@@ -436,14 +436,14 @@ public class GameplayController
             return;
         }
 
-        ShowLevelsSceneWithFade(m_gameplay.BundleId, m_gameplay.ImageId);
+        ShowLevelsSceneWithFade(m_gameplay.BundleId, m_gameplay.ImageId, m_gameplay.ImageId);
     }
 
-    private void ShowLevelsSceneWithFade(string bundleId, string imageIdToComplete)
+    private void ShowLevelsSceneWithFade(string bundleId, string imageIdToCenter, string imageIdToComplete)
     {
         Fade.FadeIn(null, true, () =>
         {
-            Pix.Game.GetInstance().ShowLevelsScene(bundleId, imageIdToComplete);
+            Pix.Game.GetInstance().ShowLevelsScene(bundleId, imageIdToCenter, imageIdToComplete);
         }); 
     }
 
