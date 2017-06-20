@@ -75,6 +75,7 @@ public class GameplayController
         m_hud.PauseClicked += HandlePauseClicked;
         m_hud.CheatFillColorsClicked += HandleCheatFillColorsClicked;
 
+        m_board.PreviewEnded += HandleBoardPreviewEnded;
         m_board.SetSize(imageProgress.Width, imageProgress.Height);
         m_board.SetReferenceImage(m_referenceImage.Texture);
         m_board.SetTiles(m_gameplay.ImageProgress.GetTiles());
@@ -165,6 +166,7 @@ public class GameplayController
 
     public void Cleanup()
     {
+        m_board.PreviewEnded -= HandleBoardPreviewEnded;
         m_boardInputController.BoardTileTapped -= HandleBoardTileTapped;
         m_hud.PreviewPressed -= HandlePreviewPressed;
         m_hud.PreviewReleased -= HandlePreviewReleased;
@@ -209,6 +211,11 @@ public class GameplayController
     private void SaveProgress()
     {
         m_gameplay.SaveProgress(m_board.Image);
+    }
+
+    private void HandleBoardPreviewEnded()
+    {
+        m_gameplay.NotifyPreviewEnded();
     }
 
     public void HandleBoardTileTapped(int x, int y)
@@ -341,7 +348,6 @@ public class GameplayController
     {
         AudioManager.GetInstance().SoundPreview.Stop();
         m_board.HidePreview();
-        m_gameplay.NotifyPreviewEnded();
     }
 
     private void HandlePaletteClicked()

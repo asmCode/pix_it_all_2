@@ -8,6 +8,8 @@ public class Board : MonoBehaviour
     public RectTransform m_parentRectTransform;
     public RectTransform m_scalePivot;
 
+    public event System.Action PreviewEnded;
+
     private RectTransform m_rectTransform;
     private float m_scaleMin;
     private float m_scaleMax;
@@ -169,6 +171,8 @@ public class Board : MonoBehaviour
             {
                 m_previewFadeDir = 0.0f;
                 m_referenceImage.gameObject.SetActive(false);
+                if (PreviewEnded != null)
+                    PreviewEnded();
             }
         }
 
