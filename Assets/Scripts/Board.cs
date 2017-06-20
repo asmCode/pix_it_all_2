@@ -7,9 +7,12 @@ public class Board : MonoBehaviour
     public RawImage m_image;
     public RectTransform m_parentRectTransform;
     public RectTransform m_scalePivot;
+    public AnimatedImage m_pixelFillPrefab;
+    public RectTransform m_pixelFillContainer;
 
     public event System.Action PreviewEnded;
 
+    private PixelFillEffect m_pixelFillEffect;
     private RectTransform m_rectTransform;
     private float m_scaleMin;
     private float m_scaleMax;
@@ -62,6 +65,11 @@ public class Board : MonoBehaviour
         m_rectTransform.sizeDelta = new Vector2(width, height);
         InitScaleBounds();
         RecreateImage();
+    }
+
+    public void PlayPixelFillEffect(int x, int y, Color color)
+    {
+        m_pixelFillEffect.Show(x, y);
     }
 
     public bool IsScaleLessThanOptimal()
@@ -190,6 +198,9 @@ public class Board : MonoBehaviour
         m_rectTransform = GetComponent<RectTransform>();
 
         InitScaleBounds();
+
+        m_pixelFillEffect = new PixelFillEffect();
+        m_pixelFillEffect.Init(m_pixelFillPrefab, m_pixelFillContainer);
 
         var screenCenter = new Vector2(Screen.width, Screen.height) / 2.0f;
         SetScale(screenCenter, 1.0f);

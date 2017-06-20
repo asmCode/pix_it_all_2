@@ -187,6 +187,7 @@ public class GameplayController
     {
         m_board.Image.SetPixel(x, y, color);
         m_board.Image.Apply();
+        m_board.PlayPixelFillEffect(x, y, color);
 
         m_gameplay.ImageProgress.RevealTile(x, y);
 
