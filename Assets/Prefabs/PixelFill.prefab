@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222792739909700190}
   - component: {fileID: 114374490681937402}
   - component: {fileID: 114685722826358740}
+  - component: {fileID: 114940444602091118}
   m_Layer: 5
   m_Name: PixelFill
   m_TagString: Untagged
@@ -172,6 +173,17 @@ MonoBehaviour:
   - {fileID: 21300200, guid: 3a93789636251db468265ab5a2d330b3, type: 3}
   - {fileID: 21300202, guid: 3a93789636251db468265ab5a2d330b3, type: 3}
   - {fileID: 21300204, guid: 3a93789636251db468265ab5a2d330b3, type: 3}
+--- !u!114 &114940444602091118
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1684220338726882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42fc2716d7ff4d4ca2221b0a7d47621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222792739909700190
 CanvasRenderer:
   m_ObjectHideFlags: 1

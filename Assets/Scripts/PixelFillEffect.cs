@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class PixelFillEffect 
 {
-	private AnimatedImage m_pixelFillPrefab;
+	private PixelFill m_pixelFillPrefab;
 	private RectTransform m_container;
 
-	public void Init(AnimatedImage pixelFillPrefab, RectTransform container)
+	public void Init(PixelFill pixelFillPrefab, RectTransform container)
 	{
 		m_pixelFillPrefab = pixelFillPrefab;
 		m_container = container;
 	}
 
-	public void Show(int x, int y)
+	public void Show(int x, int y, Color color)
 	{
 		var pixelFill = CreatePixelFill();
 		pixelFill.transform.SetParent(m_container);
 		pixelFill.transform.localPosition = new Vector3(x, y, 0.0f);
-		pixelFill.Play();
+		pixelFill.Play(color, null);
 	}
 
-	private AnimatedImage CreatePixelFill()
+	private PixelFill CreatePixelFill()
 	{
 		var obj = GameObject.Instantiate(m_pixelFillPrefab);
 		return obj;

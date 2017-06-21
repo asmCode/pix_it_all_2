@@ -7,7 +7,7 @@ public class Board : MonoBehaviour
     public RawImage m_image;
     public RectTransform m_parentRectTransform;
     public RectTransform m_scalePivot;
-    public AnimatedImage m_pixelFillPrefab;
+    public PixelFill m_pixelFillPrefab;
     public RectTransform m_pixelFillContainer;
 
     public event System.Action PreviewEnded;
@@ -69,7 +69,7 @@ public class Board : MonoBehaviour
 
     public void PlayPixelFillEffect(int x, int y, Color color)
     {
-        m_pixelFillEffect.Show(x, y);
+        m_pixelFillEffect.Show(x, y, color);
     }
 
     public bool IsScaleLessThanOptimal()
