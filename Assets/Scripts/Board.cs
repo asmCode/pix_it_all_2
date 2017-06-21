@@ -67,9 +67,13 @@ public class Board : MonoBehaviour
         RecreateImage();
     }
 
-    public void PlayPixelFillEffect(int x, int y, Color color)
+    public void SetPixelWithAnimation(int x, int y, Color color)
     {
-        m_pixelFillEffect.Show(x, y, color);
+        m_pixelFillEffect.Show(x, y, color, () =>
+        {
+            Image.SetPixel(x, y, color);
+            Image.Apply();
+        });
     }
 
     public bool IsScaleLessThanOptimal()

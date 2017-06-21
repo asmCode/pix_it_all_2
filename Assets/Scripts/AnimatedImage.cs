@@ -18,7 +18,8 @@ public class AnimatedImage : MonoBehaviour
 	{
 		m_isPlaying = true;
 		m_currentFrame = 0.0f;
-	}
+        m_image.sprite = m_frames[0];
+    }
 
 	private void Awake()
 	{

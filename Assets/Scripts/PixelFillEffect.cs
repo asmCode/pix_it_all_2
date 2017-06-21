@@ -4,26 +4,41 @@ using UnityEngine;
 
 public class PixelFillEffect 
 {
-	private PixelFill m_pixelFillPrefab;
-	private RectTransform m_container;
+    private Pool<PixelFill> m_pixelFillPool;
 
 	public void Init(PixelFill pixelFillPrefab, RectTransform container)
 	{
-		m_pixelFillPrefab = pixelFillPrefab;
-		m_container = container;
+        m_pixelFillPool = new Pool<PixelFill>(pixelFillPrefab, 10, container, null);
+    }
+
+	public void Show(int x, int y, Color color, System.Action finishedCallback)
+	{
+        var pixelFill = m_pixelFillPool.Get();
+        if (pixelFill == null)
+        {
+            if (finishedCallback != null)
+                finishedCallback();
+
+            return;
+        }
+
+        float halfTileOffset = 0.5f;
+		pixelFill.transform.localPosition = new Vector3(x + halfTileOffset, y + halfTileOffset, 0.0f);
+        pixelFill.transform.localScale = GetRandomScale(Mathf.Abs(pixelFill.transform.localScale.x));
+        pixelFill.Play(color, () =>
+        {
+            if (finishedCallback != null)
+                finishedCallback();
+
+            pixelFill.gameObject.SetActive(false);
+        });
 	}
 
-	public void Show(int x, int y, Color color)
-	{
-		var pixelFill = CreatePixelFill();
-		pixelFill.transform.SetParent(m_container);
-		pixelFill.transform.localPosition = new Vector3(x, y, 0.0f);
-		pixelFill.Play(color, null);
-	}
+    private Vector3 GetRandomScale(float baseScale)
+    {
+        float x = Random.Range(0, 2) == 0 ? 1.0f : -1.0f;
+        float y = Random.Range(0, 2) == 0 ? 1.0f : -1.0f;
 
-	private PixelFill CreatePixelFill()
-	{
-		var obj = GameObject.Instantiate(m_pixelFillPrefab);
-		return obj;
-	}
+        return new Vector3(baseScale * x, baseScale * y, 1.0f);
+    }
 }

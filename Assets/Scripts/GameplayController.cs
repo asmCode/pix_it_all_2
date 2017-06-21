@@ -185,9 +185,7 @@ public class GameplayController
 
     private void SetBoardColor(int x, int y, Color color)
     {
-        m_board.Image.SetPixel(x, y, color);
-        m_board.Image.Apply();
-        m_board.PlayPixelFillEffect(x, y, color);
+        m_board.SetPixelWithAnimation(x, y, color);
 
         m_gameplay.ImageProgress.RevealTile(x, y);
 
