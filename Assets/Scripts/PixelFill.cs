@@ -3,26 +3,51 @@ using UnityEngine.UI;
 
 public class PixelFill : MonoBehaviour
 {
-	private Image m_image;
-	private AnimatedImage m_anim;
-	private System.Action m_finishedCallback;
+	public Image m_image;
+	public AnimatedImage m_anim;
 
-	public void Play(Color color, System.Action finishedCallback)
+	private System.Action m_finishedCallback;
+    private float m_baseScale = 0.0f;
+    private float m_animScale = 1.0f;
+    private float m_animScaleProgress = 0.0f;
+
+    public void Play(Color color, System.Action finishedCallback)
 	{
 		m_finishedCallback = finishedCallback;
 		m_image.color = color;
 		m_anim.Play();
-	}
+
+        if (m_baseScale == 0.0f)
+            m_baseScale = Mathf.Abs(transform.localScale.x);
+
+        m_animScaleProgress = 0.0f;
+    }
 
 	private void Awake()
 	{
-		m_image = GetComponent<Image>();
-		m_anim = GetComponent<AnimatedImage>();
 	}
 
-	private void OnEnable()
+    private void Update()
+    {
+        m_animScaleProgress += Time.deltaTime * 2.0f;
+        if (m_animScaleProgress >= 1.0f)
+            m_animScaleProgress = 1.0f;
+
+
+        m_animScale = QuadEaseIn(m_animScaleProgress);
+        m_animScale *= 0.3f;
+        m_animScale += 0.7f;
+
+        float scale = m_baseScale * m_animScale;
+
+        transform.transform.localScale = new Vector3(scale, scale, 1.0f);
+    }
+
+    private void OnEnable()
 	{
-		m_anim.Finished += HandleFinished;
+        m_animScaleProgress = 0.0f;
+
+        m_anim.Finished += HandleFinished;
 	}
 
 	private void OnDisable()
@@ -35,4 +60,9 @@ public class PixelFill : MonoBehaviour
 		if (m_finishedCallback != null)
 			m_finishedCallback();
 	}
+
+    private float QuadEaseIn(float time)
+    {
+        return time * time;
+    }
 }

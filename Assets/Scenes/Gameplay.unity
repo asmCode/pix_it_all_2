@@ -8353,7 +8353,7 @@ MonoBehaviour:
   m_image: {fileID: 206787150}
   m_parentRectTransform: {fileID: 1763066037}
   m_scalePivot: {fileID: 1847015524}
-  m_pixelFillPrefab: {fileID: 114940444602091118, guid: 2f72ecde74510401982249b9dab35672,
+  m_pixelFillPrefab: {fileID: 114976528318447088, guid: 2f72ecde74510401982249b9dab35672,
     type: 2}
   m_pixelFillContainer: {fileID: 1133078838}
 --- !u!114 &1487821943
