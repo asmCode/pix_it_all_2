@@ -4,7 +4,8 @@ using UnityEngine.UI;
 public class PixelFill : MonoBehaviour
 {
 	public Image m_image;
-	public AnimatedImage m_anim;
+    public Image m_frame;
+    public AnimatedImage m_anim;
 
 	private System.Action m_finishedCallback;
     private float m_baseScale = 0.0f;
@@ -33,14 +34,15 @@ public class PixelFill : MonoBehaviour
         if (m_animScaleProgress >= 1.0f)
             m_animScaleProgress = 1.0f;
 
+        float curveValue = QuadEaseIn(m_animScaleProgress);
 
-        m_animScale = QuadEaseIn(m_animScaleProgress);
-        m_animScale *= 0.3f;
-        m_animScale += 0.7f;
+        m_animScale = curveValue * 0.3f + 0.7f;
 
         float scale = m_baseScale * m_animScale;
 
         transform.transform.localScale = new Vector3(scale, scale, 1.0f);
+
+        m_frame.color = new Color(1, 1, 1, 1 - curveValue);
     }
 
     private void OnEnable()

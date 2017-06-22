@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_image: {fileID: 114519272323404626}
+  m_frame: {fileID: 114193901891958926}
   m_anim: {fileID: 114402139354501122}
 --- !u!222 &222571013927259970
 CanvasRenderer:

@@ -24,7 +24,7 @@ public class PixelFillEffect
 
         float halfTileOffset = 0.5f;
 		pixelFill.transform.localPosition = new Vector3(x + halfTileOffset, y + halfTileOffset, 0.0f);
-        pixelFill.transform.localScale = GetRandomScale(Mathf.Abs(pixelFill.transform.localScale.x));
+        pixelFill.m_image.transform.localScale = GetRandomScale(1);
         pixelFill.Play(color, () =>
         {
             if (finishedCallback != null)
