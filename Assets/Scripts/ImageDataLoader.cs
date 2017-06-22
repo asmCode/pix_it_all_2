@@ -108,6 +108,7 @@ public class ImageDataLoader
         pathes.Add(path + "/test_bundle.pixbundle");
         pathes.Add(path + "/holiday.pixbundle");
         pathes.Add(path + "/extra.pixbundle");
+        pathes.Add(path + "/ava.pixbundle");
     }
 
     private static void GetDownloadedBundlePathes(List<string> pathes)
