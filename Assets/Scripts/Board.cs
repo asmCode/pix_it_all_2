@@ -259,7 +259,7 @@ public class Board : MonoBehaviour
     private float CalculateScaleMax()
     {
         const float InchToCm = 0.393701f;
-        return Screen.dpi * InchToCm;
+        return Screen.dpi * InchToCm * 0.8f;
     }
 
     private float CalculateScaleOptimal()
