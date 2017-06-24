@@ -20,11 +20,13 @@ public class SummaryView : MonoBehaviour
     public event System.Action BackToMenuClicked;
 
     private float m_time;
+    private float m_prevTime;
+
     private bool m_cachedRecord;
 
     public void Show(string levelName, int stars, float time, bool record, float currentRecord, float timeFor3Stars, float timeFor2Stars)
     {
-        m_time = time;
+        m_time = time + 1000;
         m_cachedRecord = record;
 
         UiUtils.ShowChildren(m_stars, stars);
@@ -55,5 +57,31 @@ public class SummaryView : MonoBehaviour
         m_labelTimeValue.text = Utils.TimeToString(m_time * m_animTimeProgress);
         m_newRecord.SetActive(m_cachedRecord && m_animShowNewRecord);
         m_record.SetActive(!m_cachedRecord && m_animShowNewRecord);
+
+        if (m_animTimeProgress != m_prevTime)
+        {
+            m_prevTime = m_animTimeProgress;
+            AudioManager.GetInstance().SoundSummaryTime.Play();
+        }
+    }
+
+    public void AnimEvent_TimeStarted()
+    {
+        //AudioManager.GetInstance().SoundSummaryTime.Play();
+    }
+
+    public void AnimEvent_TimeFinished()
+    {
+        //AudioManager.GetInstance().SoundSummaryTime.Stop();
+    }
+
+    public void AnimEvent_StarSound()
+    {
+        AudioManager.GetInstance().SoundSummaryStar.Play();
+    }
+
+    private void OnDisable()
+    {
+        AudioManager.GetInstance().SoundSummaryTime.Stop();
     }
 }

@@ -18,6 +18,7 @@ class AudioManager : MonoBehaviourSingleton<AudioManager, AudioManager.Meta>
     public Sound SoundMusic;
     public Sound SoundButton;
     public Sound[] SoundPixels;
+    public Sound[] SoundPixels2;
     public Sound SoundFail;
     public Sound SoundVictory;
     public Sound SoundBonus1;
@@ -26,6 +27,8 @@ class AudioManager : MonoBehaviourSingleton<AudioManager, AudioManager.Meta>
     public Sound SoundPaletteRollOut;
     public Sound SoundPaletteRollIn;
     public Sound SoundPreview;
+    public Sound SoundSummaryTime;
+    public Sound SoundSummaryStar;
 
     public bool MusicEnabled { get; private set; }
     public bool SoundsEnabled { get; private set; }
@@ -47,8 +50,8 @@ class AudioManager : MonoBehaviourSingleton<AudioManager, AudioManager.Meta>
 
     public void PlayPixelSound()
     {
-        int randIndex = Random.Range(0, SoundPixels.Length);
-        SoundPixels[randIndex].Play();
+        int randIndex = Random.Range(0, SoundPixels2.Length);
+        SoundPixels2[randIndex].Play();
     }
 
     protected override void Awake()
