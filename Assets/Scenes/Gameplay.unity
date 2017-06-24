@@ -8256,6 +8256,7 @@ MonoBehaviour:
   m_pixelFillPrefab: {fileID: 114976528318447088, guid: 2f72ecde74510401982249b9dab35672,
     type: 2}
   m_pixelFillContainer: {fileID: 1133078838}
+  m_boardAnimations: {fileID: 1763066039}
 --- !u!114 &1487821943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9791,6 +9792,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1763066037}
+  - component: {fileID: 1763066038}
+  - component: {fileID: 1763066039}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -9817,6 +9820,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 15.25}
   m_SizeDelta: {x: 0, y: -194.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &1763066038
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1763066036}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c59e4b6fcea84d18a821a0842667e34, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &1763066039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1763066036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863481c5fdf624882be9d4de3261af5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1787603506
 GameObject:
   m_ObjectHideFlags: 0

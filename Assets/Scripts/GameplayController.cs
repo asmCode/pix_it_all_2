@@ -186,6 +186,7 @@ public class GameplayController
     private void SetBoardColor(int x, int y, Color color)
     {
         m_board.SetPixelWithAnimation(x, y, color);
+        m_board.PlayBoardSuccessEffect();
 
         m_gameplay.ImageProgress.RevealTile(x, y);
 
@@ -236,6 +237,7 @@ public class GameplayController
         else
         {
             AudioManager.GetInstance().SoundFail.Play();
+            m_board.PlayBoardFailEffect();
             ApplyPenalty();
         }
     }

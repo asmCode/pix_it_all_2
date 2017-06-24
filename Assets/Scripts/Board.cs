@@ -9,6 +9,7 @@ public class Board : MonoBehaviour
     public RectTransform m_scalePivot;
     public PixelFill m_pixelFillPrefab;
     public RectTransform m_pixelFillContainer;
+    public BoardAnimations m_boardAnimations;
 
     public event System.Action PreviewEnded;
 
@@ -74,6 +75,16 @@ public class Board : MonoBehaviour
             Image.SetPixel(x, y, color);
             Image.Apply();
         });
+    }
+
+    public void PlayBoardSuccessEffect()
+    {
+        m_boardAnimations.PlaySuccess();
+    }
+
+    public void PlayBoardFailEffect()
+    {
+        m_boardAnimations.PlayFail();
     }
 
     public bool IsScaleLessThanOptimal()
