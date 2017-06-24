@@ -15,7 +15,7 @@ public class SummaryView : MonoBehaviour
     public Text m_timeFor2Stars;
 
     public float m_animTimeProgress;
-    private float m_prevAnimTimeProgress;
+    private float m_prevTimeToDisplay;
     public bool m_animShowNewRecord;
 
     public event System.Action BackToMenuClicked;
@@ -54,13 +54,15 @@ public class SummaryView : MonoBehaviour
 
     private void Update()
     {
-        m_labelTimeValue.text = Utils.TimeToString(m_time * m_animTimeProgress);
+        float timeToDisplay = m_time * m_animTimeProgress;
+
+        m_labelTimeValue.text = Utils.TimeToString(timeToDisplay);
         m_newRecord.SetActive(m_cachedRecord && m_animShowNewRecord);
         m_record.SetActive(!m_cachedRecord && m_animShowNewRecord);
 
-        if (m_animTimeProgress != m_prevAnimTimeProgress)
+        if ((int)timeToDisplay != (int)(m_prevTimeToDisplay))
         {
-            m_prevAnimTimeProgress = m_animTimeProgress;
+            m_prevTimeToDisplay = timeToDisplay;
             AudioManager.GetInstance().SoundSummaryTime.Play();
         }
     }

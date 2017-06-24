@@ -74,7 +74,7 @@ public class ImageListView : MonoBehaviour
         if (index == -1 || m_imagesContainer.childCount == 0)
             return;
 
-        float normalizePosition = (float)(index + 1) / (float)m_imagesContainer.childCount;
+        float normalizePosition = (float)(index + 0) / (float)(Mathf.Max(1, m_imagesContainer.childCount - 1));
         GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - normalizePosition;
     }
 
