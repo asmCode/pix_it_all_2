@@ -275,8 +275,7 @@ public class BoardController : MonoBehaviour
             return;
         }
 
-        if (!RectTransformUtility.RectangleContainsScreenPoint(m_board.m_parentRectTransform, position) ||
-            !RectTransformUtility.RectangleContainsScreenPoint(m_board.RectTransform, position))
+        if (!RectTransformUtility.RectangleContainsScreenPoint(m_board.RectTransform, position))
             return;
 
         int tileX;
