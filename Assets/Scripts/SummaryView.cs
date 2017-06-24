@@ -20,7 +20,9 @@ public class SummaryView : MonoBehaviour
 
     public event System.Action BackToMenuClicked;
 
+    private int m_starsCount;
     private float m_time;
+    private int m_numOfPlayedStarSound;
 
     private bool m_cachedRecord;
 
@@ -28,6 +30,7 @@ public class SummaryView : MonoBehaviour
     {
         m_time = time;
         m_cachedRecord = record;
+        m_starsCount = stars;
 
         UiUtils.ShowChildren(m_stars, stars);
         m_labelTimeValue.text = Utils.TimeToString(time);
@@ -77,7 +80,11 @@ public class SummaryView : MonoBehaviour
 
     public void AnimEvent_StarSound()
     {
+        if (m_numOfPlayedStarSound >= m_starsCount)
+            return;
+
         AudioManager.GetInstance().SoundSummaryStar.Play();
+        m_numOfPlayedStarSound++;
     }
 
     private void OnDisable()
