@@ -217,7 +217,10 @@ public class GameplayController
 
     private void SaveProgress()
     {
-        m_gameplay.SaveProgress(m_board.Image);
+        if (m_gameplay.ImageProgress.RevealedTiles > 0 &&
+            m_gameplay.ImageProgress.RevealedTiles < m_gameplay.ImageProgress.TotalTiles &&
+            !m_gameplay.IsTutorialImage)
+            m_gameplay.SaveProgress(m_board.Image);
     }
 
     private void HandleBoardPreviewEnded()
@@ -409,10 +412,7 @@ public class GameplayController
     {
         GameAnalyticsSDK.GameAnalytics.NewDesignEvent("button.gameplay.pause.back");
 
-        if (m_gameplay.ImageProgress.RevealedTiles > 0 &&
-            m_gameplay.ImageProgress.RevealedTiles < m_gameplay.ImageProgress.TotalTiles &&
-            !m_gameplay.IsTutorialImage)
-            SaveProgress();
+        SaveProgress();
 
         ShowLevelsSceneWithFade(m_gameplay.BundleId, m_gameplay.ImageId, null);
     }
@@ -434,9 +434,7 @@ public class GameplayController
     {
         if (paused && !IsSumaryActive())
         {
-            if (!m_gameplay.IsTutorialImage)
-                SaveProgress();
-
+            SaveProgress();
             Pause();
         }
     }
