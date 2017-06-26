@@ -148,17 +148,24 @@ public class GameplayController
         if (IsLevelIntroViewVisible())
         {
             m_hud.gameObject.SetActive(m_levelIntroView.m_hudVisible);
+            if (m_levelIntroView.m_boardPreviewValue > 0.0f)
+                m_board.ShowPreview();
+            else
+                m_board.HidePreview();
         }
 
         if (IsGameRunning())
         {
-            m_gameplay.AddSeconds(deltaTime);
-
-            if (m_board.IsPreviewActive)
+            // !IsLevelIntroViewVisible() means that preview is for free during the level intro.
+            if (m_board.IsPreviewActive && !IsLevelIntroViewVisible())
             {
                 m_gameplay.ApplyPreview(deltaTime);
                 m_hud.ShowPenalty(m_gameplay.PreviewCost * m_gameplay.PreviewTime);
             }
+
+            // Time is freezed when intro is visible
+            if (!IsLevelIntroViewVisible())
+                m_gameplay.AddSeconds(deltaTime);
         }
 
         m_hud.SetTime(m_gameplay.Time);
@@ -478,7 +485,6 @@ public class GameplayController
 
     private void HandleLevelIntroViewFinished()
     {
-        m_board.HidePreview();
         m_levelIntroView.Close();
         m_hud.gameObject.SetActive(true);
         m_boardInputController.ResumeInput();
