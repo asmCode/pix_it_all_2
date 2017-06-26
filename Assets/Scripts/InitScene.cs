@@ -85,7 +85,7 @@ public class InitScene : MonoBehaviour
 
         Ssg.Social.Social.GetInstance().LogEnabled = true;
 
-        if (!persistent.GetSkipSocial())
+        if (!persistent.GetSkipSocial() && !persistent.GetFirstRun())
         {
             Ssg.Social.Social.GetInstance().Authenticate(success =>
             {
