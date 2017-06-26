@@ -283,7 +283,7 @@ public class BoardController : MonoBehaviour
         if (!ScreenPointToTile(position, out tileX, out tileY))
             return;
 
-        if (m_board.IsScaleLessThanOptimal())
+        if (m_board.IsScaleLessThanOptimal() && !m_isDuringSmoothScale)
         {
             SmoothZoom(position, m_board.OptimalScale);
         }
