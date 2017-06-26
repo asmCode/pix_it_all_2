@@ -105,11 +105,21 @@ public class LevelsScene : MonoBehaviour
 
                 if (button == Popup.Button.No)
                 {
-                    levelProgress.ClearContinue();
-                    levelProgress.Save();
+                    Popup.Show("ARE YOU SURE YOU WANT TO DELETE CURRENT PROGRESS?", (int)Popup.Button.No | (int)Popup.Button.Yes, Popup.Button.No, (button2) =>
+                    {
+                        if (button2 == Popup.Button.Yes)
+                        {
+                            levelProgress.ClearContinue();
+                            levelProgress.Save();
+                            StartLevelWithFade(m_selectedBundleId, imageId, levelProgress.IsInProgress);
+                        }
+                    });
                 }
 
-                StartLevelWithFade(m_selectedBundleId, imageId, levelProgress.IsInProgress);
+                if (button == Popup.Button.Yes)
+                {
+                    StartLevelWithFade(m_selectedBundleId, imageId, levelProgress.IsInProgress);
+                }
             });
         }
         else
