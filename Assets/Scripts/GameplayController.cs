@@ -109,7 +109,6 @@ public class GameplayController
         m_boardInputController.PauseInput();
         m_board.SetScale(Vector2.zero, m_board.MinScale);
         m_board.SetLocalPosition(Vector2.zero);
-        m_board.ShowPreview();
         m_levelIntroView.Finished += HandleLevelIntroViewFinished;
         m_levelIntroView.Show(imageViewData);
     }
