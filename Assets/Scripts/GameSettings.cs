@@ -47,7 +47,14 @@ public static class GameSettings
 #else
         IsRestoreAvailable = false;
 #endif
-        RateMeUrl = "http://google.com";
+
+#if UNITY_IPHONE
+        RateMeUrl = "itms-apps://itunes.apple.com/app/id508919690";
+#elif UNITY_ANDROID
+        RateMeUrl = "market://details?id=com.semiseriousgames.pixitallfree";
+#else
+        RateMeUrl = "http://semiseriousgames.com";
+#endif
 
         RateMeWinsCount = 3;
         RateMeDaysCount = 1;
