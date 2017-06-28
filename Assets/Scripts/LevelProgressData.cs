@@ -8,5 +8,6 @@ public class LevelProgressData
     public int Version;
     public int BestTime;
     public string ContinueImageData;
+    public string Steps;
     public int ContinueTime;
 }
