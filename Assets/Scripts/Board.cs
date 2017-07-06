@@ -72,9 +72,15 @@ public class Board : MonoBehaviour
     {
         m_pixelFillEffect.Show(x, y, color, () =>
         {
-            Image.SetPixel(x, y, color);
-            Image.Apply();
+            SetPixel(x, y, color);
         });
+    }
+
+    public void SetPixel(int x, int y, Color color, bool apply = true)
+    {
+        Image.SetPixel(x, y, color);
+        if (apply)
+            Image.Apply();
     }
 
     public void PlayBoardSuccessEffect()

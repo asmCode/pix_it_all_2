@@ -96,16 +96,18 @@ public class LevelProgress
 
     public ImageStepTileCoords[] GetSteps()
     {
-        if (m_data == null || string.IsNullOrEmpty(m_data.Steps))
+        if (m_steps == null)
             return null;
 
-        return Base64Serializer.Decode<ImageStepTileCoords[]>(m_data.Steps);
+        return m_steps.ToArray();
     }
 
     public void ClearContinue()
     {
         m_data.ContinueTime = 0;
         m_data.ContinueImageData = null;
+        m_data.Steps = null;
+        m_steps.Clear();
     }
 
     public void SaveProgress(float time, bool[] tiles)

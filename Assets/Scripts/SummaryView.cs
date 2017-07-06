@@ -55,6 +55,11 @@ public class SummaryView : MonoBehaviour
             BackToMenuClicked();
     }
 
+    public void ShowCompletedBanner(System.Action finishedCallback)
+    {
+        finishedCallback();
+    }
+
     private void Update()
     {
         float timeToDisplay = m_time * m_animTimeProgress;
