@@ -20,9 +20,11 @@ public class SummaryView : MonoBehaviour
 
     public event System.Action BackToMenuClicked;
 
+    private Animator m_animator;
     private int m_starsCount;
     private float m_time;
     private int m_numOfPlayedStarSound;
+    private System.Action m_completedBannerFinishedCallback;
 
     private bool m_cachedRecord;
 
@@ -42,6 +44,7 @@ public class SummaryView : MonoBehaviour
         m_timeFor2Stars.text = Utils.TimeToString(timeFor2Stars);
 
         gameObject.SetActive(true);
+        m_animator.Play("SummaryAppear", 0, 0.0f);
     }
 
     public void Hide()
@@ -57,7 +60,9 @@ public class SummaryView : MonoBehaviour
 
     public void ShowCompletedBanner(System.Action finishedCallback)
     {
-        finishedCallback();
+        gameObject.SetActive(true);
+        m_completedBannerFinishedCallback = finishedCallback;
+        m_animator.Play("CompletedBanner", 0, 0.0f);
     }
 
     private void Update()
@@ -83,6 +88,12 @@ public class SummaryView : MonoBehaviour
     {
     }
 
+    public void AnimEvent_CompletedBannerFinished()
+    {
+        if (m_completedBannerFinishedCallback != null)
+            m_completedBannerFinishedCallback();
+    }
+
     public void AnimEvent_StarSound()
     {
         if (m_numOfPlayedStarSound >= m_starsCount)
@@ -90,6 +101,11 @@ public class SummaryView : MonoBehaviour
 
         AudioManager.GetInstance().SoundSummaryStar.Play();
         m_numOfPlayedStarSound++;
+    }
+
+    private void Awake()
+    {
+        m_animator = GetComponent<Animator>();
     }
 
     private void OnDisable()
