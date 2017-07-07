@@ -96,7 +96,7 @@ public class GameplayController
         m_summaryView.BackToMenuClicked += HandleBackToMenuClicked;
         m_summaryView.Hide();
 
-        m_summaryController = new SummaryController(m_board, m_summaryView, m_gameplay);
+        m_summaryController = new SummaryController(m_board, m_summaryView, m_gameplay, m_boardInputController);
 
         m_bonusController = new BonusController();
         m_bonusController.Init(m_gameplay, m_bonusView, m_hud);
@@ -199,7 +199,13 @@ public class GameplayController
 
     private void SetBoardColor(int x, int y, Color color)
     {
-        m_board.SetPixelWithAnimation(x, y, color);
+        // If it isn't the last pixel, reveal it with the animation. Last pixel is revealed immediately to
+        // avoid collision with the steps animation.
+        if (m_gameplay.ImageProgress.TotalTiles > m_gameplay.ImageProgress.RevealedTiles + 1)
+            m_board.SetPixelWithAnimation(x, y, color);
+        else
+            m_board.SetPixel(x, y, color);
+
         m_board.PlayBoardSuccessEffect();
 
         m_gameplay.ImageProgress.RevealTile(x, y);
@@ -272,6 +278,7 @@ public class GameplayController
 
     private void ShowSummary()
     {
+        m_boardInputController.PauseInput();
         int tilesCount = m_gameplay.ImageProgress.Width * m_gameplay.ImageProgress.Height;
         
         int colorsCount = m_referenceImage.Colors.Length;

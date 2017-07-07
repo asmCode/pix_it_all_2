@@ -61,8 +61,6 @@ public class SummaryView : MonoBehaviour
 
     public void UiEvent_Clicked()
     {
-        Debug.Log("cups");
-
         if (Clicked != null)
             Clicked();
     }

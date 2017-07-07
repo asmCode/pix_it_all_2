@@ -33,22 +33,27 @@ public class SummaryController
 	private float m_stepCooldown;
     private int m_stepIndex;
     private ImageStepTileCoords[] m_steps;
+    private BoardController m_boardController;
 
-	private bool m_isActive;
+
+    private bool m_isActive;
 
 	public bool IsActive
 	{
 		get { return m_isActive; }
 	}
 
-	public SummaryController(Board board, SummaryView view, Gameplay gameplay)
+	public SummaryController(Board board, SummaryView view, Gameplay gameplay, BoardController boardController)
 	{
 		m_board = board;
 		m_view = view;
 		m_gameplay = gameplay;
-	}
+        m_boardController = boardController;
 
-	public void Show(
+        m_view.Clicked += ViewClicked;
+    }
+
+    public void Show(
 		string levelName,
 		int stars,
 		float time,
@@ -69,17 +74,15 @@ public class SummaryController
 		m_timeFor2Stars = timeFor2Stars;
         m_steps = steps;
 
-		int tilesCount = m_gameplay.ImageProgress.Width * m_gameplay.ImageProgress.Height;
-       	var emptyTiles = new bool[tilesCount];
-        m_board.SetTiles(emptyTiles);
-
 		m_stepDelay = CalculateTimePerPixel();
 
 		m_view.ShowCompletedBanner(() =>
 		{
 			ShowSteps();
 		});
-	}
+
+        m_boardController.SmoothZoom(Vector2.zero, m_board.MinScale);
+    }
 
 	private float CalculateTimePerPixel()
 	{
@@ -108,6 +111,10 @@ public class SummaryController
 		if (m_state == State.Steps)
 			return;
 
+        int tilesCount = m_gameplay.ImageProgress.Width * m_gameplay.ImageProgress.Height;
+       	var emptyTiles = new bool[tilesCount];
+        m_board.SetTiles(emptyTiles);
+
 		m_state = State.Steps;
 	}
 
@@ -135,4 +142,10 @@ public class SummaryController
 			m_board.SetPixel(step.X, step.Y, referenceColor, m_stepCooldown < m_stepDelay);
 		}
 	}
+
+    private void ViewClicked()
+    {
+        if (m_state == State.Steps)
+            ShowSummary();
+    }
 }
