@@ -7,6 +7,7 @@ public class Hud : MonoBehaviour
     public Palette m_palette;
     public Image m_paletteColor;
     public TimeView m_timeView;
+    public TileProgress m_tileProgress;
 
     public event System.Action PreviewPressed;
     public event System.Action PreviewReleased;

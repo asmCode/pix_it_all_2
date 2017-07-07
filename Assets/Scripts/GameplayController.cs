@@ -84,6 +84,8 @@ public class GameplayController
 
         m_hud.m_palette.ColorClicked += HandleColorClicked;
         m_hud.m_palette.SetActiveColor(initialColor);
+        m_hud.m_tileProgress.SetMax(m_gameplay.ImageProgress.TotalTiles);
+        m_hud.m_tileProgress.SetCurrent(m_gameplay.ImageProgress.RevealedTiles);
 
         m_hud.m_palette.PaletteShown += PaletteShown;
         m_hud.m_palette.PaletteClosed += PaletteClosed;
@@ -212,6 +214,8 @@ public class GameplayController
         m_gameplay.LevelProgress.AddStep(x, y);
 
         m_gameplay.NotifyTileRevealedWithSuccess();
+
+        m_hud.m_tileProgress.SetCurrent(m_gameplay.ImageProgress.RevealedTiles);
 
         if (IsLevelCompleted())
             FinishLevel();
