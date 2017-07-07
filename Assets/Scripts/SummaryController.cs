@@ -11,9 +11,10 @@ public class SummaryController
 	private enum State
 	{
 		CompletedBanner,
-		Steps,
-		Summary
+		Steps
 	}
+
+	private bool m_summaryViewVisible = false;
 
 	private State m_state = State.CompletedBanner;
 	private Board m_board;
@@ -88,10 +89,10 @@ public class SummaryController
 
 	private void ShowSummary()
 	{
-		if (m_state == State.Summary)
+		if (m_summaryViewVisible)
 			return;
 
-		m_state = State.Summary;
+		m_summaryViewVisible = true;
 
 		m_view.Show(m_levelName, m_stars, m_time, m_record, m_currentRecord, m_timeFor3Stars, m_timeFor2Stars);
 	}

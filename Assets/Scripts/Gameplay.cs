@@ -46,7 +46,7 @@ public class Gameplay
         get
         {
             // TODO: Also check bundle id
-            return ImageId == "flower";
+            return ImageId == "flower2";
         }
     }
 

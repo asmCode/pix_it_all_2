@@ -60,6 +60,6 @@ public static class GameSettings
         RateMeDaysCount = 1;
 
         TutorialBundleId = "test_bundle";
-        TutorialImageId = "flower";
+        TutorialImageId = "flower_";
     }
 }

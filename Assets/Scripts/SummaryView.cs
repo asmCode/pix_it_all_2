@@ -19,6 +19,7 @@ public class SummaryView : MonoBehaviour
     public bool m_animShowNewRecord;
 
     public event System.Action BackToMenuClicked;
+    public event System.Action Clicked;
 
     private Animator m_animator;
     private int m_starsCount;
@@ -56,6 +57,14 @@ public class SummaryView : MonoBehaviour
     {
         if (BackToMenuClicked != null)
             BackToMenuClicked();
+    }
+
+    public void UiEvent_Clicked()
+    {
+        Debug.Log("cups");
+
+        if (Clicked != null)
+            Clicked();
     }
 
     public void ShowCompletedBanner(System.Action finishedCallback)
