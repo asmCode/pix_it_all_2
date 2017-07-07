@@ -1712,11 +1712,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_paletteButton: {fileID: 616135961}
   m_previewButton: {fileID: 855796298}
-  m_board: {fileID: 1487821941}
+  m_board: {fileID: 1487821942}
   m_paletteContainer: {fileID: 1040005365}
   m_indicator: {fileID: 993158133}
   m_paletteColorImage: {fileID: 197977764}
-  m_rootCanvas: {fileID: 1585151225}
   m_steps:
   - {fileID: 225291616}
   - {fileID: 1655940626}
@@ -8779,6 +8778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee7e39344ed247488dc28e04834c428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_rootCanvas: {fileID: 1585151225}
   m_referenceImage: {fileID: 1492616540}
   m_image: {fileID: 206787150}
   m_parentRectTransform: {fileID: 1763066037}

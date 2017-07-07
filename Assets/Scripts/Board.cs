@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
+    // Different resolutions have different scales in Unity UI engine. For example, 768x1280 
+    // has 1.0, and 1080x1920 has 1.5. This variable is required to read that scale.
+    public RectTransform m_rootCanvas;
     public RawImage m_referenceImage;
     public RawImage m_image;
     public RectTransform m_parentRectTransform;
@@ -264,17 +267,12 @@ public class Board : MonoBehaviour
 
     private float CalculateScaleMax()
     {
-        return Screen.dpi * 0.5f;
+        return CalculateScaleOptimal() * 1.4f;   
     }
 
     private float CalculateScaleOptimal()
     {
-        float scaleOptimal = CalculateScaleMin() * 0.6f;
-        float scaleMax = CalculateScaleMax();
-        if (scaleOptimal < scaleMax)
-            scaleOptimal = scaleMax;
-        
-        return scaleOptimal;
+        return (Screen.dpi * 0.4f) / m_rootCanvas.localScale.x;
     }
 
     public RectSides GetParentRect()

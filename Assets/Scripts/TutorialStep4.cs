@@ -18,11 +18,13 @@ public class TutorialStep4 : TutorialStep
     {
         m_view.SetStep(3);
 
-        Vector3[] corners = new Vector3[4];
-        m_view.m_board.GetWorldCorners(corners);
+        var boadRectTr = m_view.m_board.GetComponent<RectTransform>();
 
-        var leftBottomWorld = Vu.XY(m_view.m_board.TransformPoint(new Vector3(0, 3, 0)));
-        var rightTopWorld = Vu.XY(m_view.m_board.TransformPoint(new Vector3(2, 5, 0)));
+        Vector3[] corners = new Vector3[4];
+        boadRectTr.GetWorldCorners(corners);
+
+        var leftBottomWorld = Vu.XY(boadRectTr.TransformPoint(new Vector3(0, 3, 0)));
+        var rightTopWorld = Vu.XY(boadRectTr.TransformPoint(new Vector3(2, 5, 0)));
     
         var rect = new RectSides();
         rect.Left = corners[0].x;
@@ -31,8 +33,8 @@ public class TutorialStep4 : TutorialStep
         rect.Bottom = corners[0].y;
 
         var size = rightTopWorld - leftBottomWorld;
-        size.x /= m_view.m_rootCanvas.transform.localScale.x;
-        size.y /= m_view.m_rootCanvas.transform.localScale.y;
+        size.x /= m_view.m_board.m_rootCanvas.transform.localScale.x;
+        size.y /= m_view.m_board.m_rootCanvas.transform.localScale.y;
 
         m_view.SetIndicatorTarget(leftBottomWorld, size);
     }
