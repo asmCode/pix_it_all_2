@@ -17,6 +17,7 @@ public class GameplayController
     private LevelIntroView m_levelIntroView;
     private TutorialController m_tutorial;
     private TutorialView m_tutorialView;
+    private SummaryController m_summaryController;
 
     private ImageData m_referenceImage;
 
@@ -95,6 +96,8 @@ public class GameplayController
         m_summaryView.BackToMenuClicked += HandleBackToMenuClicked;
         m_summaryView.Hide();
 
+        m_summaryController = new SummaryController(m_board, m_summaryView, m_gameplay, m_boardInputController);
+
         m_bonusController = new BonusController();
         m_bonusController.Init(m_gameplay, m_bonusView, m_hud);
 
@@ -137,7 +140,7 @@ public class GameplayController
         {
             Pause();
         }
-    }
+}   
 
     public void Update(float deltaTime)
     {
@@ -167,6 +170,11 @@ public class GameplayController
                 m_gameplay.AddSeconds(deltaTime);
         }
 
+        if (IsSumaryActive())
+        {
+            m_summaryController.Update();
+        }
+
         m_hud.SetTime(m_gameplay.Time);
     }
 
@@ -191,10 +199,17 @@ public class GameplayController
 
     private void SetBoardColor(int x, int y, Color color)
     {
-        m_board.SetPixelWithAnimation(x, y, color);
+        // If it isn't the last pixel, reveal it with the animation. Last pixel is revealed immediately to
+        // avoid collision with the steps animation.
+        if (m_gameplay.ImageProgress.TotalTiles > m_gameplay.ImageProgress.RevealedTiles + 1)
+            m_board.SetPixelWithAnimation(x, y, color);
+        else
+            m_board.SetPixel(x, y, color);
+
         m_board.PlayBoardSuccessEffect();
 
         m_gameplay.ImageProgress.RevealTile(x, y);
+        m_gameplay.LevelProgress.AddStep(x, y);
 
         m_gameplay.NotifyTileRevealedWithSuccess();
 
@@ -263,7 +278,9 @@ public class GameplayController
 
     private void ShowSummary()
     {
+        m_boardInputController.PauseInput();
         int tilesCount = m_gameplay.ImageProgress.Width * m_gameplay.ImageProgress.Height;
+        
         int colorsCount = m_referenceImage.Colors.Length;
         float time = m_gameplay.Time;
         bool record =
@@ -278,7 +295,16 @@ public class GameplayController
             return;
 
         m_hud.gameObject.SetActive(false);
-        m_summaryView.Show(imageViewData.ImageData.Name, starsCount, time, record, imageViewData.LevelProgress.BestTime, timeFor3Stars, timeFor2Stars);
+        // m_summaryView.Show(imageViewData.ImageData.Name, starsCount, time, record, imageViewData.LevelProgress.BestTime, timeFor3Stars, timeFor2Stars);
+        m_summaryController.Show(
+            imageViewData.ImageData.Name, 
+            starsCount,
+            time,
+            record,
+            imageViewData.LevelProgress.BestTime,
+            timeFor3Stars,
+            timeFor2Stars,
+            m_gameplay.LevelProgress.GetSteps());
 
         AudioManager.GetInstance().SoundVictory.Play();
     }
@@ -344,7 +370,7 @@ public class GameplayController
 
     private bool IsSumaryActive()
     {
-        return m_summaryView.gameObject.activeSelf;
+        return m_summaryController.IsActive;
     }
 
     public void HandlePreviewPressed()

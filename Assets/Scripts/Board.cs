@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
+    // Different resolutions have different scales in Unity UI engine. For example, 768x1280 
+    // has 1.0, and 1080x1920 has 1.5. This variable is required to read that scale.
+    public RectTransform m_rootCanvas;
     public RawImage m_referenceImage;
     public RawImage m_image;
     public RectTransform m_parentRectTransform;
@@ -72,9 +75,15 @@ public class Board : MonoBehaviour
     {
         m_pixelFillEffect.Show(x, y, color, () =>
         {
-            Image.SetPixel(x, y, color);
-            Image.Apply();
+            SetPixel(x, y, color);
         });
+    }
+
+    public void SetPixel(int x, int y, Color color, bool apply = true)
+    {
+        Image.SetPixel(x, y, color);
+        if (apply)
+            Image.Apply();
     }
 
     public void PlayBoardSuccessEffect()
@@ -258,18 +267,12 @@ public class Board : MonoBehaviour
 
     private float CalculateScaleMax()
     {
-        const float InchToCm = 0.393701f;
-        return Screen.dpi * InchToCm * 0.8f;
+        return CalculateScaleOptimal() * 1.4f;   
     }
 
     private float CalculateScaleOptimal()
     {
-        float scaleOptimal = CalculateScaleMax() * 0.8f;
-        float scaleMax = CalculateScaleMin();
-        if (scaleOptimal < scaleMax)
-            scaleOptimal = scaleMax;
-        
-        return scaleOptimal;
+        return (Screen.dpi * 0.4f) / m_rootCanvas.localScale.x;
     }
 
     public RectSides GetParentRect()

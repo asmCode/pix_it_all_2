@@ -8,6 +8,7 @@ public class LevelProgress
     private const int Version = 1;
 
     private LevelProgressData m_data;
+    private List<ImageStepTileCoords> m_steps = new List<ImageStepTileCoords>();
 
     public string BundleId
     {
@@ -67,6 +68,9 @@ public class LevelProgress
         levelProgress.ImageId = imageId;
         levelProgress.m_data = data;
 
+        if (!string.IsNullOrEmpty(data.Steps))
+            levelProgress.m_steps = new List<ImageStepTileCoords>(Base64Serializer.Decode<ImageStepTileCoords[]>(data.Steps));
+
         return levelProgress;
     }
 
@@ -90,10 +94,20 @@ public class LevelProgress
         return ImageMask.Decode(m_data.ContinueImageData);
     }
 
+    public ImageStepTileCoords[] GetSteps()
+    {
+        if (m_steps == null)
+            return null;
+
+        return m_steps.ToArray();
+    }
+
     public void ClearContinue()
     {
         m_data.ContinueTime = 0;
         m_data.ContinueImageData = null;
+        m_data.Steps = null;
+        m_steps.Clear();
     }
 
     public void SaveProgress(float time, bool[] tiles)
@@ -105,6 +119,12 @@ public class LevelProgress
             return;
 
         m_data.ContinueImageData = imageProgressData;
+        m_data.Steps = Base64Serializer.Encode(m_steps.ToArray());
+    }
+
+    public void AddStep(int x, int y)
+    {
+        m_steps.Add(new ImageStepTileCoords((byte)x, (byte)y));
     }
 
     public void Complete(float time)
