@@ -272,7 +272,7 @@ public class Board : MonoBehaviour
 
     private float CalculateScaleOptimal()
     {
-        return (Screen.dpi * 0.4f) / m_rootCanvas.localScale.x;
+        return (Utils.Dpi() * 0.4f) / m_rootCanvas.localScale.x;
     }
 
     public RectSides GetParentRect()

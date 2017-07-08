@@ -40,4 +40,13 @@ public class Utils
         System.IO.Directory.Delete(path, true);
         System.IO.Directory.CreateDirectory(path);
     }
+
+    public static float Dpi()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        return AndroidUtils.Dpi();
+#else
+        return Screen.dpi;
+#endif
+    }
 }

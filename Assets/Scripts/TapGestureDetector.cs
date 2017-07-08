@@ -74,7 +74,7 @@ public class TapGestureDetector : MonoBehaviour
     private bool IsLessThanThreshold()
     {
         float pixelsMoved = (m_touchStartPosition - m_touchEndPosition).magnitude;
-        float inchesMoved = pixelsMoved / Screen.dpi;
+        float inchesMoved = pixelsMoved / Utils.Dpi();
         return inchesMoved <= m_tapInchThreshold;
     }
 }

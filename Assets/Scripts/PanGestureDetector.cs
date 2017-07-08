@@ -62,7 +62,7 @@ public class PanGestureDetector : MonoBehaviour
             else
             {
                 float deltaPixels = (currentPosition - m_startPosition).magnitude;
-                float deltaInches = deltaPixels / Screen.dpi;
+                float deltaInches = deltaPixels / Utils.Dpi();
 
                 if (deltaInches >= m_tapInchThreshold)
                 {

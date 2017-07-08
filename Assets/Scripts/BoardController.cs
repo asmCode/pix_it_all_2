@@ -73,7 +73,7 @@ public class BoardController : MonoBehaviour
 
     private void Awake()
     {
-        Debug.LogFormat("dpi = {0}", Screen.dpi);
+        Debug.LogFormat("dpi = {0}", Utils.Dpi());
 
         m_board = GetComponent<Board>();
     }
