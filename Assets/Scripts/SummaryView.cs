@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class SummaryView : MonoBehaviour
 {
+    public enum Review
+    {
+        None,
+        ThumbUp,
+        ThumbDown
+    }
+
     public Transform m_stars;
     public Text m_labelTimeValue;
     public GameObject m_newRecord;
@@ -13,6 +20,9 @@ public class SummaryView : MonoBehaviour
     public Text m_labelRecordValue;
     public Text m_timeFor3Stars;
     public Text m_timeFor2Stars;
+
+    public ToggleButton m_reviewUp;
+    public ToggleButton m_reviewDown;
 
     public float m_animTimeProgress;
     private float m_prevTimeToDisplay;
@@ -28,6 +38,12 @@ public class SummaryView : MonoBehaviour
     private System.Action m_completedBannerFinishedCallback;
 
     private bool m_cachedRecord;
+
+    public Review ImageReview
+    {
+        get;
+        private set;
+    }
 
     public void Show(string levelName, int stars, float time, bool record, float currentRecord, float timeFor3Stars, float timeFor2Stars)
     {
@@ -63,6 +79,22 @@ public class SummaryView : MonoBehaviour
     {
         if (Clicked != null)
             Clicked();
+    }
+
+    public void UiEvent_ReviewUpClicked()
+    {
+        m_reviewDown.Toggle = false;
+        m_reviewUp.ToggleState();
+
+        ImageReview = m_reviewUp.Toggle ? Review.ThumbUp : Review.None;
+    }
+
+    public void UiEvent_ReviewDownClicked()
+    {
+        m_reviewUp.Toggle = false;
+        m_reviewDown.ToggleState();
+
+        ImageReview = m_reviewDown.Toggle ? Review.ThumbDown : Review.None;
     }
 
     public void ShowCompletedBanner(System.Action finishedCallback)

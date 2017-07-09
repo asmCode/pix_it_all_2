@@ -477,6 +477,8 @@ public class GameplayController
             return;
         }
 
+        SendReviewEvent(m_summaryView.ImageReview);
+
         ShowLevelsSceneWithFade(m_gameplay.BundleId, m_gameplay.ImageId, m_gameplay.ImageId);
     }
 
@@ -491,6 +493,19 @@ public class GameplayController
     private void HandleBackToMenuClicked()
     {
         GoToLevels();
+    }
+
+    private void SendReviewEvent(SummaryView.Review review)
+    {
+        float reviewValue = 0.0f;
+        if (m_summaryView.ImageReview == SummaryView.Review.ThumbUp)
+            reviewValue = 1.0f;
+        else if (m_summaryView.ImageReview == SummaryView.Review.ThumbDown)
+            reviewValue = -1.0f;
+
+        string eventName = string.Format("image_review.{0}.{1}", m_gameplay.BundleId, m_gameplay.ImageId);
+
+        GameAnalyticsSDK.GameAnalytics.NewDesignEvent(eventName, reviewValue);
     }
 
     private void PaletteShown()
