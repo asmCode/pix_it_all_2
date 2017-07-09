@@ -106,8 +106,8 @@ public class ImageDataLoader
         //pathes.Add(path + "/bundles2.pixbundle");
         //pathes.Add(path + "/base.pixbundle");
         pathes.Add(path + "/test_bundle.pixbundle");
-        //pathes.Add(path + "/holiday.pixbundle");
-        //pathes.Add(path + "/extra.pixbundle");
+        pathes.Add(path + "/holiday.pixbundle");
+        pathes.Add(path + "/extra.pixbundle");
         pathes.Add(path + "/ava.pixbundle");
         pathes.Add(path + "/booster.pixbundle");
     }

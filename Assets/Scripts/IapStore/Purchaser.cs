@@ -206,6 +206,8 @@ public class Purchaser : IStoreListener
 
         SendAnalyticsEvent(args.purchasedProduct);
 
+        Backend.GetInstance().ReportPurchase(args.purchasedProduct.definition.id, args.purchasedProduct.metadata.localizedPriceString);
+
         if (PurchaseFinished != null)
             PurchaseFinished(true, args.purchasedProduct.definition.id);
 

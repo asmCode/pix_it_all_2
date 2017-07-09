@@ -21,6 +21,8 @@ public class InitScene : MonoBehaviour
 
         if (game.Persistent.GetFirstRun())
         {
+            Backend.GetInstance().ReportFirstRun();
+
             // It may be to early to reset that flag here. Chenge this logic if some other components
             // will depend on that flag in the future.
             game.Persistent.SetFirstRun(false);
