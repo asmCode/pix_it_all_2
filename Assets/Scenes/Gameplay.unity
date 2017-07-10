@@ -8042,7 +8042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 271409ac0bd7c7d47b6fc507e7ff90f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_colorOff: {r: 1, g: 0.85294116, b: 0.85294116, a: 1}
+  m_colorOff: {r: 0.85294116, g: 0.85294116, b: 0.85294116, a: 1}
   m_colorOn: {r: 1, g: 0.33823532, b: 0.33823532, a: 1}
   m_icon: {fileID: 816201356}
 --- !u!114 &1172639551
@@ -10380,8 +10380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 271409ac0bd7c7d47b6fc507e7ff90f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_colorOff: {r: 0.8014706, g: 1, b: 0.8603448, a: 1}
-  m_colorOn: {r: 0.29411763, g: 1, b: 0.53265727, a: 1}
+  m_colorOff: {r: 0.85294116, g: 0.85294116, b: 0.85294116, a: 1}
+  m_colorOn: {r: 0.3115809, g: 0.8308824, b: 0.48706904, a: 1}
   m_icon: {fileID: 375978441}
 --- !u!114 &1641312294
 MonoBehaviour:
