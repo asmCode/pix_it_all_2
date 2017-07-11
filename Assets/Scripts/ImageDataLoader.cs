@@ -105,11 +105,13 @@ public class ImageDataLoader
 
         //pathes.Add(path + "/bundles2.pixbundle");
         //pathes.Add(path + "/base.pixbundle");
-        pathes.Add(path + "/test_bundle.pixbundle");
-        pathes.Add(path + "/holiday.pixbundle");
-        pathes.Add(path + "/extra.pixbundle");
+        //pathes.Add(path + "/test_bundle.pixbundle");
+        //pathes.Add(path + "/holiday.pixbundle");
+        //pathes.Add(path + "/extra.pixbundle");
         pathes.Add(path + "/ava.pixbundle");
-        pathes.Add(path + "/booster.pixbundle");
+        pathes.Add(path + "/tiny_ones.pixbundle");
+        pathes.Add(path + "/remastered.pixbundle");
+        //pathes.Add(path + "/booster.pixbundle");
     }
 
     private static void GetDownloadedBundlePathes(List<string> pathes)
