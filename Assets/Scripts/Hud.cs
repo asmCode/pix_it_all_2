@@ -8,6 +8,7 @@ public class Hud : MonoBehaviour
     public Image m_paletteColor;
     public TimeView m_timeView;
     public TileProgress m_tileProgress;
+    public GameObject m_cheatRevealImage;
 
     public event System.Action PreviewPressed;
     public event System.Action PreviewReleased;

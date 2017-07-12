@@ -40,6 +40,24 @@ public static class GameSettings
         private set;
     }
 
+    public static bool DevBuild
+    {
+        get;
+        private set;
+    }
+
+    public static bool CheatPersistentPreview
+    {
+        get;
+        private set;
+    }
+
+    public static bool CheatAlwaysReveal
+    {
+        get;
+        private set;
+    }
+
     static GameSettings()
 	{
 #if UNITY_IPHONE
@@ -61,5 +79,10 @@ public static class GameSettings
 
         TutorialBundleId = "test_bundle";
         TutorialImageId = "flower_";
+
+        // Hack the planet, fool!
+        DevBuild = false;
+        CheatPersistentPreview = false;
+        CheatAlwaysReveal = false;
     }
 }

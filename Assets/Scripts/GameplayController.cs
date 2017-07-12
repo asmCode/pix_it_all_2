@@ -86,6 +86,7 @@ public class GameplayController
         m_hud.m_palette.SetActiveColor(initialColor);
         m_hud.m_tileProgress.SetMax(m_gameplay.ImageProgress.TotalTiles);
         m_hud.m_tileProgress.SetCurrent(m_gameplay.ImageProgress.RevealedTiles);
+        m_hud.m_cheatRevealImage.gameObject.SetActive(GameSettings.DevBuild);
 
         m_hud.m_palette.PaletteShown += PaletteShown;
         m_hud.m_palette.PaletteClosed += PaletteClosed;
@@ -254,9 +255,9 @@ public class GameplayController
         var activeColor = m_hud.m_palette.ActiveColor;
         var requiredColor = m_gameplay.GetReferenceColor(x, y);
 
-        if (activeColor == requiredColor)
+        if (activeColor == requiredColor || GameSettings.CheatAlwaysReveal)
         {
-            SetBoardColor(x, y, activeColor);
+            SetBoardColor(x, y, requiredColor);
 
             // Don't play pixel sound if it was the last pixel. We want to avoid collision with the Victory sound.
             if (!IsLevelCompleted())

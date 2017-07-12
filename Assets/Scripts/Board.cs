@@ -205,6 +205,12 @@ public class Board : MonoBehaviour
                 m_referenceImage.gameObject.SetActive(false);
                 if (PreviewEnded != null)
                     PreviewEnded();
+
+                if (GameSettings.CheatPersistentPreview)
+                {
+                    m_referenceImage.gameObject.SetActive(true);
+                    m_previewFade = 0.5f;
+                }
             }
         }
 

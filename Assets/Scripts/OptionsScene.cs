@@ -23,6 +23,7 @@ public class OptionsScene : MonoBehaviour
     {
         m_optionsController = new OptionsController();
         m_optionsController.Init(m_optionsView, m_fade, m_duringGameplay);
+        m_optionsView.SetDevButtonsEnabled(GameSettings.DevBuild);
     }
 
     private void Start()

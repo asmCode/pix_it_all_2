@@ -11636,6 +11636,7 @@ MonoBehaviour:
   m_paletteColor: {fileID: 1043280479}
   m_timeView: {fileID: 164052909}
   m_tileProgress: {fileID: 274514449}
+  m_cheatRevealImage: {fileID: 7335520}
 --- !u!1 &1860434675
 GameObject:
   m_ObjectHideFlags: 0

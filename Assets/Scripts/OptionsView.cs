@@ -11,6 +11,7 @@ public class OptionsView : MonoBehaviour
     public Text m_labelGPGS;
     public GameObject m_buttonGPGS;
     public GameObject m_buttonRestorePurchases;
+    public GameObject m_devButtons;
 
     public event System.Action SoundPressed;
     public event System.Action MusicPressed;
@@ -62,6 +63,11 @@ public class OptionsView : MonoBehaviour
     public void SetMusicEnabled(bool enabled)
     {
         m_labelMusic.text = "MUSIC " + (enabled ? "ON" : "OFF");
+    }
+
+    public void SetDevButtonsEnabled(bool enabled)
+    {
+        m_devButtons.SetActive(enabled);
     }
 
     public void UiEvent_BackButtonPreesed()
