@@ -56,6 +56,7 @@ namespace bundle_maker
 
             var bundleData = new BundleData();
             bundleData.Name = bundleDataInput.Name;
+            bundleData.ProductId = bundleDataInput.ProductId;
             bundleData.Images = GetImagesData(path);
 
             return bundleData;

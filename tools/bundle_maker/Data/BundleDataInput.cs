@@ -7,5 +7,8 @@ namespace bundle_maker
     {
         [DataMember]
         public string Name { get; set; }
+
+        [DataMember]
+        public string ProductId { get; set; }
     }
 }

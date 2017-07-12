@@ -55,11 +55,6 @@ public class GameplayScene : MonoBehaviour
         {
             m_gameplayController.HandleBackButton();
         }
-
-        //if (Input.GetKeyUp(KeyCode.S))
-        //{
-        //    m_summaryView.Show("Poznan", 2, 2145, true, 1243, 1000, 2000);
-        //}
     }
 
     private void SetupSceneInputVariables()
@@ -67,8 +62,8 @@ public class GameplayScene : MonoBehaviour
         if (string.IsNullOrEmpty(m_selectedBundleId) ||
             string.IsNullOrEmpty(m_selectedLevelId))
         {
-            m_selectedBundleId = "test_bundle";
-            m_selectedLevelId = "flower";
+            m_selectedBundleId = "appetizer";
+            m_selectedLevelId = "tutorial";
             m_continueLevel = true;
         }
     }

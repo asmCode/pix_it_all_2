@@ -9,6 +9,9 @@ namespace bundle_maker
         public string Name { get; set; }
 
         [DataMember(Order = 1)]
+        public string ProductId { get; set; }
+
+        [DataMember(Order = 2)]
         public ImageData[] Images { get; set; }
     }
 }

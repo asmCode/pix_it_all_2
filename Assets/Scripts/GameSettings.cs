@@ -77,8 +77,8 @@ public static class GameSettings
         RateMeWinsCount = 3;
         RateMeDaysCount = 1;
 
-        TutorialBundleId = "test_bundle";
-        TutorialImageId = "flower_";
+        TutorialBundleId = "appetizer";
+        TutorialImageId = "tutorial";
 
         // Hack the planet, fool!
         DevBuild = false;

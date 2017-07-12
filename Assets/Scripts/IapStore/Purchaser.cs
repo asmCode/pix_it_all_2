@@ -75,8 +75,8 @@ public class Purchaser : IStoreListener
 		foreach (var itemId in IapIds.Ids)
 			builder.AddProduct(itemId, ProductType.NonConsumable);
 
-        // TODO: remove that in release version
-        builder.AddProduct("test.pixitallfree.consume_01", ProductType.Consumable);
+        // TODO: remove that in release version. This is consumable bundle for testing
+        // builder.AddProduct("test.pixitallfree.consume_01", ProductType.Consumable);
 
         UnityPurchasing.Initialize(this, builder);
     }

@@ -103,15 +103,11 @@ public class ImageDataLoader
     {
         var path = Application.streamingAssetsPath + "/Bundles";
 
-        //pathes.Add(path + "/bundles2.pixbundle");
-        //pathes.Add(path + "/base.pixbundle");
-        //pathes.Add(path + "/test_bundle.pixbundle");
-        //pathes.Add(path + "/holiday.pixbundle");
-        //pathes.Add(path + "/extra.pixbundle");
-        pathes.Add(path + "/ava.pixbundle");
+        pathes.Add(path + "/appetizer.pixbundle");
+        pathes.Add(path + "/good_start.pixbundle");
+        pathes.Add(path + "/one_by_one.pixbundle");
+        pathes.Add(path + "/pixel_lovers.pixbundle");
         pathes.Add(path + "/tiny_ones.pixbundle");
-        pathes.Add(path + "/remastered.pixbundle");
-        //pathes.Add(path + "/booster.pixbundle");
     }
 
     private static void GetDownloadedBundlePathes(List<string> pathes)

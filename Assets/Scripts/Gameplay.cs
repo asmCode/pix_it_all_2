@@ -45,8 +45,9 @@ public class Gameplay
     {
         get
         {
-            // TODO: Also check bundle id
-            return ImageId == "flower2";
+            return
+                BundleId == GameSettings.TutorialBundleId &&
+                ImageId == GameSettings.TutorialImageId;
         }
     }
 
