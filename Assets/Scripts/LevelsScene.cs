@@ -276,7 +276,7 @@ public class LevelsScene : MonoBehaviour
 
         data.ImageData = imageData;
 
-        int totalTiles = imageData.Texture.width * imageData.Texture.height;
+        int totalTiles = imageData.Width * imageData.Height;
         int totalColors = imageData.Colors.Length;
 
         var playerProgress = Pix.Game.GetInstance().PlayerProgress;

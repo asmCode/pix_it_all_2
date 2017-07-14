@@ -63,6 +63,12 @@ public class BundleView : MonoBehaviour
 
         m_icon.texture = icon.Texture;
 
+        float scale = icon.Width < icon.Height ?
+            (float)icon.Texture.width / (float)icon.Width :
+            (float)icon.Texture.height / (float)icon.Height;
+
+        m_icon.transform.localScale = new Vector2(scale, scale);
+
         m_aspect.aspectRatio = (float)icon.Texture.width / (float)icon.Texture.height;
     }
 

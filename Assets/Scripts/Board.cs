@@ -312,13 +312,13 @@ public class Board : MonoBehaviour
 
         if (Image == null)
         {
-            Image = new Texture2D(width, height);
+            Image = new Texture2D(m_referenceImage.texture.width, m_referenceImage.texture.height);
             Image.wrapMode = TextureWrapMode.Clamp;
             Image.filterMode = FilterMode.Point;
             Image.name = "image";
         }
 
-        int pixelCount = width * height;
+        int pixelCount = Image.width * Image.height;
 
         Color[] colors = new Color[pixelCount];
         for (int i = 0; i < colors.Length; i++)
@@ -327,6 +327,11 @@ public class Board : MonoBehaviour
         Image.SetPixels(colors);
         Image.Apply();
 
+        float scaleX = (float)m_referenceImage.texture.width / (float)width;
+        float scaleY = (float)m_referenceImage.texture.height / (float)height;
+
         m_image.texture = Image;
+        m_image.transform.localScale = new Vector2(scaleX, scaleY);
+        m_referenceImage.transform.localScale = new Vector2(scaleX, scaleY);
     }
 }

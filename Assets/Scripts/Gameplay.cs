@@ -88,7 +88,7 @@ public class Gameplay
         ReferenceImage = Pix.Game.GetInstance().ImageManager.GetImageById(bundleId, imageId);
 
         ImageProgress = new ImageProgress();
-        ImageProgress.Init(ReferenceImage.Texture.width, ReferenceImage.Texture.height);
+        ImageProgress.Init(ReferenceImage.Width, ReferenceImage.Height);
 
         InitLevelProgress();
 

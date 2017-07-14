@@ -83,8 +83,22 @@ public class ImageDataLoader
         if (!texture.LoadImage(textureData))
             return null;
 
+        int size = Mathf.NextPowerOfTwo(Mathf.Max(texture.width, texture.height));
+        var texture2 = new Texture2D(size, size);
+        texture2.filterMode = FilterMode.Point;
+        texture2.wrapMode = TextureWrapMode.Clamp;
+
+        for (int x = 0; x < texture.width; x++)
+        {
+            for (int y = 0; y < texture.height; y++)
+            {
+                texture2.SetPixel(x, y, texture.GetPixel(x, y));
+            }
+        }
+        texture2.Apply(false);
+
         var imageData = new ImageData();
-        imageData.Init(imageFileData.Id, imageFileData.Name, texture);
+        imageData.Init(imageFileData.Id, imageFileData.Name, texture.width, texture.height, texture2);
 
         return imageData;
     }

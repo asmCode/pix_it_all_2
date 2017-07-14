@@ -77,8 +77,8 @@ public class GameplayController
         m_hud.CheatFillColorsClicked += HandleCheatFillColorsClicked;
 
         m_board.PreviewEnded += HandleBoardPreviewEnded;
-        m_board.SetSize(imageProgress.Width, imageProgress.Height);
         m_board.SetReferenceImage(m_referenceImage.Texture);
+        m_board.SetSize(imageProgress.Width, imageProgress.Height);
         m_board.SetTiles(m_gameplay.ImageProgress.GetTiles());
         m_board.HidePreview();
 

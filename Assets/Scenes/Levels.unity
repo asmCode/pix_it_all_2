@@ -693,6 +693,16 @@ Prefab:
       propertyPath: m_Name
       value: BundleView (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00f82cec09b7ece4d8fecc39df770dd7, type: 2}
   m_IsPrefabParent: 0
@@ -1525,6 +1535,16 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 265.7335
       objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00f82cec09b7ece4d8fecc39df770dd7, type: 2}
   m_IsPrefabParent: 0
@@ -1955,6 +1975,16 @@ Prefab:
       propertyPath: m_Name
       value: BundleView (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00f82cec09b7ece4d8fecc39df770dd7, type: 2}
   m_IsPrefabParent: 0
@@ -2308,6 +2338,16 @@ Prefab:
     - target: {fileID: 1160057455975622, guid: 00f82cec09b7ece4d8fecc39df770dd7, type: 2}
       propertyPath: m_Name
       value: BundleView (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00f82cec09b7ece4d8fecc39df770dd7, type: 2}
@@ -2716,6 +2756,16 @@ Prefab:
       propertyPath: m_Name
       value: BundleView (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00f82cec09b7ece4d8fecc39df770dd7, type: 2}
   m_IsPrefabParent: 0
@@ -2995,6 +3045,16 @@ Prefab:
     - target: {fileID: 1160057455975622, guid: 00f82cec09b7ece4d8fecc39df770dd7, type: 2}
       propertyPath: m_Name
       value: BundleView (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00f82cec09b7ece4d8fecc39df770dd7, type: 2}
@@ -3465,6 +3525,16 @@ Prefab:
     - target: {fileID: 1160057455975622, guid: 00f82cec09b7ece4d8fecc39df770dd7, type: 2}
       propertyPath: m_Name
       value: BundleView (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224458926844278912, guid: 00f82cec09b7ece4d8fecc39df770dd7,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00f82cec09b7ece4d8fecc39df770dd7, type: 2}

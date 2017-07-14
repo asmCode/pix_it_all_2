@@ -61,14 +61,21 @@ public class ImageView : MonoBehaviour
         
         SetColors(image.Colors);
 
-        m_dimensions.text = string.Format("{0} x {1}", image.Texture.width, image.Texture.height);
+        m_dimensions.text = string.Format("{0} x {1}", image.Width, image.Height);
 
         m_imageAspectRatio.aspectRatio = (float)image.Texture.width / (float)image.Texture.height;
 
         m_inProgressIndicator.gameObject.SetActive(data.LevelProgress.IsInProgress);
         m_completedIndicator.gameObject.SetActive(data.LevelProgress.IsCompleted);
 
+        //m_thumbnail.GetComponent<RectTransform>().pivot = new Vector2(0.0f, ((float)image.Height / 2) / (float)image.Texture.height);
+
+        float scale = image.Width < image.Height ?
+            (float)image.Texture.width / (float)image.Width :
+            (float)image.Texture.height / (float)image.Height;
+
         m_thumbnail.texture = image.Texture;
+        m_thumbnail.transform.localScale = new Vector2(scale, scale);
     }
 
     public void ShowCompletedIndicator(bool show, bool animated)
