@@ -97,6 +97,13 @@ namespace Pix
         private void Update()
         {
             TouchProxy.Update();
+
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                Application.CaptureScreenshot(string.Format("pix_it_all_{0}.png", System.DateTime.Now.Ticks));
+            }
+#endif
         }
 
         public void ReportScores()
