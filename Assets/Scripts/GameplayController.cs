@@ -239,7 +239,7 @@ public class GameplayController
         if (m_gameplay.ImageProgress.RevealedTiles > 0 &&
             m_gameplay.ImageProgress.RevealedTiles < m_gameplay.ImageProgress.TotalTiles &&
             !m_gameplay.IsTutorialImage)
-            m_gameplay.SaveProgress(m_board.Image);
+            m_gameplay.SaveProgress();
     }
 
     private void HandleBoardPreviewEnded()

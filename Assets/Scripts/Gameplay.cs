@@ -120,7 +120,7 @@ public class Gameplay
         Pix.Game.GetInstance().ReportScores();
     }
 
-    public void SaveProgress(Texture2D image)
+    public void SaveProgress()
     {
         if (LevelProgress == null)
             return;

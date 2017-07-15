@@ -111,7 +111,7 @@ public class SummaryController
 		if (m_state == State.Steps)
 			return;
 
-        int tilesCount = m_board.m_referenceImage.texture.width * m_board.m_referenceImage.texture.height;
+        int tilesCount = m_gameplay.ImageProgress.Width * m_gameplay.ImageProgress.Height;
        	var emptyTiles = new bool[tilesCount];
         m_board.SetTiles(emptyTiles);
 

@@ -119,14 +119,17 @@ public class Board : MonoBehaviour
 
     public void SetTiles(bool[] tiles)
     {
+        int width = (int)m_rectTransform.rect.width;
+        int height = (int)m_rectTransform.rect.height;
+
         if (tiles == null ||
-            tiles.Length != (Image.width * Image.height))
+            tiles.Length != (width * height))
             return;
 
         for (int i = 0; i < tiles.Length; i++)
         {
-            int x = i % Image.width;
-            int y = i / Image.width;
+            int x = i % width;
+            int y = i / width;
 
             var color = Color.black;
             color.a = 0.0f;
